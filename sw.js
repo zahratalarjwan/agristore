@@ -1,9 +1,10 @@
-const CACHE_NAME = 'agristore-pro-v1';
+const CACHE_NAME = 'zahrat-alarjwan-v6';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icons/agristore-icon.svg'
+  './icons/zahrat-alarjwan-logo.jpg',
+  './icons/whatsapp.svg'
 ];
 
 self.addEventListener('install', event => {
