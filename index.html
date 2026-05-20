@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>المتجر الزراعي - AgriStore Pro</title>
+  <meta name="theme-color" content="#2d6a4f">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="AgriStore">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/agristore-icon.svg" type="image/svg+xml">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
+
+    :root {
+      --primary: #2d6a4f;
+      --primary-light: #40916c;
+      --primary-dark: #1b4332;
+      --secondary: #d8f3dc;
+      --accent: #f77f00;
+      --accent-light: #fcbf49;
+      --danger: #e63946;
+      --success: #06a77d;
+      --info: #118ab2;
+      --surface: #ffffff;
+      --page: #f6f7f4;
+      --text: #1f2933;
+      --muted: #667085;
+      --border: #d8ded7;
+      --shadow: 0 10px 30px rgba(20, 43, 32, .12);
+      --radius: 8px;
+      --font: 'Tajawal', system-ui, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --primary: #52b788;
+      --primary-light: #74c69d;
+      --primary-dark: #1b4332;
+      --secondary: #1b4332;
+      --surface: #121821;
+      --page: #0d1117;
+      --text: #f4f7fb;
+      --muted: #aeb7c2;
+      --border: #303944;
+      --shadow: 0 12px 30px rgba(0, 0, 0, .35);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--page);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
+      color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .topbar, .mainbar, .nav, .container {
+      max-width: 1240px;
+      margin: auto;
+      padding-inline: 22px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-block: 10px;
+      font-size: 13px;
+      background: rgba(0, 0, 0, .12);
+      max-width: none;
+    }
+
+    .mainbar {
+      display: grid;
+      grid-template-columns: auto minmax(180px, 520px) auto;
+      gap: 18px;
+      align-items: center;
+      padding-block: 15px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 0;
+      background: transparent;
+      color: white;
+      text-align: right;
+    }
+
+    .logo-mark, .icon-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, .16);
+      color: white;
+      border: 0;
+    }
+
+    .logo strong { display: block; font-size: 22px; font-weight: 900; }
+    .logo small { display: block; opacity: .82; font-size: 12px; }
+
+    .search {
+      position: relative;
+    }
+
+    .search input {
+      width: 100%;
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 18px 13px 48px;
+      background: rgba(255, 255, 255, .96);
+      color: #17212b;
+      outline: 0;
+    }
+
+    .search button {
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 0;
+      background: var(--primary);
+      color: white;
+    }
+
+    .search-results {
+      position: absolute;
+      inset-inline: 0;
+      top: calc(100% + 8px);
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: none;
+      z-index: 20;
+    }
+
+    .search-results.active { display: block; }
+
+    .search-result {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 14px;
+      border: 0;
+      width: 100%;
+      text-align: right;
+      background: transparent;
+      color: inherit;
+    }
+
+    .search-result:hover { background: color-mix(in srgb, var(--secondary), transparent 60%); }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cart-button {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding-inline: 6px;
+      margin-inline-start: 4px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: #281200;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      padding-block: 8px 12px;
+      overflow-x: auto;
+    }
+
+    .nav button {
+      border: 0;
+      background: rgba(255, 255, 255, .14);
+      color: white;
+      border-radius: var(--radius);
+      padding: 9px 14px;
+      white-space: nowrap;
+    }
+
+    .nav button.active, .nav button:hover { background: rgba(255, 255, 255, .26); }
+
+    .hero {
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--secondary), white 18%), var(--surface));
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero .container {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+      gap: 36px;
+      align-items: center;
+      padding-block: 56px;
+    }
+
+    .hero h1 {
+      margin: 0 0 16px;
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.2;
+      color: var(--primary-dark);
+    }
+
+    [data-theme="dark"] .hero h1 { color: var(--primary-light); }
+    .hero h1 span { color: var(--accent); }
+    .hero p { color: var(--muted); font-size: 18px; max-width: 700px; }
+
+    .hero-visual {
+      min-height: 300px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      display: grid;
+      place-items: center;
+      font-size: 120px;
+      box-shadow: var(--shadow);
+    }
+
+    .ad-slider {
+      max-width: 1240px;
+      margin: 24px auto 0;
+      padding: 0 22px;
+    }
+
+    .ad-slider-frame {
+      position: relative;
+      min-height: 250px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .ad-slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .7fr);
+      align-items: center;
+      gap: 24px;
+      padding: 30px;
+      opacity: 0;
+      transform: translateX(20px);
+      transition: .35s ease;
+      pointer-events: none;
+      background: linear-gradient(135deg, color-mix(in srgb, var(--secondary), white 20%), var(--surface));
+    }
+
+    .ad-slide.active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .ad-slide h2 {
+      font-size: clamp(26px, 4vw, 40px);
+      margin-bottom: 8px;
+      color: var(--primary-dark);
+    }
+
+    [data-theme="dark"] .ad-slide h2 { color: var(--primary-light); }
+
+    .ad-slide p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      max-width: 620px;
+    }
+
+    .ad-media {
+      height: 190px;
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      font-size: 78px;
+    }
+
+    .ad-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .ad-controls {
+      position: absolute;
+      inset-inline: 16px;
+      bottom: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .ad-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 0;
+      background: rgba(45, 106, 79, .35);
+      padding: 0;
+    }
+
+    .ad-dot.active { background: var(--accent); }
+
+    .section {
+      max-width: 1240px;
+      margin: auto;
+      padding: 42px 22px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    h2 { margin: 0; font-size: 28px; }
+    .muted { color: var(--muted); }
+
+    .stats {
+      background: var(--primary-dark);
+      color: white;
+    }
+
+    .stats .container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding-block: 22px;
+      text-align: center;
+    }
+
+    .stat strong { color: var(--accent-light); font-size: 28px; display: block; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .category-grid {
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 14px rgba(20, 43, 32, .06);
+      overflow: hidden;
+    }
+
+    .category-card {
+      min-height: 145px;
+      padding: 22px;
+      text-align: center;
+      color: inherit;
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: var(--radius);
+    }
+
+    .category-card:hover, .product:hover, .admin-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .category-card, .product, .admin-card { transition: .2s ease; }
+    .category-icon { font-size: 36px; display: block; margin-bottom: 8px; }
+
+    .product-image {
+      position: relative;
+      height: 170px;
+      display: grid;
+      place-items: center;
+      font-size: 72px;
+      background: linear-gradient(135deg, var(--secondary), color-mix(in srgb, var(--secondary), white 35%));
+    }
+
+    .product-image img, .cart-emoji img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-image img {
+      position: absolute;
+      inset: 0;
+    }
+
+    .product-image .product-fallback {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pill {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--secondary);
+      color: var(--primary);
+    }
+
+    .sale {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--danger);
+      color: white;
+    }
+
+    .product-body { padding: 16px; }
+    .product h3 { margin: 10px 0 6px; font-size: 17px; min-height: 48px; }
+    .price { color: var(--primary); font-size: 22px; font-weight: 900; }
+    .old { color: var(--muted); text-decoration: line-through; margin-inline-start: 8px; }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .between { justify-content: space-between; }
+
+    .btn {
+      border: 0;
+      border-radius: var(--radius);
+      padding: 11px 16px;
+      background: var(--primary);
+      color: white;
+      font-weight: 800;
+    }
+
+    .btn:hover { background: var(--primary-dark); }
+    .btn.secondary { background: var(--surface); color: var(--primary); border: 1px solid var(--primary); }
+    .btn.accent { background: var(--accent); }
+    .btn.danger { background: var(--danger); }
+    .btn:disabled { opacity: .55; cursor: not-allowed; }
+
+    .product-actions {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .square {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .drawer-backdrop, .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .45);
+      display: none;
+      z-index: 30;
+    }
+
+    .drawer-backdrop.active, .modal-backdrop.active { display: block; }
+
+    .drawer {
+      position: fixed;
+      inset-block: 0;
+      left: 0;
+      width: min(430px, 92vw);
+      background: var(--surface);
+      z-index: 31;
+      transform: translateX(-105%);
+      transition: .25s ease;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow);
+    }
+
+    .drawer.active { transform: translateX(0); }
+    .drawer-head, .drawer-foot, .modal-head, .modal-foot {
+      padding: 18px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .drawer-foot { border-top: 1px solid var(--border); border-bottom: 0; }
+    .drawer-body { padding: 16px; overflow: auto; flex: 1; }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 12px;
+      padding: 12px;
+      background: color-mix(in srgb, var(--page), var(--surface) 45%);
+      border-radius: var(--radius);
+      margin-bottom: 10px;
+    }
+
+    .cart-emoji {
+      display: grid;
+      place-items: center;
+      background: var(--secondary);
+      border-radius: var(--radius);
+      font-size: 30px;
+      overflow: hidden;
+    }
+
+    .modal-backdrop {
+      place-items: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.active { display: grid; }
+    .modal {
+      width: min(720px, 94vw);
+      max-height: 90vh;
+      overflow: auto;
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .modal-body { padding: 20px; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .form-group.full { grid-column: 1 / -1; }
+    label { display: block; font-weight: 800; margin-bottom: 6px; }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: var(--radius);
+      padding: 11px 12px;
+      outline: 0;
+    }
+
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+
+    .admin {
+      display: none;
+      min-height: 100vh;
+      background: var(--page);
+    }
+
+    .admin.active { display: grid; grid-template-columns: 260px 1fr; }
+    .admin-side {
+      background: linear-gradient(180deg, var(--primary-dark), #111827);
+      color: white;
+      padding: 20px 14px;
+      min-height: 100vh;
+    }
+
+    .admin-side button {
+      width: 100%;
+      text-align: right;
+      border: 0;
+      border-radius: var(--radius);
+      background: transparent;
+      color: rgba(255, 255, 255, .78);
+      padding: 12px;
+      margin-bottom: 4px;
+    }
+
+    .admin-side button.active, .admin-side button:hover {
+      color: white;
+      background: rgba(255, 255, 255, .12);
+    }
+
+    .admin-main { min-width: 0; }
+    .admin-top {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .admin-locked {
+      max-width: 480px;
+      margin: auto;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .admin-locked .logo-mark {
+      margin: 0 auto 12px;
+      color: white;
+      background: var(--primary);
+    }
+
+    .admin-body { padding: 22px; }
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .admin-card { padding: 18px; }
+    .admin-card strong { font-size: 26px; display: block; color: var(--primary); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: right;
+      vertical-align: middle;
+    }
+
+    th {
+      background: color-mix(in srgb, var(--page), var(--surface) 35%);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .notification {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translate(-50%, -120%);
+      z-index: 60;
+      padding: 13px 20px;
+      border-radius: var(--radius);
+      color: white;
+      background: var(--primary);
+      box-shadow: var(--shadow);
+      transition: .25s ease;
+      font-weight: 800;
+    }
+
+    .notification.show { transform: translate(-50%, 0); }
+    .notification.error { background: var(--danger); }
+    .notification.info { background: var(--info); }
+    .notification.warning { background: var(--accent); }
+
+    .install-hint {
+      display: none;
+      position: fixed;
+      inset-inline: 16px;
+      bottom: 16px;
+      z-index: 40;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .install-hint.show { display: flex; }
+
+    .footer {
+      background: #111827;
+      color: white;
+      padding: 34px 22px;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .topbar { display: none; }
+      .mainbar { grid-template-columns: 1fr auto; }
+      .search { grid-column: 1 / -1; order: 3; }
+      .hero .container { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .ad-slide {
+        grid-template-columns: 1fr;
+        min-height: 420px;
+        padding: 22px;
+      }
+      .ad-media { height: 170px; order: -1; }
+      .stats .container { grid-template-columns: repeat(2, 1fr); }
+      .admin.active { grid-template-columns: 1fr; }
+      .admin-side { position: static; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 520px) {
+      .actions { gap: 6px; }
+      .icon-btn { width: 40px; height: 40px; }
+      .cart-button { padding-inline: 12px; }
+      .section-head { display: block; }
+      .stats .container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="notification" class="notification"></div>
+  <div id="installHint" class="install-hint">
+    <span><strong>AgriStore</strong><br><small class="muted">يمكن تثبيت الموقع كتطبيق على الهاتف.</small></span>
+    <div class="row">
+      <button class="btn" type="button" id="installAppBtn">تثبيت</button>
+      <button class="square" type="button" id="dismissInstallBtn">✕</button>
+    </div>
+  </div>
+
+  <div id="store">
+    <header class="header">
+      <div class="topbar">
+        <span>+968 9601 7822 | info@agristore.com</span>
+        <span>السبت - الخميس: 8 صباحا - 10 مساء</span>
+      </div>
+      <div class="mainbar">
+        <button class="logo" type="button" data-page="home">
+          <span class="logo-mark">🌿</span>
+          <span><strong>AgriStore</strong><small>المتجر الزراعي المتكامل</small></span>
+        </button>
+        <div class="search">
+          <input id="searchInput" type="search" placeholder="ابحث عن منتجات، بذور، أسمدة..." autocomplete="off">
+          <button id="searchBtn" type="button">🔍</button>
+          <div id="searchResults" class="search-results"></div>
+        </div>
+        <div class="actions">
+          <button class="icon-btn" type="button" id="themeBtn" title="تبديل الوضع">🌓</button>
+          <button class="icon-btn" type="button" id="adminBtn" title="لوحة التحكم">⚙️</button>
+          <button class="icon-btn" type="button" data-page="wishlist" title="المفضلة">❤️<span id="wishlistCount" class="badge">0</span></button>
+          <button class="cart-button" type="button" id="cartBtn">السلة <span id="cartCount" class="badge">0</span></button>
+        </div>
+      </div>
+      <nav id="nav" class="nav"></nav>
+    </header>
+
+    <main>
+      <section id="homePage" class="page active">
+        <div class="hero">
+          <div class="container">
+            <div>
+              <h1>كل ما تحتاجه <span>لزراعتك</span> في مكان واحد</h1>
+              <p>نباتات، بذور، أدوات، أسمدة ومستلزمات زراعية مختارة بعناية، مع تجربة شراء سريعة وواضحة.</p>
+              <div class="row">
+                <button class="btn" type="button" data-page="shop">تسوق الآن</button>
+                <button class="btn secondary" type="button" data-category="offers">شاهد العروض</button>
+              </div>
+            </div>
+            <div class="hero-visual">🌳</div>
+          </div>
+        </div>
+        <section id="adSlider" class="ad-slider" aria-label="الإعلانات"></section>
+        <div class="stats">
+          <div class="container">
+            <div class="stat"><strong id="statProducts">0</strong><span>منتج متاح</span></div>
+            <div class="stat"><strong>5000+</strong><span>عميل سعيد</span></div>
+            <div class="stat"><strong>150+</strong><span>علامة تجارية</span></div>
+            <div class="stat"><strong>24/7</strong><span>دعم فني</span></div>
+          </div>
+        </div>
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2>الأقسام</h2>
+              <div class="muted">تصفح المنتجات حسب القسم</div>
+            </div>
+            <button class="btn secondary" type="button" data-page="shop">عرض الكل</button>
+          </div>
+          <div id="categoriesGrid" class="grid category-grid"></div>
+        </section>
+        <section class="section">
+          <div class="section-head">
+            <div>
+              <h2>منتجات مميزة</h2>
+              <div class="muted">اختيارات رائجة وعروض نشطة</div>
+            </div>
+            <button class="btn secondary" type="button" data-page="shop">عرض الكل</button>
+          </div>
+          <div id="featuredProducts" class="grid"></div>
+        </section>
+      </section>
+
+      <section id="shopPage" class="page section">
+        <div class="section-head">
+          <div>
+            <h2 id="shopTitle">جميع المنتجات</h2>
+            <div id="shopSubtitle" class="muted"></div>
+          </div>
+        </div>
+        <div id="shopProducts" class="grid"></div>
+      </section>
+
+      <section id="wishlistPage" class="page section">
+        <div class="section-head">
+          <div>
+            <h2>المفضلة</h2>
+            <div class="muted">منتجاتك المحفوظة للرجوع إليها لاحقا</div>
+          </div>
+        </div>
+        <div id="wishlistProducts" class="grid"></div>
+      </section>
+
+      <section id="checkoutPage" class="page section">
+        <div class="section-head"><h2>إتمام الطلب</h2></div>
+        <div class="form-grid">
+          <div class="card" style="padding:20px">
+            <h3>معلومات الشحن</h3>
+            <div class="form-grid">
+              <div class="form-group"><label for="checkoutName">الاسم الكامل</label><input id="checkoutName"></div>
+              <div class="form-group"><label for="checkoutPhone">رقم الهاتف</label><input id="checkoutPhone" inputmode="tel"></div>
+              <div class="form-group"><label for="checkoutEmail">البريد الإلكتروني</label><input id="checkoutEmail" type="email"></div>
+              <div class="form-group"><label for="checkoutWilayat">الولاية</label><input id="checkoutWilayat" placeholder="اكتب الولاية"></div>
+              <div class="form-group full"><label for="checkoutAddress">العنوان</label><textarea id="checkoutAddress" rows="4"></textarea></div>
+            </div>
+          </div>
+          <div class="card" style="padding:20px">
+            <h3>ملخص الطلب</h3>
+            <div id="checkoutItems"></div>
+            <hr>
+            <div class="row between"><span>المجموع الفرعي</span><strong id="checkoutSubtotal">0 ر.ع</strong></div>
+            <div class="row between"><span>الشحن</span><strong id="checkoutShipping">0 ر.ع</strong></div>
+            <div class="row between"><span>الضريبة 15%</span><strong id="checkoutTax">0 ر.ع</strong></div>
+            <div class="row between"><span>الإجمالي</span><strong id="checkoutTotal">0 ر.ع</strong></div>
+            <button class="btn" type="button" id="placeOrderBtn" style="width:100%; margin-top:16px">تأكيد الطلب</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">© 2026 AgriStore - جميع الحقوق محفوظة</footer>
+  </div>
+
+  <div id="admin" class="admin">
+    <aside class="admin-side">
+      <h2>🌿 AgriStore Pro</h2>
+      <button class="admin-nav active" type="button" data-admin="dashboard">لوحة المعلومات</button>
+      <button class="admin-nav" type="button" data-admin="products">المنتجات</button>
+      <button class="admin-nav" type="button" data-admin="orders">الطلبات</button>
+      <button class="admin-nav" type="button" data-admin="customers">العملاء</button>
+      <button class="admin-nav" type="button" data-admin="inventory">المخزون</button>
+      <button class="admin-nav" type="button" data-admin="ads">الإعلانات</button>
+      <button class="admin-nav" type="button" data-admin="discounts">الخصومات</button>
+      <button class="admin-nav" type="button" data-admin="reviews">التقييمات</button>
+      <button class="admin-nav" type="button" data-admin="settings">الإعدادات</button>
+      <button type="button" id="backToStore" style="margin-top:16px">العودة للمتجر</button>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-top">
+        <h2 id="adminTitle">لوحة المعلومات</h2>
+        <button class="btn secondary" type="button" id="adminThemeBtn">تبديل الوضع</button>
+      </div>
+      <div id="adminBody" class="admin-body"></div>
+    </main>
+  </div>
+
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <aside id="cartDrawer" class="drawer" aria-label="سلة التسوق">
+    <div class="drawer-head row between">
+      <h2>سلة التسوق</h2>
+      <button class="square" type="button" id="closeCart">✕</button>
+    </div>
+    <div id="cartItems" class="drawer-body"></div>
+    <div id="cartFooter" class="drawer-foot"></div>
+  </aside>
+
+  <div id="modalBackdrop" class="modal-backdrop">
+    <div class="modal">
+      <div class="modal-head row between">
+        <h2 id="modalTitle"></h2>
+        <button id="closeModal" class="square" type="button">✕</button>
+      </div>
+      <div id="modalBody" class="modal-body"></div>
+      <div id="modalFoot" class="modal-foot"></div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'agriStoreFixed';
+    const categoryNames = {
+      all: 'جميع المنتجات',
+      plants: 'النباتات',
+      seeds: 'البذور',
+      tools: 'الأدوات الزراعية',
+      fertilizers: 'الأسمدة',
+      pesticides: 'المبيدات',
+      materials: 'المواد الزراعية',
+      offers: 'العروض'
+    };
+
+    const initialData = {
+      products: [
+        { id: 1, name: 'شجرة زيتون صغيرة', category: 'plants', price: 85, oldPrice: 120, stock: 45, emoji: '🫒', desc: 'شجرة زيتون عمر سنتين، مثالية للزراعة المنزلية', rating: 4.8, reviews: 124, badge: 'sale' },
+        { id: 2, name: 'بذور طماطم كرزية', category: 'seeds', price: 12, oldPrice: null, stock: 200, emoji: '🍅', desc: 'بذور طماطم كرزية عالية الإنتاجية، 50 بذرة', rating: 4.5, reviews: 89, badge: 'new' },
+        { id: 3, name: 'مرشة مياه 5 لتر', category: 'tools', price: 35, oldPrice: 50, stock: 70, emoji: '🚿', desc: 'مرشة مياه بلاستيكية مع فوهة قابلة للتعديل', rating: 4.3, reviews: 67, badge: 'sale' },
+        { id: 4, name: 'سماد NPK متوازن', category: 'fertilizers', price: 45, oldPrice: null, stock: 150, emoji: '🧪', desc: 'سماد مركب NPK 20-20-20 لجميع أنواع النباتات', rating: 4.7, reviews: 156, badge: 'hot' },
+        { id: 5, name: 'مبيد حشري طبيعي', category: 'pesticides', price: 28, oldPrice: 35, stock: 65, emoji: '🛡️', desc: 'مبيد حشري طبيعي آمن على البيئة', rating: 4.2, reviews: 43, badge: 'sale' },
+        { id: 6, name: 'تربة زراعية فاخرة', category: 'materials', price: 22, oldPrice: null, stock: 300, emoji: '🪴', desc: 'تربة زراعية عضوية غنية بالعناصر الغذائية', rating: 4.6, reviews: 98, badge: null },
+        { id: 7, name: 'نبات صبار زينة', category: 'plants', price: 25, oldPrice: null, stock: 80, emoji: '🌵', desc: 'نبات صبار مزهر مناسب للديكور الداخلي', rating: 4.4, reviews: 56, badge: 'new' },
+        { id: 8, name: 'بذور ريحان طازج', category: 'seeds', price: 8, oldPrice: null, stock: 250, emoji: '🌿', desc: 'بذور ريحان إيطالي', rating: 4.1, reviews: 34, badge: null },
+        { id: 9, name: 'مجرفة يدوية ستانلس', category: 'tools', price: 55, oldPrice: 70, stock: 42, emoji: '⛏️', desc: 'مجرفة يدوية من الستانلس ستيل مع مقبض خشبي', rating: 4.9, reviews: 178, badge: 'hot' },
+        { id: 10, name: 'سماد عضوي طبيعي', category: 'fertilizers', price: 38, oldPrice: null, stock: 120, emoji: '🌱', desc: 'سماد عضوي طبيعي 100%', rating: 4.5, reviews: 92, badge: null },
+        { id: 11, name: 'شجرة ليمون صغيرة', category: 'plants', price: 95, oldPrice: 130, stock: 35, emoji: '🍋', desc: 'شتلة ليمون عمر 3 سنوات في أصيص', rating: 4.7, reviews: 145, badge: 'sale' },
+        { id: 12, name: 'بذور جزر عضوي', category: 'seeds', price: 10, oldPrice: null, stock: 180, emoji: '🥕', desc: 'بذور جزر عضوي', rating: 4.3, reviews: 28, badge: 'new' },
+        { id: 13, name: 'خراطيم ري بالتنقيط', category: 'tools', price: 120, oldPrice: 160, stock: 28, emoji: '💧', desc: 'خرطوم ري بالتنقيط 50 متر مع ملحقات', rating: 4.6, reviews: 67, badge: 'sale' },
+        { id: 14, name: 'مبيد فطري شامل', category: 'pesticides', price: 42, oldPrice: null, stock: 90, emoji: '🧴', desc: 'مبيد فطري شامل لعلاج أمراض النبات', rating: 4.4, reviews: 51, badge: null },
+        { id: 15, name: 'أصيص سيراميك كبير', category: 'materials', price: 65, oldPrice: 80, stock: 75, emoji: '🏺', desc: 'أصيص سيراميك فاخر بقطر 30 سم', rating: 4.8, reviews: 89, badge: 'hot' },
+        { id: 16, name: 'نبات فلودندرون', category: 'plants', price: 45, oldPrice: null, stock: 60, emoji: '🌿', desc: 'نبات فلودندرون للديكور الداخلي', rating: 4.2, reviews: 37, badge: null },
+        { id: 17, name: 'بذور فراولة', category: 'seeds', price: 15, oldPrice: 20, stock: 140, emoji: '🍓', desc: 'بذور فراولة هجينة عالية الإنتاج', rating: 4.6, reviews: 112, badge: 'sale' },
+        { id: 18, name: 'مقص تقليم احترافي', category: 'tools', price: 75, oldPrice: null, stock: 55, emoji: '✂️', desc: 'مقص تقليم احترافي مع غمد أمان', rating: 4.8, reviews: 134, badge: 'hot' },
+        { id: 19, name: 'سماد بوتاسيوم', category: 'fertilizers', price: 32, oldPrice: null, stock: 100, emoji: '🔬', desc: 'سماد بوتاسيوم سائل لتقوية الأزهار', rating: 4.3, reviews: 45, badge: null },
+        { id: 20, name: 'بيت نمو 5x5م', category: 'materials', price: 250, oldPrice: 350, stock: 12, emoji: '🏗️', desc: 'بيت نمو مقاوم للأشعة فوق البنفسجية', rating: 4.7, reviews: 78, badge: 'sale' }
+      ],
+      categories: [
+        { id: 'plants', name: 'النباتات', emoji: '🌱' },
+        { id: 'seeds', name: 'البذور', emoji: '🌾' },
+        { id: 'tools', name: 'الأدوات الزراعية', emoji: '🔧' },
+        { id: 'fertilizers', name: 'الأسمدة', emoji: '🧪' },
+        { id: 'pesticides', name: 'المبيدات', emoji: '🛡️' },
+        { id: 'materials', name: 'المواد الزراعية', emoji: '📦' }
+      ],
+      orders: [
+        { id: 1001, customer: 'أحمد محمد', email: 'ahmed@email.com', phone: '0555123456', items: [{ productId: 1, qty: 2 }, { productId: 4, qty: 1 }], total: 215, status: 'completed', date: '2026-05-18' },
+        { id: 1002, customer: 'سارة علي', email: 'sara@email.com', phone: '0555987654', items: [{ productId: 11, qty: 1 }], total: 95, status: 'pending', date: '2026-05-19' },
+        { id: 1003, customer: 'خالد العمري', email: 'khaled@email.com', phone: '0555456789', items: [{ productId: 9, qty: 1 }, { productId: 18, qty: 1 }], total: 130, status: 'completed', date: '2026-05-17' }
+      ],
+      customers: [
+        { id: 1, name: 'أحمد محمد', email: 'ahmed@email.com', phone: '0555123456', orders: 8, totalSpent: 1250, date: '2025-11-15' },
+        { id: 2, name: 'سارة علي', email: 'sara@email.com', phone: '0555987654', orders: 5, totalSpent: 680, date: '2025-12-20' },
+        { id: 3, name: 'خالد العمري', email: 'khaled@email.com', phone: '0555456789', orders: 12, totalSpent: 2100, date: '2025-09-10' }
+      ],
+      discounts: [
+        { id: 1, code: 'AGRI20', percent: 20, uses: 45, maxUses: 100, status: 'active' },
+        { id: 2, code: 'SUMMER10', percent: 10, uses: 89, maxUses: 200, status: 'active' }
+      ],
+      ads: [
+        { id: 1, title: 'عروض الموسم الزراعي', text: 'خصومات على البذور والأسمدة المختارة لفترة محدودة.', buttonText: 'تسوق العروض', category: 'offers', emoji: '🌾', imageUrl: '', active: true },
+        { id: 2, title: 'مستلزمات الري الحديثة', text: 'جهز مزرعتك بخراطيم وتنقيط وأدوات ري عملية.', buttonText: 'عرض الأدوات', category: 'tools', emoji: '💧', imageUrl: '', active: true },
+        { id: 3, title: 'نباتات منزلية جاهزة', text: 'اختيارات جميلة للبيت والمكتب مع عناية سهلة.', buttonText: 'عرض النباتات', category: 'plants', emoji: '🪴', imageUrl: '', active: true }
+      ],
+      reviews: [
+        { id: 1, customer: 'أحمد محمد', product: 'شجرة زيتون صغيرة', rating: 5, comment: 'شجرة ممتازة وجذورها قوية.', date: '2026-05-15' },
+        { id: 2, customer: 'سارة علي', product: 'بذور طماطم كرزية', rating: 4, comment: 'بذور جيدة وتحتاج وقتا للإنبات.', date: '2026-05-12' }
+      ],
+      cart: [],
+      wishlist: [],
+      nextProductId: 21,
+      nextOrderId: 1004,
+      nextAdId: 4,
+      totalRevenue: 85420
+    };
+
+    let state = loadData();
+    let currentCategory = 'all';
+    let editingProductId = null;
+
+    const $ = selector => document.querySelector(selector);
+    const $$ = selector => [...document.querySelectorAll(selector)];
+    const STORE_WHATSAPP_NUMBER = '96896017822';
+    const ADMIN_PASSCODE = 'Asdf@#$1234';
+    const money = value => `${Number(value || 0).toFixed(3)} ر.ع`;
+
+    function escapeHtml(value = '') {
+      return String(value).replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[char]));
+    }
+
+    function safeAttr(value = '') {
+      return escapeHtml(value).replace(/`/g, '&#96;');
+    }
+
+    function productVisual(product, className = '') {
+      if (product.imageUrl) {
+        return `<img class="${className}" src="${safeAttr(product.imageUrl)}" alt="${safeAttr(product.name)}" loading="lazy" onerror="this.replaceWith(document.createTextNode('${safeAttr(product.emoji || '🌿')}'))">`;
+      }
+      return `<span class="product-fallback">${product.emoji || '🌿'}</span>`;
+    }
+
+    function adVisual(ad) {
+      if (ad.imageUrl) {
+        return `<img src="${safeAttr(ad.imageUrl)}" alt="${safeAttr(ad.title)}" loading="lazy" onerror="this.replaceWith(document.createTextNode('${safeAttr(ad.emoji || '🌿')}'))">`;
+      }
+      return ad.emoji || '🌿';
+    }
+
+    function loadData() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const data = raw ? JSON.parse(raw) : structuredClone(initialData);
+      data.products = data.products.map(product => ({
+        stock: 0,
+        rating: 0,
+        reviews: 0,
+        badge: null,
+        oldPrice: null,
+        desc: '',
+        imageUrl: '',
+        ...product,
+        stock: Number.isFinite(Number(product.stock)) ? Number(product.stock) : 0
+      }));
+      data.cart = (data.cart || []).filter(item => data.products.some(product => product.id === item.productId));
+      data.wishlist = [...new Set(data.wishlist || [])].filter(id => data.products.some(product => product.id === id));
+      data.ads = (data.ads || structuredClone(initialData.ads)).map(ad => ({
+        title: '',
+        text: '',
+        buttonText: 'عرض المزيد',
+        category: 'offers',
+        emoji: '🌿',
+        imageUrl: '',
+        active: true,
+        ...ad
+      }));
+      data.nextProductId = Math.max(data.nextProductId || 1, ...data.products.map(product => product.id + 1));
+      data.nextOrderId = Math.max(data.nextOrderId || 1000, ...data.orders.map(order => order.id + 1));
+      data.nextAdId = Math.max(data.nextAdId || 1, ...data.ads.map(ad => ad.id + 1));
+      saveData(data);
+      return data;
+    }
+
+    function saveData(data = state) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function productById(id) {
+      return state.products.find(product => product.id === Number(id));
+    }
+
+    function categoryLabel(id) {
+      const category = state.categories.find(item => item.id === id);
+      return category ? `${category.emoji} ${category.name}` : categoryNames[id] || id;
+    }
+
+    function showNotification(message, type = 'success') {
+      const el = $('#notification');
+      el.textContent = message;
+      el.className = `notification ${type} show`;
+      clearTimeout(showNotification.timer);
+      showNotification.timer = setTimeout(() => el.classList.remove('show'), 2600);
+    }
+
+    function renderNav() {
+      const links = [{ id: 'all', label: 'الرئيسية', page: 'home', emoji: '🏠' }, ...state.categories.map(category => ({ ...category, label: category.name })), { id: 'offers', label: 'العروض', emoji: '🔥' }];
+      $('#nav').innerHTML = links.map(link => `<button type="button" class="${link.id === currentCategory ? 'active' : ''}" data-${link.page ? `page="${link.page}"` : `category="${link.id}"`}>${link.emoji} ${link.label}</button>`).join('');
+    }
+
+    function createProductCard(product) {
+      const wished = state.wishlist.includes(product.id);
+      const discount = product.oldPrice ? Math.round((product.oldPrice - product.price) / product.oldPrice * 100) : 0;
+      const stars = '⭐'.repeat(Math.max(0, Math.round(product.rating)));
+      return `
+        <article class="card product">
+          <div class="product-image">
+            ${productVisual(product)}
+            ${discount ? `<span class="pill sale">-${discount}%</span>` : ''}
+          </div>
+          <div class="product-body">
+            <span class="pill">${categoryLabel(product.category)}</span>
+            <h3>${product.name}</h3>
+            <div class="muted">${stars} (${product.reviews} تقييم)</div>
+            <div><span class="price">${money(product.price)}</span>${product.oldPrice ? `<span class="old">${money(product.oldPrice)}</span>` : ''}</div>
+            <div class="product-actions">
+              <button class="btn" type="button" data-add="${product.id}" ${product.stock <= 0 ? 'disabled' : ''}>${product.stock <= 0 ? 'نفذ' : 'أضف للسلة'}</button>
+              <button class="square" type="button" data-wish="${product.id}" title="المفضلة">${wished ? '❤️' : '🤍'}</button>
+              <button class="square" type="button" data-view="${product.id}" title="عرض سريع">👁️</button>
+            </div>
+          </div>
+        </article>`;
+    }
+
+    function renderCategories() {
+      $('#categoriesGrid').innerHTML = state.categories.map(category => {
+        const count = state.products.filter(product => product.category === category.id).length;
+        return `<button class="category-card" type="button" data-category="${category.id}">
+          <span class="category-icon">${category.emoji}</span>
+          <strong>${category.name}</strong>
+          <div class="muted">${count} منتج</div>
+        </button>`;
+      }).join('');
+    }
+
+    function productsFor(category) {
+      if (category === 'offers') return state.products.filter(product => product.oldPrice || product.badge === 'sale');
+      if (category === 'all') return state.products;
+      return state.products.filter(product => product.category === category);
+    }
+
+    function renderProducts(category = currentCategory) {
+      const products = productsFor(category);
+      $('#shopTitle').textContent = categoryNames[category] || categoryLabel(category);
+      $('#shopSubtitle').textContent = `${products.length} منتج`;
+      $('#shopProducts').innerHTML = products.length ? products.map(createProductCard).join('') : emptyState('لا توجد منتجات في هذا القسم');
+      renderNav();
+    }
+
+    function renderFeatured() {
+      const featured = state.products.filter(product => product.badge === 'hot' || product.badge === 'sale' || product.oldPrice).slice(0, 8);
+      $('#featuredProducts').innerHTML = featured.map(createProductCard).join('');
+      $('#statProducts').textContent = state.products.length;
+    }
+
+    let currentAdIndex = 0;
+    let adTimer = null;
+
+    function renderAdSlider() {
+      const ads = state.ads.filter(ad => ad.active);
+      const slider = $('#adSlider');
+      if (!ads.length) {
+        slider.innerHTML = '';
+        return;
+      }
+      currentAdIndex = Math.min(currentAdIndex, ads.length - 1);
+      slider.innerHTML = `
+        <div class="ad-slider-frame">
+          ${ads.map((ad, index) => `
+            <article class="ad-slide ${index === currentAdIndex ? 'active' : ''}">
+              <div>
+                <h2>${escapeHtml(ad.title)}</h2>
+                <p>${escapeHtml(ad.text)}</p>
+                <button class="btn accent" type="button" data-category="${safeAttr(ad.category)}">${escapeHtml(ad.buttonText || 'عرض المزيد')}</button>
+              </div>
+              <div class="ad-media">${adVisual(ad)}</div>
+            </article>
+          `).join('')}
+          <div class="ad-controls">
+            ${ads.map((ad, index) => `<button class="ad-dot ${index === currentAdIndex ? 'active' : ''}" type="button" data-ad-dot="${index}" aria-label="الإعلان ${index + 1}"></button>`).join('')}
+          </div>
+        </div>`;
+      startAdTimer();
+    }
+
+    function setAdSlide(index) {
+      const ads = state.ads.filter(ad => ad.active);
+      if (!ads.length) return;
+      currentAdIndex = ((Number(index) % ads.length) + ads.length) % ads.length;
+      $$('.ad-slide').forEach((slide, slideIndex) => slide.classList.toggle('active', slideIndex === currentAdIndex));
+      $$('.ad-dot').forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === currentAdIndex));
+      startAdTimer();
+    }
+
+    function startAdTimer() {
+      clearInterval(adTimer);
+      const ads = state.ads.filter(ad => ad.active);
+      if (ads.length <= 1) return;
+      adTimer = setInterval(() => setAdSlide(currentAdIndex + 1), 4500);
+    }
+
+    function renderWishlist() {
+      const products = state.products.filter(product => state.wishlist.includes(product.id));
+      $('#wishlistProducts').innerHTML = products.length ? products.map(createProductCard).join('') : emptyState('المفضلة فارغة');
+    }
+
+    function emptyState(text) {
+      return `<div class="card" style="grid-column:1/-1; padding:40px; text-align:center"><div style="font-size:48px">🔎</div><h3>${text}</h3></div>`;
+    }
+
+    function showPage(page) {
+      $$('.page').forEach(el => el.classList.remove('active'));
+      $(`#${page}Page`).classList.add('active');
+      $('#store').style.display = 'block';
+      $('#admin').classList.remove('active');
+      if (page === 'shop') {
+        currentCategory = currentCategory || 'all';
+        renderProducts(currentCategory);
+      }
+      if (page === 'wishlist') renderWishlist();
+      if (page === 'checkout') renderCheckout();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function filterByCategory(category) {
+      currentCategory = category;
+      showPage('shop');
+    }
+
+    function addToCart(id) {
+      const product = productById(id);
+      if (!product || product.stock <= 0) return showNotification('هذا المنتج غير متوفر', 'warning');
+      const item = state.cart.find(row => row.productId === product.id);
+      if (item) {
+        if (item.qty >= product.stock) return showNotification('الكمية المطلوبة غير متوفرة في المخزون', 'warning');
+        item.qty += 1;
+      } else {
+        state.cart.push({ productId: product.id, qty: 1 });
+      }
+      saveData();
+      updateCounters();
+      showNotification(`تم إضافة "${product.name}" إلى السلة`);
+    }
+
+    function toggleWishlist(id) {
+      const product = productById(id);
+      if (!product) return;
+      const exists = state.wishlist.includes(product.id);
+      state.wishlist = exists ? state.wishlist.filter(item => item !== product.id) : [...state.wishlist, product.id];
+      saveData();
+      updateCounters();
+      renderFeatured();
+      renderProducts(currentCategory);
+      if ($('#wishlistPage').classList.contains('active')) renderWishlist();
+      showNotification(exists ? 'تمت الإزالة من المفضلة' : 'تمت الإضافة إلى المفضلة', exists ? 'info' : 'success');
+    }
+
+    function cartTotals() {
+      const subtotal = state.cart.reduce((sum, item) => {
+        const product = productById(item.productId);
+        return sum + (product ? product.price * item.qty : 0);
+      }, 0);
+      const shipping = subtotal === 0 || subtotal >= 200 ? 0 : 25;
+      const tax = subtotal * 0.15;
+      return { subtotal, shipping, tax, total: subtotal + shipping + tax };
+    }
+
+    function renderCart() {
+      const body = $('#cartItems');
+      if (!state.cart.length) {
+        body.innerHTML = emptyState('السلة فارغة');
+        $('#cartFooter').innerHTML = '';
+        return;
+      }
+      body.innerHTML = state.cart.map(item => {
+        const product = productById(item.productId);
+        if (!product) return '';
+        return `<div class="cart-item">
+          <div class="cart-emoji">${productVisual(product)}</div>
+          <div>
+            <strong>${product.name}</strong>
+            <div class="muted">${money(product.price * item.qty)}</div>
+            <div class="row" style="margin-top:8px">
+              <button class="square" type="button" data-qty="${product.id}" data-change="-1">−</button>
+              <strong>${item.qty}</strong>
+              <button class="square" type="button" data-qty="${product.id}" data-change="1">+</button>
+              <button class="square" type="button" data-remove="${product.id}">🗑️</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+      const totals = cartTotals();
+      $('#cartFooter').innerHTML = `
+        <div class="row between"><span>المجموع</span><strong>${money(totals.subtotal)}</strong></div>
+        <div class="row between"><span>الضريبة</span><strong>${money(totals.tax)}</strong></div>
+        <div class="row between"><span>الإجمالي</span><strong>${money(totals.total)}</strong></div>
+        <button class="btn" type="button" data-page="checkout" style="width:100%; margin-top:12px">إتمام الشراء</button>`;
+    }
+
+    function openCart() {
+      renderCart();
+      $('#drawerBackdrop').classList.add('active');
+      $('#cartDrawer').classList.add('active');
+    }
+
+    function closeCart() {
+      $('#drawerBackdrop').classList.remove('active');
+      $('#cartDrawer').classList.remove('active');
+    }
+
+    function changeQty(id, change) {
+      const product = productById(id);
+      const item = state.cart.find(row => row.productId === Number(id));
+      if (!product || !item) return;
+      item.qty += Number(change);
+      if (item.qty <= 0) state.cart = state.cart.filter(row => row.productId !== Number(id));
+      if (item.qty > product.stock) {
+        item.qty = product.stock;
+        showNotification('الكمية المطلوبة غير متوفرة', 'warning');
+      }
+      saveData();
+      updateCounters();
+      renderCart();
+      if ($('#checkoutPage').classList.contains('active')) renderCheckout();
+    }
+
+    function removeFromCart(id) {
+      state.cart = state.cart.filter(item => item.productId !== Number(id));
+      saveData();
+      updateCounters();
+      renderCart();
+    }
+
+    function updateCounters() {
+      $('#cartCount').textContent = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      $('#wishlistCount').textContent = state.wishlist.length;
+    }
+
+    function renderCheckout() {
+      if (!state.cart.length) {
+        $('#checkoutItems').innerHTML = '<p class="muted">لا توجد منتجات في السلة.</p>';
+      } else {
+        $('#checkoutItems').innerHTML = state.cart.map(item => {
+          const product = productById(item.productId);
+          return product ? `<div class="row between"><span>${product.emoji} ${product.name} × ${item.qty}</span><strong>${money(product.price * item.qty)}</strong></div>` : '';
+        }).join('');
+      }
+      const totals = cartTotals();
+      $('#checkoutSubtotal').textContent = money(totals.subtotal);
+      $('#checkoutShipping').textContent = totals.shipping ? money(totals.shipping) : 'مجاني';
+      $('#checkoutTax').textContent = money(totals.tax);
+      $('#checkoutTotal').textContent = money(totals.total);
+    }
+
+    function placeOrder() {
+      if (!state.cart.length) return showNotification('السلة فارغة', 'error');
+      const name = $('#checkoutName').value.trim();
+      const phone = $('#checkoutPhone').value.trim();
+      const wilayat = $('#checkoutWilayat').value.trim();
+      const address = $('#checkoutAddress').value.trim();
+      if (!name || !phone || !wilayat) return showNotification('يرجى تعبئة الاسم والهاتف والولاية', 'error');
+
+      for (const item of state.cart) {
+        const product = productById(item.productId);
+        if (!product || product.stock < item.qty) return showNotification(`المخزون لا يكفي للمنتج: ${product ? product.name : item.productId}`, 'error');
+      }
+
+      const totals = cartTotals();
+      const orderItems = structuredClone(state.cart);
+      state.cart.forEach(item => {
+        const product = productById(item.productId);
+        product.stock -= item.qty;
+      });
+      const order = {
+        id: state.nextOrderId++,
+        customer: name,
+        email: $('#checkoutEmail').value.trim(),
+        phone,
+        wilayat,
+        address,
+        items: orderItems,
+        total: totals.total,
+        status: 'pending',
+        date: new Date().toISOString().slice(0, 10)
+      };
+      state.orders.unshift(order);
+      state.totalRevenue += totals.total;
+      state.cart = [];
+      saveData();
+      updateCounters();
+      renderFeatured();
+      sendInvoiceToWhatsApp(order, totals);
+      showNotification('تم تأكيد الطلب بنجاح');
+      showPage('home');
+    }
+
+    function buildInvoiceText(order, totals) {
+      const lines = [
+        `فاتورة طلب جديد من AgriStore`,
+        `رقم الطلب: #${order.id}`,
+        `التاريخ: ${order.date}`,
+        '',
+        `العميل: ${order.customer}`,
+        `الهاتف: ${order.phone}`,
+        `البريد: ${order.email || 'غير مسجل'}`,
+        `الولاية: ${order.wilayat}`,
+        `العنوان: ${order.address || 'غير مسجل'}`,
+        '',
+        'المنتجات:'
+      ];
+      order.items.forEach(item => {
+        const product = productById(item.productId);
+        if (product) lines.push(`- ${product.name} × ${item.qty} = ${money(product.price * item.qty)}`);
+      });
+      lines.push(
+        '',
+        `المجموع الفرعي: ${money(totals.subtotal)}`,
+        `الشحن: ${totals.shipping ? money(totals.shipping) : 'مجاني'}`,
+        `الضريبة 15%: ${money(totals.tax)}`,
+        `الإجمالي: ${money(totals.total)}`
+      );
+      return lines.join('\n');
+    }
+
+    function sendInvoiceToWhatsApp(order, totals) {
+      const invoiceText = buildInvoiceText(order, totals);
+      const whatsappUrl = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(invoiceText)}`;
+      const opened = window.open(whatsappUrl, '_blank', 'noopener');
+      if (!opened) {
+        window.location.href = whatsappUrl;
+      }
+    }
+
+    function quickView(id) {
+      const product = productById(id);
+      if (!product) return;
+      openModal(product.name, `
+        <div class="form-grid">
+          <div class="product-image" style="height:260px">${productVisual(product)}</div>
+          <div>
+            <span class="pill">${categoryLabel(product.category)}</span>
+            <h2>${product.name}</h2>
+            <p class="muted">${product.desc}</p>
+            <div><span class="price">${money(product.price)}</span>${product.oldPrice ? `<span class="old">${money(product.oldPrice)}</span>` : ''}</div>
+            <p>${product.stock > 0 ? `متوفر: ${product.stock} قطعة` : 'غير متوفر'}</p>
+          </div>
+        </div>`,
+        `<button class="btn" type="button" data-add="${product.id}" ${product.stock <= 0 ? 'disabled' : ''}>أضف للسلة</button>`);
+    }
+
+    function openModal(title, body, foot = '') {
+      $('#modalTitle').textContent = title;
+      $('#modalBody').innerHTML = body;
+      $('#modalFoot').innerHTML = foot;
+      $('#modalBackdrop').classList.add('active');
+    }
+
+    function closeModal() {
+      $('#modalBackdrop').classList.remove('active');
+    }
+
+    function handleSearch(query) {
+      const box = $('#searchResults');
+      const text = query.trim();
+      if (text.length < 2) {
+        box.classList.remove('active');
+        return;
+      }
+      const matches = state.products.filter(product =>
+        product.name.includes(text) || product.desc.includes(text) || categoryLabel(product.category).includes(text)
+      ).slice(0, 8);
+      box.innerHTML = matches.length ? matches.map(product => `
+        <button class="search-result" type="button" data-view="${product.id}">
+          <span style="font-size:28px">${product.emoji}</span>
+          <span><strong>${product.name}</strong><br><small>${money(product.price)}</small></span>
+        </button>`).join('') : '<div style="padding:16px">لا توجد نتائج</div>';
+      box.classList.add('active');
+    }
+
+    function performSearch() {
+      const query = $('#searchInput').value.trim();
+      if (!query) return;
+      const matches = state.products.filter(product => product.name.includes(query) || product.desc.includes(query));
+      showPage('shop');
+      $('#shopTitle').textContent = `نتائج البحث: ${query}`;
+      $('#shopSubtitle').textContent = `${matches.length} نتيجة`;
+      $('#shopProducts').innerHTML = matches.length ? matches.map(createProductCard).join('') : emptyState('لا توجد نتائج مطابقة');
+      $('#searchResults').classList.remove('active');
+    }
+
+    function isAdminUnlocked() {
+      return sessionStorage.getItem('agriAdminUnlocked') === 'true';
+    }
+
+    function requestAdminAccess() {
+      if (isAdminUnlocked()) {
+        toggleAdmin();
+        return;
+      }
+      openModal('دخول الإدارة', `
+        <div class="admin-locked">
+          <span class="logo-mark">🔐</span>
+          <h3>الرجاء إدخال رمز الدخول</h3>
+          <p class="muted">هذا الرمز يحمي لوحة الإدارة من الاستخدام العادي على النسخة الثابتة.</p>
+          <label for="adminPasscode" style="text-align:right">رمز الدخول</label>
+          <input id="adminPasscode" type="password" autocomplete="current-password" placeholder="••••••••">
+        </div>`, `<button class="btn" type="button" data-admin-login>دخول</button>`);
+      setTimeout(() => $('#adminPasscode')?.focus(), 50);
+    }
+
+    function unlockAdmin() {
+      const input = $('#adminPasscode');
+      if (!input || input.value !== ADMIN_PASSCODE) {
+        showNotification('رمز الدخول غير صحيح', 'error');
+        return;
+      }
+      sessionStorage.setItem('agriAdminUnlocked', 'true');
+      closeModal();
+      toggleAdmin();
+    }
+
+    function toggleAdmin() {
+      $('#store').style.display = 'none';
+      $('#admin').classList.add('active');
+      showAdminSection('dashboard');
+      window.scrollTo(0, 0);
+    }
+
+    function showAdminSection(section) {
+      if (!isAdminUnlocked()) {
+        requestAdminAccess();
+        return;
+      }
+      $$('.admin-nav').forEach(button => button.classList.toggle('active', button.dataset.admin === section));
+      const titleMap = {
+        dashboard: 'لوحة المعلومات',
+        products: 'إدارة المنتجات',
+        orders: 'إدارة الطلبات',
+        customers: 'العملاء',
+        inventory: 'المخزون',
+        ads: 'إدارة الإعلانات',
+        discounts: 'الخصومات',
+        reviews: 'التقييمات',
+        settings: 'الإعدادات'
+      };
+      $('#adminTitle').textContent = titleMap[section] || section;
+      const renderers = {
+        dashboard: renderAdminDashboard,
+        products: renderAdminProducts,
+        orders: renderAdminOrders,
+        customers: renderAdminCustomers,
+        inventory: renderAdminInventory,
+        ads: renderAdminAds,
+        discounts: renderAdminDiscounts,
+        reviews: renderAdminReviews,
+        settings: renderAdminSettings
+      };
+      $('#adminBody').innerHTML = renderers[section]();
+    }
+
+    function renderAdminDashboard() {
+      return `
+        <div class="admin-grid">
+          <div class="card admin-card"><span>إجمالي المبيعات</span><strong>${money(state.totalRevenue)}</strong></div>
+          <div class="card admin-card"><span>الطلبات</span><strong>${state.orders.length}</strong></div>
+          <div class="card admin-card"><span>العملاء</span><strong>${state.customers.length}</strong></div>
+          <div class="card admin-card"><span>المنتجات</span><strong>${state.products.length}</strong></div>
+        </div>
+        <h3>آخر الطلبات</h3>
+        ${ordersTable(state.orders.slice(0, 6))}`;
+    }
+
+    function renderAdminProducts() {
+      return `
+        <div class="row between" style="margin-bottom:14px">
+          <h3>قائمة المنتجات</h3>
+          <button class="btn" type="button" data-product-new>إضافة منتج</button>
+        </div>
+        <table><thead><tr><th>المنتج</th><th>القسم</th><th>السعر</th><th>المخزون</th><th>إجراءات</th></tr></thead>
+        <tbody>${state.products.map(product => `<tr>
+          <td>${product.emoji} <strong>${product.name}</strong></td>
+          <td>${categoryLabel(product.category)}</td>
+          <td>${money(product.price)}</td>
+          <td>${product.stock}</td>
+          <td><button class="square" data-product-edit="${product.id}">✏️</button> <button class="square" data-product-delete="${product.id}">🗑️</button></td>
+        </tr>`).join('')}</tbody></table>`;
+    }
+
+    function ordersTable(orders) {
+      return `<table><thead><tr><th>رقم الطلب</th><th>العميل</th><th>المبلغ</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr></thead>
+      <tbody>${orders.map(order => `<tr>
+        <td>#${order.id}</td><td>${order.customer}</td><td>${money(order.total)}</td><td>${statusText(order.status)}</td><td>${order.date}</td>
+        <td>${order.status === 'pending' ? `<button class="square" data-order-status="${order.id}" data-status="completed">✅</button> <button class="square" data-order-status="${order.id}" data-status="cancelled">✕</button>` : ''}</td>
+      </tr>`).join('')}</tbody></table>`;
+    }
+
+    function renderAdminOrders() {
+      return ordersTable(state.orders);
+    }
+
+    function renderAdminCustomers() {
+      return `<table><thead><tr><th>العميل</th><th>البريد</th><th>الهاتف</th><th>الطلبات</th><th>المشتريات</th></tr></thead>
+      <tbody>${state.customers.map(customer => `<tr><td>${customer.name}</td><td>${customer.email}</td><td>${customer.phone}</td><td>${customer.orders}</td><td>${money(customer.totalSpent)}</td></tr>`).join('')}</tbody></table>`;
+    }
+
+    function renderAdminInventory() {
+      const total = state.products.reduce((sum, product) => sum + product.stock, 0);
+      const low = state.products.filter(product => product.stock > 0 && product.stock <= 10).length;
+      const out = state.products.filter(product => product.stock <= 0).length;
+      return `<div class="admin-grid">
+        <div class="card admin-card"><span>إجمالي المخزون</span><strong>${total}</strong></div>
+        <div class="card admin-card"><span>مخزون منخفض</span><strong>${low}</strong></div>
+        <div class="card admin-card"><span>نفد المخزون</span><strong>${out}</strong></div>
+      </div>
+      <table><thead><tr><th>المنتج</th><th>المخزون</th><th>الحالة</th><th>إجراء</th></tr></thead>
+      <tbody>${state.products.map(product => `<tr><td>${product.emoji} ${product.name}</td><td>${product.stock}</td><td>${product.stock > 10 ? 'جيد' : product.stock > 0 ? 'منخفض' : 'نفد'}</td><td><button class="square" data-restock="${product.id}">📦</button></td></tr>`).join('')}</tbody></table>`;
+    }
+
+    function renderAdminAds() {
+      return `
+        <div class="row between" style="margin-bottom:14px">
+          <h3>إعلانات السلايدر</h3>
+          <button class="btn" type="button" data-ad-new>إضافة إعلان</button>
+        </div>
+        <table><thead><tr><th>الإعلان</th><th>القسم</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+        <tbody>${state.ads.map(ad => `<tr>
+          <td>${ad.imageUrl ? `<span style="display:inline-block;width:48px;height:34px;vertical-align:middle;border-radius:6px;overflow:hidden;background:var(--secondary)"><img src="${safeAttr(ad.imageUrl)}" alt="" style="width:100%;height:100%;object-fit:cover"></span>` : ad.emoji} <strong>${escapeHtml(ad.title)}</strong><div class="muted">${escapeHtml(ad.text)}</div></td>
+          <td>${categoryNames[ad.category] || categoryLabel(ad.category)}</td>
+          <td>${ad.active ? 'نشط' : 'متوقف'}</td>
+          <td>
+            <button class="square" data-ad-edit="${ad.id}">✏️</button>
+            <button class="square" data-ad-toggle="${ad.id}">${ad.active ? '⏸️' : '▶️'}</button>
+            <button class="square" data-ad-delete="${ad.id}">🗑️</button>
+          </td>
+        </tr>`).join('')}</tbody></table>`;
+    }
+
+    function renderAdminDiscounts() {
+      return `<table><thead><tr><th>الكود</th><th>النسبة</th><th>الاستخدام</th><th>الحالة</th></tr></thead>
+      <tbody>${state.discounts.map(discount => `<tr><td><strong>${discount.code}</strong></td><td>${discount.percent}%</td><td>${discount.uses}/${discount.maxUses}</td><td>${discount.status === 'active' ? 'نشط' : 'متوقف'}</td></tr>`).join('')}</tbody></table>`;
+    }
+
+    function renderAdminReviews() {
+      return state.reviews.map(review => `<div class="card" style="padding:16px; margin-bottom:12px">
+        <div class="row between"><strong>${review.customer} - ${review.product}</strong><span>${'⭐'.repeat(review.rating)}</span></div>
+        <p class="muted">${review.comment}</p><small>${review.date}</small>
+      </div>`).join('');
+    }
+
+    function renderAdminSettings() {
+      return `<div class="card" style="padding:20px"><h3>إعدادات المتجر</h3>
+        <div class="form-grid">
+          <div class="form-group"><label>اسم المتجر</label><input value="AgriStore - المتجر الزراعي"></div>
+          <div class="form-group"><label>البريد</label><input value="info@agristore.com"></div>
+          <div class="form-group"><label>نسبة الضريبة</label><input value="15"></div>
+          <div class="form-group"><label>حد الشحن المجاني</label><input value="200"></div>
+        </div>
+        <button class="btn" type="button" onclick="showNotification('تم حفظ الإعدادات')">حفظ</button>
+      </div>`;
+    }
+
+    function statusText(status) {
+      return { pending: 'قيد الانتظار', completed: 'مكتمل', cancelled: 'ملغي' }[status] || status;
+    }
+
+    function showProductForm(product = null) {
+      editingProductId = product ? product.id : null;
+      openModal(product ? 'تعديل المنتج' : 'إضافة منتج', `
+        <div class="form-grid">
+          <div class="form-group full"><label>اسم المنتج</label><input id="prodName" value="${product ? product.name : ''}"></div>
+          <div class="form-group"><label>القسم</label><select id="prodCategory">${state.categories.map(category => `<option value="${category.id}" ${product && product.category === category.id ? 'selected' : ''}>${category.emoji} ${category.name}</option>`).join('')}</select></div>
+          <div class="form-group"><label>السعر</label><input id="prodPrice" type="number" value="${product ? product.price : ''}"></div>
+          <div class="form-group"><label>السعر القديم</label><input id="prodOldPrice" type="number" value="${product && product.oldPrice ? product.oldPrice : ''}"></div>
+          <div class="form-group"><label>المخزون</label><input id="prodStock" type="number" value="${product ? product.stock : ''}"></div>
+          <div class="form-group"><label>الرمز</label><input id="prodEmoji" value="${product ? product.emoji : '🌿'}"></div>
+          <div class="form-group full"><label>رابط صورة المنتج</label><input id="prodImageUrl" type="url" placeholder="https://example.com/image.jpg" value="${product && product.imageUrl && !product.imageUrl.startsWith('data:') ? safeAttr(product.imageUrl) : ''}"></div>
+          <div class="form-group full"><label>أو اختر صورة من الجهاز</label><input id="prodImageFile" type="file" accept="image/*"><small class="muted">إذا اخترت صورة من الجهاز سيتم حفظها داخل المتصفح لهذا المتجر.</small></div>
+          <div class="form-group full"><label>الوصف</label><textarea id="prodDesc" rows="3">${product ? product.desc : ''}</textarea></div>
+        </div>`, `<button class="btn" type="button" data-save-product>حفظ المنتج</button>`);
+    }
+
+    function readImageFile(input) {
+      const file = input.files && input.files[0];
+      if (!file) return Promise.resolve('');
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function saveProductFromForm() {
+      const name = $('#prodName').value.trim();
+      const price = Number($('#prodPrice').value);
+      if (!name || !Number.isFinite(price) || price <= 0) return showNotification('يرجى إدخال اسم وسعر صحيحين', 'error');
+      const selectedImage = await readImageFile($('#prodImageFile'));
+      const typedImage = $('#prodImageUrl').value.trim();
+      const currentProduct = editingProductId ? productById(editingProductId) : null;
+      const payload = {
+        name,
+        category: $('#prodCategory').value,
+        price,
+        oldPrice: Number($('#prodOldPrice').value) || null,
+        stock: Math.max(0, Number($('#prodStock').value) || 0),
+        emoji: $('#prodEmoji').value.trim() || '🌿',
+        imageUrl: selectedImage || typedImage || (currentProduct ? currentProduct.imageUrl : ''),
+        desc: $('#prodDesc').value.trim(),
+        rating: 0,
+        reviews: 0,
+        badge: null
+      };
+      if (editingProductId) {
+        const product = currentProduct;
+        Object.assign(product, payload, { rating: product.rating, reviews: product.reviews, badge: product.badge });
+      } else {
+        state.products.push({ id: state.nextProductId++, ...payload });
+      }
+      saveData();
+      closeModal();
+      renderAll();
+      showAdminSection('products');
+      showNotification('تم حفظ المنتج');
+    }
+
+    function showAdForm(ad = null) {
+      openModal(ad ? 'تعديل الإعلان' : 'إضافة إعلان', `
+        <div class="form-grid">
+          <div class="form-group full"><label>عنوان الإعلان</label><input id="adTitle" value="${ad ? safeAttr(ad.title) : ''}"></div>
+          <div class="form-group full"><label>نص الإعلان</label><textarea id="adText" rows="3">${ad ? escapeHtml(ad.text) : ''}</textarea></div>
+          <div class="form-group"><label>نص الزر</label><input id="adButtonText" value="${ad ? safeAttr(ad.buttonText) : 'عرض المزيد'}"></div>
+          <div class="form-group"><label>القسم عند الضغط</label><select id="adCategory">
+            <option value="offers" ${ad && ad.category === 'offers' ? 'selected' : ''}>العروض</option>
+            ${state.categories.map(category => `<option value="${category.id}" ${ad && ad.category === category.id ? 'selected' : ''}>${category.emoji} ${category.name}</option>`).join('')}
+          </select></div>
+          <div class="form-group"><label>الرمز</label><input id="adEmoji" value="${ad ? safeAttr(ad.emoji) : '🌿'}"></div>
+          <div class="form-group"><label>الحالة</label><select id="adActive"><option value="true" ${!ad || ad.active ? 'selected' : ''}>نشط</option><option value="false" ${ad && !ad.active ? 'selected' : ''}>متوقف</option></select></div>
+          <div class="form-group full"><label>رابط صورة الإعلان</label><input id="adImageUrl" type="url" placeholder="https://example.com/banner.jpg" value="${ad && ad.imageUrl && !ad.imageUrl.startsWith('data:') ? safeAttr(ad.imageUrl) : ''}"></div>
+          <div class="form-group full"><label>أو اختر صورة من الجهاز</label><input id="adImageFile" type="file" accept="image/*"><small class="muted">الصورة ستظهر داخل سلايدر الإعلانات في الصفحة الرئيسية.</small></div>
+        </div>`, `<button class="btn" type="button" data-save-ad="${ad ? ad.id : ''}">حفظ الإعلان</button>`);
+    }
+
+    async function saveAdFromForm(id) {
+      const title = $('#adTitle').value.trim();
+      if (!title) return showNotification('يرجى إدخال عنوان الإعلان', 'error');
+      const selectedImage = await readImageFile($('#adImageFile'));
+      const typedImage = $('#adImageUrl').value.trim();
+      const currentAd = id ? state.ads.find(ad => ad.id === Number(id)) : null;
+      const payload = {
+        title,
+        text: $('#adText').value.trim(),
+        buttonText: $('#adButtonText').value.trim() || 'عرض المزيد',
+        category: $('#adCategory').value,
+        emoji: $('#adEmoji').value.trim() || '🌿',
+        imageUrl: selectedImage || typedImage || (currentAd ? currentAd.imageUrl : ''),
+        active: $('#adActive').value === 'true'
+      };
+      if (currentAd) {
+        Object.assign(currentAd, payload);
+      } else {
+        state.ads.push({ id: state.nextAdId++, ...payload });
+      }
+      saveData();
+      closeModal();
+      renderAll();
+      showAdminSection('ads');
+      showNotification('تم حفظ الإعلان');
+    }
+
+    function toggleAd(id) {
+      const ad = state.ads.find(item => item.id === Number(id));
+      if (!ad) return;
+      ad.active = !ad.active;
+      saveData();
+      renderAdSlider();
+      showAdminSection('ads');
+    }
+
+    function deleteAd(id) {
+      if (!confirm('هل تريد حذف هذا الإعلان؟')) return;
+      state.ads = state.ads.filter(ad => ad.id !== Number(id));
+      saveData();
+      renderAdSlider();
+      showAdminSection('ads');
+      showNotification('تم حذف الإعلان', 'warning');
+    }
+
+    function deleteProduct(id) {
+      if (!confirm('هل تريد حذف هذا المنتج؟')) return;
+      state.products = state.products.filter(product => product.id !== Number(id));
+      state.cart = state.cart.filter(item => item.productId !== Number(id));
+      state.wishlist = state.wishlist.filter(productId => productId !== Number(id));
+      saveData();
+      renderAll();
+      showAdminSection('products');
+      showNotification('تم حذف المنتج', 'warning');
+    }
+
+    function updateOrderStatus(id, status) {
+      const order = state.orders.find(item => item.id === Number(id));
+      if (!order) return;
+      order.status = status;
+      saveData();
+      showAdminSection('orders');
+      showNotification('تم تحديث حالة الطلب');
+    }
+
+    function restock(id) {
+      const product = productById(id);
+      if (!product) return;
+      const qty = Number(prompt(`أدخل الكمية المضافة إلى "${product.name}"`, '50'));
+      if (!Number.isFinite(qty) || qty <= 0) return;
+      product.stock += qty;
+      saveData();
+      showAdminSection('inventory');
+      renderFeatured();
+      renderProducts(currentCategory);
+      showNotification('تم تحديث المخزون');
+    }
+
+    function toggleTheme() {
+      document.body.toggleAttribute('data-theme');
+    }
+
+    function renderAll() {
+      renderNav();
+      renderAdSlider();
+      renderCategories();
+      renderFeatured();
+      renderProducts(currentCategory);
+      updateCounters();
+    }
+
+    document.addEventListener('click', event => {
+      const target = event.target.closest('button');
+      if (!target) {
+        if (!event.target.closest('.search')) $('#searchResults').classList.remove('active');
+        return;
+      }
+      if (target.dataset.page) {
+        closeCart();
+        showPage(target.dataset.page);
+      }
+      if (target.dataset.category) filterByCategory(target.dataset.category);
+      if (target.dataset.add) addToCart(target.dataset.add);
+      if (target.dataset.wish) toggleWishlist(target.dataset.wish);
+      if (target.dataset.view) {
+        $('#searchResults').classList.remove('active');
+        quickView(target.dataset.view);
+      }
+      if (target.dataset.qty) changeQty(target.dataset.qty, target.dataset.change);
+      if (target.dataset.remove) removeFromCart(target.dataset.remove);
+      if (target.dataset.admin) showAdminSection(target.dataset.admin);
+      if (target.dataset.adminLogin !== undefined) unlockAdmin();
+      if (target.dataset.productNew !== undefined) showProductForm();
+      if (target.dataset.productEdit) showProductForm(productById(target.dataset.productEdit));
+      if (target.dataset.productDelete) deleteProduct(target.dataset.productDelete);
+      if (target.dataset.saveProduct !== undefined) saveProductFromForm();
+      if (target.dataset.adDot !== undefined) setAdSlide(target.dataset.adDot);
+      if (target.dataset.adNew !== undefined) showAdForm();
+      if (target.dataset.adEdit) showAdForm(state.ads.find(ad => ad.id === Number(target.dataset.adEdit)));
+      if (target.dataset.adToggle) toggleAd(target.dataset.adToggle);
+      if (target.dataset.adDelete) deleteAd(target.dataset.adDelete);
+      if (target.dataset.saveAd !== undefined) saveAdFromForm(target.dataset.saveAd);
+      if (target.dataset.orderStatus) updateOrderStatus(target.dataset.orderStatus, target.dataset.status);
+      if (target.dataset.restock) restock(target.dataset.restock);
+    });
+
+    $('#searchInput').addEventListener('input', event => handleSearch(event.target.value));
+    $('#searchInput').addEventListener('keydown', event => {
+      if (event.key === 'Enter') performSearch();
+    });
+    $('#searchBtn').addEventListener('click', performSearch);
+    $('#cartBtn').addEventListener('click', openCart);
+    $('#closeCart').addEventListener('click', closeCart);
+    $('#drawerBackdrop').addEventListener('click', closeCart);
+    $('#closeModal').addEventListener('click', closeModal);
+    $('#modalBackdrop').addEventListener('click', event => {
+      if (event.target.id === 'modalBackdrop') closeModal();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Enter' && $('#modalBackdrop').classList.contains('active') && $('#adminPasscode')) {
+        unlockAdmin();
+      }
+      if (event.key === 'Escape' && $('#modalBackdrop').classList.contains('active')) {
+        closeModal();
+      }
+    });
+    $('#themeBtn').addEventListener('click', toggleTheme);
+    $('#adminThemeBtn').addEventListener('click', toggleTheme);
+    $('#adminBtn').addEventListener('click', requestAdminAccess);
+    $('#backToStore').addEventListener('click', () => {
+      $('#admin').classList.remove('active');
+      $('#store').style.display = 'block';
+      renderAll();
+    });
+    $('#placeOrderBtn').addEventListener('click', placeOrder);
+
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      if (!localStorage.getItem('agriInstallDismissed')) {
+        $('#installHint').classList.add('show');
+      }
+    });
+    $('#installAppBtn').addEventListener('click', async () => {
+      if (!deferredInstallPrompt) return;
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      $('#installHint').classList.remove('show');
+    });
+    $('#dismissInstallBtn').addEventListener('click', () => {
+      localStorage.setItem('agriInstallDismissed', 'true');
+      $('#installHint').classList.remove('show');
+    });
+
+    if ('serviceWorker' in navigator && window.isSecureContext) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+
+    renderAll();
+  </script>
+</body>
+</html>

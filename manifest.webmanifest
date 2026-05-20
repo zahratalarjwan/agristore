@@ -1,0 +1,22 @@
+{
+  "name": "AgriStore Pro - المتجر الزراعي",
+  "short_name": "AgriStore",
+  "description": "متجر زراعي عربي لإدارة المنتجات والطلبات والإعلانات.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#f6f7f4",
+  "theme_color": "#2d6a4f",
+  "categories": ["shopping", "business", "productivity"],
+  "icons": [
+    {
+      "src": "icons/agristore-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
