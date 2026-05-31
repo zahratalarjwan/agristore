@@ -1,2829 +1,322 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>زهرة الأرجوان - المتجر الزراعي</title>
-  <meta name="theme-color" content="#5b16f0">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="زهرة الأرجوان">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/zahrat-alarjwan-logo.jpg" type="image/jpeg">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800;900&display=swap');
-
-    :root {
-      --primary: #2d6a4f;
-      --primary-light: #40916c;
-      --primary-dark: #1b4332;
-      --secondary: #d8f3dc;
-      --violet: #5b16f0;
-      --violet-soft: #eee7ff;
-      --accent: #f77f00;
-      --accent-light: #fcbf49;
-      --danger: #e63946;
-      --success: #06a77d;
-      --info: #118ab2;
-      --surface: #ffffff;
-      --page: #f6f7f4;
-      --text: #1f2933;
-      --muted: #667085;
-      --border: #d8ded7;
-      --shadow: 0 18px 42px rgba(50, 24, 110, .13);
-      --radius: 8px;
-      --font: 'IBM Plex Sans Arabic', 'Tajawal', system-ui, sans-serif;
-    }
-
-    [data-theme="dark"] {
-      --primary: #52b788;
-      --primary-light: #74c69d;
-      --primary-dark: #1b4332;
-      --secondary: #1b4332;
-      --surface: #121821;
-      --page: #0d1117;
-      --text: #f4f7fb;
-      --muted: #aeb7c2;
-      --border: #303944;
-      --shadow: 0 12px 30px rgba(0, 0, 0, .35);
-    }
-
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: var(--font);
-      background: var(--page);
-      color: var(--text);
-      line-height: 1.7;
-    }
-
-    button, input, select, textarea { font: inherit; }
-    button { cursor: pointer; }
-
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--primary-light));
-      color: white;
-      box-shadow: var(--shadow);
-    }
-
-    .topbar, .mainbar, .nav, .container {
-      max-width: 1240px;
-      margin: auto;
-      padding-inline: 22px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      padding-block: 10px;
-      font-size: 13px;
-      background: rgba(0, 0, 0, .12);
-      max-width: none;
-    }
-
-    .mainbar {
-      display: grid;
-      grid-template-columns: auto minmax(180px, 520px) auto;
-      gap: 18px;
-      align-items: center;
-      padding-block: 15px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border: 0;
-      background: transparent;
-      color: white;
-      text-align: right;
-    }
-
-    .logo-mark, .icon-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(255, 255, 255, .16);
-      color: white;
-      border: 0;
-      font-size: 15px;
-    }
-
-    .logo strong { display: block; font-size: 22px; font-weight: 900; }
-    .logo small { display: block; opacity: .82; font-size: 12px; }
-
-    .brand-logo {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      border-radius: inherit;
-      background: white;
-    }
-
-    .search {
-      position: relative;
-    }
-
-    .search input {
-      width: 100%;
-      border: 0;
-      border-radius: 999px;
-      padding: 13px 18px 13px 88px;
-      background: rgba(255, 255, 255, .96);
-      color: #17212b;
-      outline: 0;
-    }
-
-    .search-actions {
-      position: absolute;
-      left: 5px;
-      top: 5px;
-      display: flex;
-      gap: 5px;
-    }
-
-    .search-actions button {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 0;
-      background: linear-gradient(135deg, var(--violet), var(--primary));
-      color: white;
-      font-size: 14px;
-    }
-
-    .search-results {
-      position: absolute;
-      inset-inline: 0;
-      top: calc(100% + 8px);
-      background: var(--surface);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      display: none;
-      z-index: 20;
-    }
-
-    .search-results.active { display: block; }
-
-    .search-result {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      padding: 12px 14px;
-      border: 0;
-      width: 100%;
-      text-align: right;
-      background: transparent;
-      color: inherit;
-    }
-
-    .search-result:hover { background: color-mix(in srgb, var(--secondary), transparent 60%); }
-
-    .actions {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .cart-button {
-      border: 0;
-      border-radius: 999px;
-      padding: 10px 16px;
-      background: var(--accent);
-      color: white;
-      font-weight: 800;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 22px;
-      height: 22px;
-      padding-inline: 6px;
-      margin-inline-start: 4px;
-      border-radius: 999px;
-      background: var(--accent-light);
-      color: #281200;
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .nav {
-      display: flex;
-      gap: 6px;
-      padding-block: 8px 12px;
-      overflow-x: auto;
-    }
-
-    .nav button {
-      border: 0;
-      background: rgba(255, 255, 255, .14);
-      color: white;
-      border-radius: var(--radius);
-      padding: 9px 14px;
-      white-space: nowrap;
-    }
-
-    .nav button.active, .nav button:hover { background: rgba(255, 255, 255, .26); }
-
-    .hero {
-      background:
-        linear-gradient(135deg, color-mix(in srgb, var(--secondary), white 18%), var(--surface));
-      border-bottom: 1px solid var(--border);
-    }
-
-    .hero .container {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
-      gap: 36px;
-      align-items: center;
-      padding-block: 56px;
-    }
-
-    .hero h1 {
-      margin: 0 0 16px;
-      font-size: clamp(32px, 5vw, 54px);
-      line-height: 1.2;
-      color: var(--primary-dark);
-    }
-
-    [data-theme="dark"] .hero h1 { color: var(--primary-light); }
-    .hero h1 span { color: var(--accent); }
-    .hero p { color: var(--muted); font-size: 18px; max-width: 700px; }
-
-    .hero-visual {
-      min-height: 300px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary-light), var(--primary));
-      display: grid;
-      place-items: center;
-      font-size: 120px;
-      box-shadow: var(--shadow);
-    }
-
-    .ad-slider {
-      max-width: 1240px;
-      margin: 24px auto 0;
-      padding: 0 22px;
-    }
-
-    .ad-slider-frame {
-      position: relative;
-      min-height: 250px;
-      border-radius: var(--radius);
-      overflow: hidden;
-      background: var(--surface);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-    }
-
-    .ad-slide {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(260px, .7fr);
-      align-items: center;
-      gap: 24px;
-      padding: 30px;
-      opacity: 0;
-      transform: translateX(20px);
-      transition: .35s ease;
-      pointer-events: none;
-      background: linear-gradient(135deg, color-mix(in srgb, var(--secondary), white 20%), var(--surface));
-      border: 0;
-      width: 100%;
-      text-align: right;
-      color: inherit;
-      cursor: pointer;
-    }
-
-    .ad-slide.active {
-      opacity: 1;
-      transform: translateX(0);
-      pointer-events: auto;
-    }
-
-    .ad-slide h2 {
-      font-size: clamp(26px, 4vw, 40px);
-      margin-bottom: 8px;
-      color: var(--primary-dark);
-    }
-
-    [data-theme="dark"] .ad-slide h2 { color: var(--primary-light); }
-
-    .ad-slide p {
-      margin: 0 0 18px;
-      color: var(--muted);
-      max-width: 620px;
-    }
-
-    .ad-media {
-      height: 190px;
-      border-radius: var(--radius);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
-      font-size: 78px;
-    }
-
-    .ad-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .ad-controls {
-      position: absolute;
-      inset-inline: 16px;
-      bottom: 14px;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      z-index: 2;
-    }
-
-    .ad-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      border: 0;
-      background: rgba(45, 106, 79, .35);
-      padding: 0;
-    }
-
-    .ad-dot.active { background: var(--accent); }
-
-    .section {
-      max-width: 1240px;
-      margin: auto;
-      padding: 42px 22px;
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: end;
-      margin-bottom: 24px;
-    }
-
-    h2 { margin: 0; font-size: 28px; }
-    .muted { color: var(--muted); }
-
-    .stats {
-      background: var(--primary-dark);
-      color: white;
-    }
-
-    .stats .container {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      padding-block: 22px;
-      text-align: center;
-    }
-
-    .stat strong { color: var(--accent-light); font-size: 28px; display: block; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 18px;
-    }
-
-    .category-grid {
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: 0 14px 34px rgba(50, 24, 110, .08);
-      overflow: hidden;
-    }
-
-    .category-card {
-      min-height: 145px;
-      padding: 22px;
-      text-align: center;
-      color: inherit;
-      width: 100%;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      border-radius: var(--radius);
-    }
-
-    .category-card:hover, .product:hover, .admin-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow);
-    }
-
-    .category-card, .product, .admin-card { transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
-    .category-icon { font-size: 36px; display: block; margin-bottom: 8px; }
-
-    .product-image {
-      position: relative;
-      height: 170px;
-      display: grid;
-      place-items: center;
-      font-size: 72px;
-      background: linear-gradient(135deg, var(--secondary), color-mix(in srgb, var(--secondary), white 35%));
-    }
-
-    .product-image img, .cart-emoji img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .product-image img {
-      position: absolute;
-      inset: 0;
-    }
-
-    .product-image .product-fallback {
-      position: relative;
-      z-index: 1;
-    }
-
-    .pill {
-      display: inline-flex;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 12px;
-      font-weight: 800;
-      background: var(--secondary);
-      color: var(--primary);
-    }
-
-    .sale {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: var(--danger);
-      color: white;
-    }
-
-    .product-body { padding: 16px; }
-    .product h3 { margin: 10px 0 6px; font-size: 17px; min-height: 48px; }
-    .price { color: var(--primary); font-size: 22px; font-weight: 900; }
-    .old { color: var(--muted); text-decoration: line-through; margin-inline-start: 8px; }
-
-    .row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .between { justify-content: space-between; }
-
-    .btn {
-      border: 0;
-      border-radius: var(--radius);
-      padding: 11px 16px;
-      background: var(--primary);
-      color: white;
-      font-weight: 800;
-    }
-
-    .btn:hover { background: var(--primary-dark); }
-    .btn.secondary { background: var(--surface); color: var(--primary); border: 1px solid var(--primary); }
-    .btn.accent { background: var(--accent); }
-    .btn.danger { background: var(--danger); }
-    .btn:disabled { opacity: .55; cursor: not-allowed; }
-
-    .product-actions {
-      display: grid;
-      grid-template-columns: 1fr auto auto auto;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
-    .square {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      display: inline-grid;
-      place-items: center;
-      font-size: 14px;
-      box-shadow: 0 8px 18px rgba(50, 24, 110, .08);
-    }
-
-    .page { display: none; }
-    .page.active { display: block; }
-
-    .drawer-backdrop, .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, .45);
-      display: none;
-      z-index: 30;
-    }
-
-    .drawer-backdrop.active, .modal-backdrop.active { display: block; }
-
-    .drawer {
-      position: fixed;
-      inset-block: 0;
-      left: 0;
-      width: min(430px, 92vw);
-      background: var(--surface);
-      z-index: 31;
-      transform: translateX(-105%);
-      transition: .25s ease;
-      display: flex;
-      flex-direction: column;
-      box-shadow: var(--shadow);
-    }
-
-    .drawer.active { transform: translateX(0); }
-    .drawer-head, .drawer-foot, .modal-head, .modal-foot {
-      padding: 18px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .drawer-foot { border-top: 1px solid var(--border); border-bottom: 0; }
-    .drawer-body { padding: 16px; overflow: auto; flex: 1; }
-
-    .cart-item {
-      display: grid;
-      grid-template-columns: 64px 1fr;
-      gap: 12px;
-      padding: 12px;
-      background: color-mix(in srgb, var(--page), var(--surface) 45%);
-      border-radius: var(--radius);
-      margin-bottom: 10px;
-    }
-
-    .cart-emoji {
-      display: grid;
-      place-items: center;
-      background: var(--secondary);
-      border-radius: var(--radius);
-      font-size: 30px;
-      overflow: hidden;
-    }
-
-    .modal-backdrop {
-      place-items: center;
-      padding: 20px;
-    }
-
-    .modal-backdrop.active { display: grid; }
-    .modal {
-      width: min(720px, 94vw);
-      max-height: 90vh;
-      overflow: auto;
-      background: var(--surface);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    .modal-body { padding: 20px; }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    .form-group.full { grid-column: 1 / -1; }
-    label { display: block; font-weight: 800; margin-bottom: 6px; }
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      border-radius: var(--radius);
-      padding: 11px 12px;
-      outline: 0;
-    }
-
-    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
-
-    .admin {
-      display: none;
-      min-height: 100vh;
-      background: var(--page);
-    }
-
-    .admin.active { display: grid; grid-template-columns: 260px 1fr; }
-    .admin-side {
-      background: linear-gradient(180deg, var(--primary-dark), #111827);
-      color: white;
-      padding: 20px 14px;
-      min-height: 100vh;
-    }
-
-    .admin-side button {
-      width: 100%;
-      text-align: right;
-      border: 0;
-      border-radius: var(--radius);
-      background: transparent;
-      color: rgba(255, 255, 255, .78);
-      padding: 12px;
-      margin-bottom: 4px;
-    }
-
-    .admin-side button.active, .admin-side button:hover {
-      color: white;
-      background: rgba(255, 255, 255, .12);
-    }
-
-    .admin-main { min-width: 0; }
-    .admin-top {
-      position: sticky;
-      top: 0;
-      z-index: 5;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 22px;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .admin-locked {
-      max-width: 480px;
-      margin: auto;
-      padding: 24px;
-      text-align: center;
-    }
-
-    .admin-locked .logo-mark {
-      margin: 0 auto 12px;
-      color: white;
-      background: var(--primary);
-    }
-
-    .admin-body { padding: 22px; }
-    .admin-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    .admin-card { padding: 18px; }
-    .admin-card strong { font-size: 26px; display: block; color: var(--primary); }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--surface);
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid var(--border);
-    }
-
-    th, td {
-      padding: 12px;
-      border-bottom: 1px solid var(--border);
-      text-align: right;
-      vertical-align: middle;
-    }
-
-    th {
-      background: color-mix(in srgb, var(--page), var(--surface) 35%);
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .notification {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translate(-50%, -120%);
-      z-index: 60;
-      padding: 13px 20px;
-      border-radius: var(--radius);
-      color: white;
-      background: var(--primary);
-      box-shadow: var(--shadow);
-      transition: .25s ease;
-      font-weight: 800;
-    }
-
-    .notification.show { transform: translate(-50%, 0); }
-    .notification.error { background: var(--danger); }
-    .notification.info { background: var(--info); }
-    .notification.warning { background: var(--accent); }
-
-    .install-hint {
-      display: none;
-      position: fixed;
-      inset-inline: 16px;
-      bottom: 16px;
-      z-index: 40;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .install-hint.show { display: flex; }
-
-    .footer {
-      background: #111827;
-      color: white;
-      padding: 34px 22px;
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    .social-dock {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
-    .social-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      min-height: 44px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      text-decoration: none;
-      color: white;
-      font-weight: 800;
-      box-shadow: 0 12px 24px rgba(20, 43, 32, .12);
-    }
-
-    .social-link.whatsapp { background: #25d366; }
-    .social-link.youtube { background: #ff0033; }
-
-    .blog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-    }
-
-    .blog-card {
-      display: grid;
-      gap: 12px;
-      padding: 14px;
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .blog-thumb {
-      aspect-ratio: 16 / 9;
-      border-radius: var(--radius);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background: linear-gradient(135deg, #5b16f0, #fcbf49);
-      color: white;
-      font-size: 42px;
-    }
-
-    .blog-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .image-search-panel {
-      display: grid;
-      gap: 16px;
-    }
-
-    .image-drop {
-      border: 1px dashed color-mix(in srgb, var(--violet), var(--border) 45%);
-      border-radius: 14px;
-      padding: 22px;
-      display: grid;
-      place-items: center;
-      gap: 10px;
-      text-align: center;
-      background: linear-gradient(135deg, rgba(91, 22, 240, .06), rgba(82, 183, 136, .08));
-    }
-
-    .image-drop input {
-      max-width: 280px;
-      background: white;
-    }
-
-    .image-search-preview {
-      display: none;
-      grid-template-columns: 120px 1fr;
-      gap: 14px;
-      align-items: center;
-      padding: 12px;
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--page), var(--surface) 50%);
-      border: 1px solid var(--border);
-    }
-
-    .image-search-preview.active { display: grid; }
-
-    .image-search-preview img {
-      width: 120px;
-      aspect-ratio: 1;
-      object-fit: cover;
-      border-radius: var(--radius);
-    }
-
-    .image-match-list {
-      display: grid;
-      gap: 10px;
-    }
-
-    .image-match {
-      display: grid;
-      grid-template-columns: 58px 1fr auto;
-      gap: 10px;
-      align-items: center;
-      width: 100%;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: inherit;
-      text-align: right;
-      border-radius: var(--radius);
-      padding: 10px;
-    }
-
-    .image-match-thumb {
-      width: 58px;
-      height: 58px;
-      display: grid;
-      place-items: center;
-      border-radius: var(--radius);
-      background: var(--violet-soft);
-      overflow: hidden;
-    }
-
-    .match-score {
-      min-width: 52px;
-      text-align: center;
-      color: var(--violet);
-      font-weight: 900;
-    }
-
-    /* 2026 mobile-first refresh */
-    body {
-      background:
-        radial-gradient(circle at 86% 6%, rgba(91, 22, 240, .18), transparent 28rem),
-        radial-gradient(circle at 8% 28%, rgba(252, 191, 73, .16), transparent 24rem),
-        linear-gradient(180deg, #fbfaff 0%, #eef7f1 48%, var(--page) 100%);
-    }
-
-    [data-theme="dark"] body {
-      background:
-        radial-gradient(circle at top right, rgba(82, 183, 136, .16), transparent 32rem),
-        linear-gradient(180deg, #111827 0%, #0d1512 52%, var(--page) 100%);
-    }
-
-    .header {
-      background: linear-gradient(135deg, rgba(38, 16, 90, .92), rgba(20, 93, 77, .88));
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255, 255, 255, .14);
-    }
-
-    .topbar {
-      background: rgba(8, 47, 40, .36);
-    }
-
-    .logo-mark {
-      background: white;
-      color: #08251d;
-      box-shadow: 0 14px 30px rgba(91, 22, 240, .28);
-      padding: 3px;
-    }
-
-    .search input {
-      box-shadow: inset 0 0 0 1px rgba(8, 47, 40, .08), 0 12px 26px rgba(8, 47, 40, .12);
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, .84), rgba(238, 231, 255, .72)),
-        linear-gradient(120deg, #ffffff, #f3eeff 44%, #e3f8ef);
-    }
-
-    [data-theme="dark"] .hero {
-      background: linear-gradient(135deg, rgba(18, 24, 33, .92), rgba(27, 67, 50, .76));
-    }
-
-    .hero .container {
-      padding-block: 64px 48px;
-    }
-
-    .hero-kicker,
-    .mini-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border-radius: 999px;
-      padding: 6px 12px;
-      background: rgba(91, 22, 240, .1);
-      color: #4c12c9;
-      font-weight: 800;
-      font-size: 13px;
-    }
-
-    [data-theme="dark"] .hero-kicker,
-    [data-theme="dark"] .mini-tag {
-      color: #ffd28a;
-      background: rgba(252, 191, 73, .14);
-    }
-
-    .hero h1 {
-      max-width: 760px;
-      letter-spacing: 0;
-    }
-
-    .hero-visual {
-      border-radius: 28px;
-      min-height: 380px;
-      isolation: isolate;
-      position: relative;
-      background:
-        linear-gradient(145deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0)),
-        linear-gradient(135deg, #5b16f0, #7c3aed 45%, #fcbf49);
-      transform: perspective(900px) rotateY(-5deg);
-    }
-
-    .hero-visual::before,
-    .hero-visual::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .22);
-      z-index: -1;
-    }
-
-    .hero-visual::before { width: 150px; height: 150px; top: 30px; right: 28px; }
-    .hero-visual::after { width: 92px; height: 92px; bottom: 42px; left: 34px; }
-
-    .hero-actions {
-      margin-top: 22px;
-    }
-
-    .trust-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .trust-item,
-    .shop-control,
-    .product-chip {
-      border: 1px solid var(--border);
-      background: color-mix(in srgb, var(--surface), transparent 4%);
-      border-radius: var(--radius);
-    }
-
-    .trust-item {
-      padding: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 10px 24px rgba(20, 43, 32, .06);
-    }
-
-    .trust-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius);
-      display: grid;
-      place-items: center;
-      background: var(--secondary);
-      color: var(--primary-dark);
-      font-size: 20px;
-      flex: 0 0 auto;
-    }
-
-    .shop-toolbar {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-
-    .shop-control {
-      min-width: 170px;
-      padding: 10px 12px;
-      min-height: 46px;
-    }
-
-    .quick-filters {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
-
-    .quick-filters button {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      border-radius: 999px;
-      padding: 9px 13px;
-      white-space: nowrap;
-      font-weight: 800;
-    }
-
-    .quick-filters button.active {
-      background: var(--primary-dark);
-      border-color: var(--primary-dark);
-      color: white;
-    }
-
-    .product {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(91, 22, 240, .08);
-      box-shadow: 0 18px 34px rgba(50, 24, 110, .1);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, .92), rgba(255, 255, 255, .98)),
-        var(--surface);
-    }
-
-    .product-image {
-      height: 188px;
-      background:
-        linear-gradient(160deg, rgba(255, 255, 255, .35), rgba(255, 255, 255, 0)),
-        linear-gradient(135deg, #eee7ff, #e4f8ef 58%, #fff4d6);
-    }
-
-    .product-body {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-    }
-
-    .product-meta {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-      margin: 10px 0 12px;
-    }
-
-    .product-chip {
-      padding: 4px 8px;
-      font-size: 12px;
-      color: var(--muted);
-      background: color-mix(in srgb, var(--page), var(--surface) 60%);
-    }
-
-    .stock-meter {
-      height: 7px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--border), transparent 35%);
-      margin-top: auto;
-    }
-
-    .stock-meter span {
-      display: block;
-      height: 100%;
-      width: var(--stock-level);
-      background: linear-gradient(90deg, var(--violet), var(--success));
-    }
-
-    .floating-whatsapp {
-      position: fixed;
-      right: 18px;
-      bottom: 22px;
-      z-index: 25;
-      width: 56px;
-      height: 56px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: #25d366;
-      color: white;
-      text-decoration: none;
-      font-size: 26px;
-      box-shadow: 0 16px 28px rgba(37, 211, 102, .32);
-    }
-
-    .floating-whatsapp img {
-      width: 31px;
-      height: 31px;
-      display: block;
-    }
-
-    .mobile-nav {
-      display: none;
-      position: fixed;
-      inset-inline: 12px;
-      bottom: 12px;
-      z-index: 24;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 4px;
-      padding: 8px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      background: color-mix(in srgb, var(--surface), transparent 5%);
-      box-shadow: 0 18px 40px rgba(20, 43, 32, .22);
-      backdrop-filter: blur(16px);
-    }
-
-    .mobile-nav button {
-      border: 0;
-      background: transparent;
-      color: var(--muted);
-      border-radius: 14px;
-      padding: 7px 4px;
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .mobile-nav button span {
-      display: block;
-      font-size: 16px;
-      line-height: 1;
-      margin-bottom: 2px;
-    }
-
-    .mobile-nav button.active,
-    .mobile-nav button:hover {
-      background: var(--primary-dark);
-      color: white;
-    }
-
-    @media (max-width: 860px) {
-      .topbar { display: none; }
-      .mainbar { grid-template-columns: 1fr auto; gap: 12px; padding-block: 12px; }
-      .search { grid-column: 1 / -1; order: 3; }
-      .hero .container { grid-template-columns: 1fr; }
-      .hero-visual { min-height: 220px; border-radius: 22px; font-size: 86px; }
-      .ad-slide {
-        grid-template-columns: 1fr;
-        min-height: 420px;
-        padding: 22px;
-      }
-      .ad-media { height: 170px; order: -1; }
-      .stats .container { grid-template-columns: repeat(2, 1fr); }
-      .trust-strip { grid-template-columns: repeat(2, 1fr); }
-      .admin.active { grid-template-columns: 1fr; }
-      .admin-side { position: static; }
-      .form-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 520px) {
-      body { padding-bottom: 92px; }
-      .mainbar { grid-template-columns: 1fr; }
-      .logo { width: 100%; justify-content: center; }
-      .actions { justify-content: center; width: 100%; }
-      .actions { gap: 6px; }
-      .icon-btn { width: 36px; height: 36px; font-size: 13px; }
-      .cart-button { padding-inline: 12px; min-height: 40px; }
-      .nav { display: none; }
-      .hero .container { padding-block: 34px 28px; }
-      .hero h1 { font-size: 31px; }
-      .hero p { font-size: 16px; }
-      .hero-actions .btn { flex: 1 1 140px; }
-      .hero-visual { display: grid; min-height: 170px; font-size: 68px; }
-      .section-head { display: block; }
-      .stats .container { grid-template-columns: 1fr; }
-      .trust-strip { grid-template-columns: 1fr; }
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-      .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .category-card { min-height: 122px; padding: 16px 10px; }
-      #featuredProducts, #shopProducts, #wishlistProducts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .product { border-radius: 10px; }
-      .product-image { height: 118px; font-size: 48px; }
-      .product-body { padding: 10px; }
-      .product h3 {
-        min-height: 44px;
-        margin: 7px 0 4px;
-        font-size: 13px;
-        line-height: 1.45;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-      }
-      .product .pill { font-size: 10px; padding: 3px 7px; }
-      .product .muted { font-size: 11px; line-height: 1.45; }
-      .product-meta { gap: 4px; margin: 6px 0 8px; }
-      .product-chip { font-size: 10px; padding: 3px 6px; }
-      .product-chip:nth-child(n+3) { display: none; }
-      .price { font-size: 16px; }
-      .old { display: block; margin-inline-start: 0; font-size: 11px; }
-      .stock-meter { height: 5px; }
-      .product-actions {
-        grid-template-columns: 1fr repeat(3, 32px);
-        gap: 5px;
-        margin-top: 9px;
-      }
-      .product-actions .btn {
-        min-height: 32px;
-        padding: 6px 5px;
-        font-size: 11px;
-      }
-      .product-actions .square {
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
-      }
-      .sale {
-        top: 7px;
-        right: 7px;
-        font-size: 10px;
-      }
-      .shop-control { min-width: 100%; }
-      .drawer { width: 100vw; }
-      .modal { width: 100%; max-height: 86vh; }
-      .image-search-preview { grid-template-columns: 1fr; }
-      .image-match { grid-template-columns: 46px 1fr; }
-      .image-match-thumb { width: 46px; height: 46px; }
-      .match-score {
-        grid-column: 1 / -1;
-        min-width: 0;
-        text-align: right;
-        font-size: 12px;
-      }
-      .floating-whatsapp { bottom: 92px; right: 14px; width: 50px; height: 50px; }
-      .mobile-nav { display: grid; }
-      .footer { margin-bottom: 12px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#0b1120">
+    <meta name="description"
+        content="زهرة الارجوان - وجهتك الأولى لأجود المستلزمات الزراعية، الأسمدة، والبذور في سلطنة عمان. تميز زراعي بلا حدود.">
+    <title>زهرة الارجوان | تميز زراعي بلا حدود</title>
+
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome & AOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div id="notification" class="notification"></div>
-  <div id="installHint" class="install-hint">
-    <span><strong>زهرة الأرجوان</strong><br><small class="muted">يمكن تثبيت الموقع كتطبيق على الهاتف.</small></span>
-    <div class="row">
-      <button class="btn" type="button" id="installAppBtn">تثبيت</button>
-      <button class="square" type="button" id="dismissInstallBtn">✕</button>
-    </div>
-  </div>
 
-  <div id="store">
-    <header class="header">
-      <div class="topbar">
-        <span>+968 9601 7822 | info@agristore.com</span>
-        <span>السبت - الخميس: 8 صباحا - 10 مساء</span>
-      </div>
-      <div class="mainbar">
-        <button class="logo" type="button" data-page="home">
-          <span class="logo-mark"><img class="brand-logo" src="icons/zahrat-alarjwan-logo.jpg" alt="شعار زهرة الأرجوان"></span>
-          <span><strong>زهرة الأرجوان</strong><small>المتجر الزراعي المتكامل</small></span>
-        </button>
-        <div class="search">
-          <input id="searchInput" type="search" placeholder="ابحث عن منتجات، بذور، أسمدة..." autocomplete="off">
-          <div class="search-actions">
-            <button id="imageSearchBtn" type="button" title="البحث بالصورة" aria-label="البحث بالصورة">◎</button>
-            <button id="searchBtn" type="button" title="بحث" aria-label="بحث">⌕</button>
-          </div>
-          <div id="searchResults" class="search-results"></div>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <i class="fa-solid fa-seedling loader-icon"></i>
+            <h2 style="margin-top: 1rem; font-weight: 800; color: var(--primary);">زهرة الارجوان</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">جاري تحضير عالمك الأخضر...</p>
         </div>
-        <div class="actions">
-          <button class="icon-btn" type="button" id="themeBtn" title="تبديل الوضع">◐</button>
-          <button class="icon-btn" type="button" id="adminBtn" title="لوحة التحكم">⚙</button>
-          <button class="icon-btn" type="button" data-page="wishlist" title="المفضلة">♡<span id="wishlistCount" class="badge">0</span></button>
-          <button class="cart-button" type="button" id="cartBtn">السلة <span id="cartCount" class="badge">0</span></button>
+    </div>
+
+    <!-- Header Navigation -->
+    <header id="mainHeader">
+        <a href="#home" class="logo">🌿 زهرة <span>الارجوان</span></a>
+
+        <nav id="desktopNav">
+            <ul>
+                <li><a href="#home" class="active">الرئيسية</a></li>
+                <li><a href="#products">المتجر</a></li>
+                <li><a href="#about">عن المؤسسة</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </nav>
+
+        <div class="nav-actions">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
+                <input type="text" id="productSearch" placeholder="ابحث عن منتج..." oninput="searchProducts()">
+            </div>
+            <div class="cart-btn" onclick="toggleCart()">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge" id="cartCount">0</span>
+            </div>
+            <div class="menu-toggle" onclick="toggleMobileMenu()"
+                style="display: none; cursor: pointer; font-size: 1.5rem;">
+                <i class="fa-solid fa-bars"></i>
+            </div>
         </div>
-      </div>
-      <nav id="nav" class="nav"></nav>
     </header>
 
     <main>
-      <section id="homePage" class="page active">
-        <div class="hero">
-          <div class="container">
-            <div>
-              <span class="hero-kicker">توصيل سريع + منتجات موثوقة للمزارع والبيت</span>
-              <h1>كل ما تحتاجه <span>لزراعتك</span> في مكان واحد</h1>
-              <p>نباتات، بذور، أدوات، أسمدة ومستلزمات زراعية مختارة بعناية، مع تجربة شراء سريعة وواضحة.</p>
-              <div class="row hero-actions">
-                <button class="btn" type="button" data-page="shop">تسوق الآن</button>
-                <button class="btn secondary" type="button" data-category="offers">شاهد العروض</button>
-              </div>
-              <div class="social-dock" aria-label="روابط الاشتراك">
-                <a class="social-link whatsapp" href="https://whatsapp.com/channel/0029VbBwEAu7IUYNRVJOtX3X?utm_source=chatgpt.com" target="_blank" rel="noopener">💬 اشترك في قناة واتساب</a>
-                <a class="social-link youtube" href="https://youtube.com/@abuhassan1ai?si=KP1hLLJ6wiBpCGYX" target="_blank" rel="noopener">▶ اشترك في اليوتيوب</a>
-              </div>
+        <!-- Dynamic Hero Slider -->
+        <section class="hero-slider-container" id="home">
+            <div class="slider-wrapper" id="heroSliderWrapper">
+                <!-- Static Fallback Slide -->
+                <div class="slide active">
+                    <div class="hero">
+                        <div class="hero-content" data-aos="zoom-out" data-aos-duration="1200">
+                            <span style="color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 1rem;">سلطنة عمان - مسقط / صحار</span>
+                            <h1>مستقبلك الأخضر يبدأ بلمسة احترافية</h1>
+                            <p>نقدم أجود أنواع الأسمدة، البذور المهجنة، والمبيدات الآمنة لضمان إنتاجية استثنائية لمزرعتك.</p>
+                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                                <a href="#products" class="btn-primary">استعرض المنتجات</a>
+                                <a href="https://wa.me/96896017822" class="btn-primary" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); box-shadow: none;">استشارة المهندس</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="hero-visual"><img src="icons/zahrat-alarjwan-logo.jpg" alt="زهرة الأرجوان" style="width:72%;height:72%;object-fit:contain;border-radius:24px;background:white"></div>
-          </div>
-        </div>
-        <section id="adSlider" class="ad-slider" aria-label="الإعلانات"></section>
-        <div class="stats">
-          <div class="container">
-            <div class="stat"><strong id="statProducts">0</strong><span>منتج متاح</span></div>
-            <div class="stat"><strong>5000+</strong><span>عميل سعيد</span></div>
-            <div class="stat"><strong>150+</strong><span>علامة تجارية</span></div>
-            <div class="stat"><strong>24/7</strong><span>دعم فني</span></div>
-          </div>
-        </div>
-        <section class="section" aria-label="مميزات المتجر">
-          <div class="trust-strip">
-            <div class="trust-item"><span class="trust-icon">🚚</span><span><strong>توصيل مرن</strong><br><small class="muted">خيارات شحن حسب الولاية</small></span></div>
-            <div class="trust-item"><span class="trust-icon">💬</span><span><strong>طلب عبر واتساب</strong><br><small class="muted">الفاتورة تصل جاهزة للإرسال</small></span></div>
-            <div class="trust-item"><span class="trust-icon">🛡️</span><span><strong>ضمان جودة</strong><br><small class="muted">منتجات مختارة ومخزون واضح</small></span></div>
-            <div class="trust-item"><span class="trust-icon">🌱</span><span><strong>إرشاد زراعي</strong><br><small class="muted">تفاصيل عناية داخل كل منتج</small></span></div>
-          </div>
+            <!-- Slider Controls -->
+            <button class="slider-nav prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-right"></i></button>
+            <button class="slider-nav next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-left"></i></button>
+            <div class="slider-dots" id="sliderDots"></div>
         </section>
-        <section class="section">
-          <div class="section-head">
-            <div>
-              <h2>الأقسام</h2>
-              <div class="muted">تصفح المنتجات حسب القسم</div>
-            </div>
-            <button class="btn secondary" type="button" data-page="shop">عرض الكل</button>
-          </div>
-          <div id="categoriesGrid" class="grid category-grid"></div>
-        </section>
-        <section class="section">
-          <div class="section-head">
-            <div>
-              <h2>منتجات مميزة</h2>
-              <div class="muted">اختيارات رائجة وعروض نشطة</div>
-            </div>
-            <button class="btn secondary" type="button" data-page="shop">عرض الكل</button>
-          </div>
-          <div id="featuredProducts" class="grid"></div>
-        </section>
-        <section class="section">
-          <div class="section-head">
-            <div>
-              <h2>من مدونة زهرة الأرجوان</h2>
-              <div class="muted">آخر المواضيع والنصائح الزراعية</div>
-            </div>
-            <a class="btn secondary" href="https://zahratalarjwan.blogspot.com/" target="_blank" rel="noopener">زيارة البلوجر</a>
-          </div>
-          <div id="blogPosts" class="blog-grid"></div>
-        </section>
-      </section>
 
-      <section id="shopPage" class="page section">
-        <div class="section-head">
-          <div>
-            <h2 id="shopTitle">جميع المنتجات</h2>
-            <div id="shopSubtitle" class="muted"></div>
-          </div>
-        </div>
-        <div class="shop-toolbar" aria-label="خيارات عرض المنتجات">
-          <select id="sortProducts" class="shop-control" aria-label="ترتيب المنتجات">
-            <option value="featured">الأفضل أولًا</option>
-            <option value="price-low">السعر: من الأقل</option>
-            <option value="price-high">السعر: من الأعلى</option>
-            <option value="rating">الأعلى تقييمًا</option>
-          </select>
-          <div class="quick-filters" id="quickFilters">
-            <button class="active" type="button" data-stock-filter="all">الكل</button>
-            <button type="button" data-stock-filter="available">متوفر</button>
-            <button type="button" data-stock-filter="sale">عروض</button>
-            <button type="button" data-stock-filter="low">قرب النفاد</button>
-          </div>
-        </div>
-        <div id="shopProducts" class="grid"></div>
-      </section>
-
-      <section id="wishlistPage" class="page section">
-        <div class="section-head">
-          <div>
-            <h2>المفضلة</h2>
-            <div class="muted">منتجاتك المحفوظة للرجوع إليها لاحقا</div>
-          </div>
-        </div>
-        <div id="wishlistProducts" class="grid"></div>
-      </section>
-
-      <section id="checkoutPage" class="page section">
-        <div class="section-head"><h2>إتمام الطلب</h2></div>
-        <div class="form-grid">
-          <div class="card" style="padding:20px">
-            <h3>معلومات الشحن</h3>
-            <div class="form-grid">
-              <div class="form-group"><label for="checkoutName">الاسم الكامل</label><input id="checkoutName"></div>
-              <div class="form-group"><label for="checkoutPhone">رقم الهاتف</label><input id="checkoutPhone" inputmode="tel"></div>
-              <div class="form-group"><label for="checkoutEmail">البريد الإلكتروني</label><input id="checkoutEmail" type="email"></div>
-              <div class="form-group"><label for="checkoutWilayat">الولاية</label><input id="checkoutWilayat" placeholder="اكتب الولاية"></div>
-              <div class="form-group full"><label for="checkoutAddress">العنوان</label><textarea id="checkoutAddress" rows="4"></textarea></div>
+        <!-- Flash Sale Banner (New Feature) -->
+        <section id="flashSaleBanner" class="flash-sale" style="background: linear-gradient(90deg, #ef4444, #fbbf24); color: var(--bg-dark); padding: 1rem; text-align: center; font-weight: 800; font-size: 1.1rem; position: relative; overflow: hidden;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                <span>🔥 عروض الصيف الكبرى! خصومات تصل إلى 50% على بذور الخريف</span>
+                <div id="countdown" style="background: rgba(0,0,0,0.1); padding: 5px 15px; border-radius: 50px;">ينتهي خلال: 12:45:00</div>
             </div>
-          </div>
-          <div class="card" style="padding:20px">
-            <h3>ملخص الطلب</h3>
-            <div id="checkoutItems"></div>
-            <hr>
-            <div class="row between"><span>المجموع الفرعي</span><strong id="checkoutSubtotal">0 ر.ع</strong></div>
-            <div class="row between"><span>الشحن</span><strong id="checkoutShipping">0 ر.ع</strong></div>
-            <div class="row between"><span>الضريبة 15%</span><strong id="checkoutTax">0 ر.ع</strong></div>
-            <div class="row between"><span>الإجمالي</span><strong id="checkoutTotal">0 ر.ع</strong></div>
-            <button class="btn" type="button" id="placeOrderBtn" style="width:100%; margin-top:16px">تأكيد الطلب</button>
-          </div>
-        </div>
-      </section>
+        </section>
+
+        <!-- Trust Badges (New Feature) -->
+        <section style="padding: 2rem 5%; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--glass-border);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; text-align: center;">
+                <div><i class="fa-solid fa-truck-fast" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 10px;"></i><p style="font-size: 0.8rem; font-weight: 700;">توصيل سريع لكافة الولايات</p></div>
+                <div><i class="fa-solid fa-shield-heart" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 10px;"></i><p style="font-size: 0.8rem; font-weight: 700;">جودة مضمونة 100%</p></div>
+                <div><i class="fa-solid fa-headset" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 10px;"></i><p style="font-size: 0.8rem; font-weight: 700;">دعم فني واستشارات</p></div>
+                <div><i class="fa-solid fa-lock" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 10px;"></i><p style="font-size: 0.8rem; font-weight: 700;">دفع آمن عند الاستلام</p></div>
+            </div>
+        </section>
+
+        <!-- New Products Slider (New Feature) -->
+        <section class="new-arrivals" data-aos="fade-up">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; padding: 0 5%; margin-bottom: 2rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 800; border-right: 4px solid var(--primary); padding-right: 15px;">وصل حديثاً ✨</h2>
+                <div class="slider-controls-mini">
+                    <button onclick="scrollNewProducts(-1)" class="mini-nav"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button onclick="scrollNewProducts(1)" class="mini-nav"><i class="fa-solid fa-chevron-left"></i></button>
+                </div>
+            </div>
+            <div class="product-slider-container">
+                <div class="product-slider-track" id="newProductsTrack">
+                    <!-- Dynamic Product Cards Injected Here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Filter -->
+        <section class="categories" data-aos="fade-up">
+            <div class="cat-item active" onclick="filterCategory('الكل', this)">الكل</div>
+            <div class="cat-item" onclick="filterCategory('أسمدة', this)"><i class="fa-solid fa-flask"></i> أسمدة</div>
+            <div class="cat-item" onclick="filterCategory('بذور', this)"><i class="fa-solid fa-leaf"></i> بذور</div>
+            <div class="cat-item" onclick="filterCategory('مبيدات', this)"><i class="fa-solid fa-shield-virus"></i>
+                مبيدات</div>
+            <div class="cat-item" onclick="filterCategory('أدوات', this)"><i class="fa-solid fa-screwdriver-wrench"></i>
+                أدوات</div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section" id="products">
+            <h2 class="grid-title" data-aos="fade-up">مجموعتنا المختارة</h2>
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be injected by script.js -->
+            </div>
+        </section>
+
+        <!-- About / Features -->
+        <section id="about" style="padding: 6rem 5%; background: var(--bg-surface);">
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; align-items: center;">
+                <div data-aos="fade-right">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--primary);">لماذا تختار زهرة
+                        الارجوان؟</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">نحن في زهرة الارجوان نسعى لتوفير أجود
+                        المستلزمات الزراعية التي تناسب بيئة سلطنة عمان، مع تقديم استشارات فنية متخصصة لضمان نجاح كل
+                        مشروع زراعي.</p>
+                    <ul style="list-style: none; display: grid; gap: 1rem;">
+                        <li><i class="fa-solid fa-circle-check" style="color: var(--secondary); margin-left: 10px;"></i>
+                            منتجات أصلية 100%</li>
+                        <li><i class="fa-solid fa-circle-check" style="color: var(--secondary); margin-left: 10px;"></i>
+                            استشارات من المهندس أبو حسن مباشرة</li>
+                        <li><i class="fa-solid fa-circle-check" style="color: var(--secondary); margin-left: 10px;"></i>
+                            توصيل سريع لمختلف ولايات السلطنة</li>
+                    </ul>
+                </div>
+                <div style="position: relative;" data-aos="fade-left">
+                    <img src="glassy_botanical_hero.png" alt="Zahrat Alarjwan"
+                        style="width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-premium);">
+                    <div
+                        style="position: absolute; bottom: -20px; right: -20px; background: var(--primary); padding: 2rem; border-radius: var(--radius-md); text-align: center;">
+                        <span style="font-size: 2.5rem; font-weight: 900; display: block;">10+</span>
+                        <span style="font-size: 0.9rem;">سنوات من الخبرة</span>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <a class="floating-whatsapp" href="https://wa.me/96896017822" target="_blank" rel="noopener" aria-label="تواصل عبر واتساب"><img src="icons/whatsapp.svg" alt=""></a>
-    <nav class="mobile-nav" aria-label="تنقل الهاتف">
-      <button class="active" type="button" data-page="home"><span>⌂</span>الرئيسية</button>
-      <button type="button" data-page="shop"><span>⌕</span>المتجر</button>
-      <button type="button" data-page="wishlist"><span>♡</span>المفضلة</button>
-      <button type="button" data-cart-open><span>🛒</span>السلة</button>
-    </nav>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col" data-aos="fade-up">
+                <a href="#" class="footer-logo">🌿 زهرة <span>الارجوان</span></a>
+                <p style="color: var(--text-muted);">شريككم الموثوق في رحلة الإنتاج الزراعي. نوفر الحلول المبتكرة
+                    لمستقبل مستدام.</p>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <a href="#" style="font-size: 1.5rem; color: var(--text-muted);"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#" style="font-size: 1.5rem; color: var(--text-muted);"><i
+                            class="fa-brands fa-twitter"></i></a>
+                    <a href="https://wa.me/96896017822" style="font-size: 1.5rem; color: var(--text-muted);"><i
+                            class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
+                <h3>روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#products">المتجر</a></li>
+                    <li><a href="#about">عن المؤسسة</a></li>
+                    <li><a href="admin.html" style="color: var(--primary);"><i class="fa-solid fa-user-lock" style="margin-left: 5px;"></i> لوحة التحكم</a></li>
+                </ul>
+            </div>
+            <div class="footer-col" data-aos="fade-up" data-aos-delay="200" id="contact">
+                <h3>اتصل بنا</h3>
+                <ul class="footer-links">
+                    <li><i class="fa-solid fa-phone" style="color: var(--primary); margin-left: 10px;"></i> +968
+                        96017822</li>
+                    <li><i class="fa-solid fa-location-dot" style="color: var(--primary); margin-left: 10px;"></i>سلطنة
+                        عمان - منح / المعرى ر</li>
+                    <li><i class="fa-solid fa-envelope" style="color: var(--primary); margin-left: 10px;"></i>
+                        info@arjwan-om.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 زهرة الارجوان. جميع الحقوق محفوظة. تصميم وتطوير أبو حسان.
+        </div>
+    </footer>
 
-    <footer class="footer">© 2026 زهرة الأرجوان - جميع الحقوق محفوظة</footer>
-  </div>
+    <!-- Cart Drawer -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div id="cartDrawer">
+        <div class="cart-header">
+            <h2 style="font-weight: 800; color: var(--text-light);">سلة المشتريات</h2>
+            <i class="fa-solid fa-xmark" style="cursor: pointer; font-size: 1.5rem;" onclick="toggleCart()"></i>
+        </div>
 
-  <div id="admin" class="admin">
-    <aside class="admin-side">
-      <h2>زهرة الأرجوان</h2>
-      <button class="admin-nav active" type="button" data-admin="dashboard">لوحة المعلومات</button>
-      <button class="admin-nav" type="button" data-admin="products">المنتجات</button>
-      <button class="admin-nav" type="button" data-admin="orders">الطلبات</button>
-      <button class="admin-nav" type="button" data-admin="customers">العملاء</button>
-      <button class="admin-nav" type="button" data-admin="inventory">المخزون</button>
-      <button class="admin-nav" type="button" data-admin="ads">الإعلانات</button>
-      <button class="admin-nav" type="button" data-admin="discounts">الخصومات</button>
-      <button class="admin-nav" type="button" data-admin="reviews">التقييمات</button>
-      <button class="admin-nav" type="button" data-admin="settings">الإعدادات</button>
-      <button type="button" id="backToStore" style="margin-top:16px">العودة للمتجر</button>
-    </aside>
-    <main class="admin-main">
-      <div class="admin-top">
-        <h2 id="adminTitle">لوحة المعلومات</h2>
-        <button class="btn secondary" type="button" id="adminThemeBtn">تبديل الوضع</button>
-      </div>
-      <div id="adminBody" class="admin-body"></div>
-    </main>
-  </div>
+        <div id="cartItemsList">
+            <!-- Items injected by script.js -->
+        </div>
 
-  <div id="drawerBackdrop" class="drawer-backdrop"></div>
-  <aside id="cartDrawer" class="drawer" aria-label="سلة التسوق">
-    <div class="drawer-head row between">
-      <h2>سلة التسوق</h2>
-      <button class="square" type="button" id="closeCart">✕</button>
+        <div class="cart-footer">
+            <!-- Coupon Section (New Feature) -->
+            <div style="margin-bottom: 1.5rem; display: flex; gap: 8px;">
+                <input type="text" id="couponCode" placeholder="كود الخصم (مثلاً: WELCOME)" style="flex: 1; margin-bottom: 0;">
+                <button class="btn-primary" onclick="applyCoupon()" style="padding: 0 1rem; border-radius: 12px; font-size: 0.85rem;">تطبيق</button>
+            </div>
+
+            <div class="total-row">
+                <span>الإجمالي:</span>
+                <span id="totalAmount">0.000 ر.ع</span>
+            </div>
+
+            <!-- Payment Method Selector -->
+            <div class="payment-methods-selector" style="margin-bottom: 1.5rem; display: none;" id="ompaySelectorContainer">
+                <label style="display: block; margin-bottom: 0.75rem; font-weight: 700; color: var(--primary); font-size: 0.9rem;">اختر طريقة الدفع:</label>
+                <div style="display: flex; gap: 10px;">
+                    <div class="pay-method-option active" onclick="selectPaymentMethod('whatsapp')" id="methodWhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>واتساب (عند الاستلام)</span>
+                    </div>
+                    <div class="pay-method-option" onclick="selectPaymentMethod('ompay')" id="methodOmPay">
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span>بطاقة بنكية (OmPay)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-form">
+                <input type="text" id="custName" placeholder="الاسم بالكامل">
+                <input type="tel" id="custPhone" placeholder="رقم الهاتف">
+                <input type="text" id="custLoc" placeholder="الولاية / الموقع">
+                
+                <!-- WhatsApp Checkout Button -->
+                <button class="btn-primary" id="btnCheckoutWhatsApp" onclick="sendToWhatsApp()"
+                    style="width: 100%; background: #25d366; border: none; margin-top: 1rem; display: block;">
+                    <i class="fa-brands fa-whatsapp" style="margin-left: 8px;"></i> إرسال الطلب عبر واتساب
+                </button>
+
+                <!-- OmPay Checkout Button -->
+                <button class="btn-primary" id="btnCheckoutOmPay" onclick="payWithOmPay()"
+                    style="width: 100%; background: var(--primary); border: none; margin-top: 1rem; display: none;">
+                    <i class="fa-solid fa-shield-halved" style="margin-left: 8px;"></i> ادفع الآن ببطاقتك (دفع آمن)
+                </button>
+            </div>
+        </div>
     </div>
-    <div id="cartItems" class="drawer-body"></div>
-    <div id="cartFooter" class="drawer-foot"></div>
-  </aside>
 
-  <div id="modalBackdrop" class="modal-backdrop">
-    <div class="modal">
-      <div class="modal-head row between">
-        <h2 id="modalTitle"></h2>
-        <button id="closeModal" class="square" type="button">✕</button>
-      </div>
-      <div id="modalBody" class="modal-body"></div>
-      <div id="modalFoot" class="modal-foot"></div>
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/96896017822" class="whatsapp-float" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- FOMO Recent Sales Popup -->
+    <div class="fomo-popup" id="fomoPopup"></div>
+
+    <!-- Payment Success Modal -->
+    <div class="modal-overlay" id="paymentSuccessModal">
+        <div class="modal-card">
+            <div class="success-icon-wrapper" style="margin-bottom: 1.5rem; text-align: center;">
+                <i class="fa-solid fa-circle-check" style="font-size: 5rem; color: var(--primary); filter: drop-shadow(0 0 15px var(--primary-glow));"></i>
+            </div>
+            <h2 style="font-size: 2rem; font-weight: 800; color: white; margin-bottom: 1rem; text-align: center;">تم الدفع بنجاح!</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1rem; text-align: center;" id="successModalMessage">شكراً لك على ثقتك بزهرة الارجوان. تم استلام طلبك بنجاح وجاري تجهيزه.</p>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 1.25rem; border-radius: 12px; margin-bottom: 2rem; text-align: right;">
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--secondary);">رقم الطلب (OmPay): <span id="successOrderId" style="font-family: monospace; color: white; font-weight: 700;">-</span></p>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted);">الاسم: <span id="successCustomerName" style="color: white; font-weight: 700;">-</span></p>
+                <p style="font-size: 0.9rem; margin-bottom: 0px; color: var(--text-muted);">المجموع: <span id="successOrderTotal" style="color: white; font-weight: 700;">-</span></p>
+            </div>
+            <button class="btn-primary" onclick="closeSuccessModal()" style="width: 100%;">العودة للمتجر</button>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const STORAGE_KEY = 'agriStoreFixed';
-    const categoryNames = {
-      all: 'جميع المنتجات',
-      plants: 'النباتات',
-      seeds: 'البذور',
-      tools: 'الأدوات الزراعية',
-      fertilizers: 'الأسمدة',
-      pesticides: 'المبيدات',
-      materials: 'المواد الزراعية',
-      offers: 'العروض'
-    };
-
-    const initialData = {
-      products: [
-        { id: 1, name: 'شجرة زيتون صغيرة', category: 'plants', price: 85, oldPrice: 120, stock: 45, emoji: '🫒', desc: 'شجرة زيتون عمر سنتين، مثالية للزراعة المنزلية', rating: 4.8, reviews: 124, badge: 'sale' },
-        { id: 2, name: 'بذور طماطم كرزية', category: 'seeds', price: 12, oldPrice: null, stock: 200, emoji: '🍅', desc: 'بذور طماطم كرزية عالية الإنتاجية، 50 بذرة', rating: 4.5, reviews: 89, badge: 'new' },
-        { id: 3, name: 'مرشة مياه 5 لتر', category: 'tools', price: 35, oldPrice: 50, stock: 70, emoji: '🚿', desc: 'مرشة مياه بلاستيكية مع فوهة قابلة للتعديل', rating: 4.3, reviews: 67, badge: 'sale' },
-        { id: 4, name: 'سماد NPK متوازن', category: 'fertilizers', price: 45, oldPrice: null, stock: 150, emoji: '🧪', desc: 'سماد مركب NPK 20-20-20 لجميع أنواع النباتات', rating: 4.7, reviews: 156, badge: 'hot' },
-        { id: 5, name: 'مبيد حشري طبيعي', category: 'pesticides', price: 28, oldPrice: 35, stock: 65, emoji: '🛡️', desc: 'مبيد حشري طبيعي آمن على البيئة', rating: 4.2, reviews: 43, badge: 'sale' },
-        { id: 6, name: 'تربة زراعية فاخرة', category: 'materials', price: 22, oldPrice: null, stock: 300, emoji: '🪴', desc: 'تربة زراعية عضوية غنية بالعناصر الغذائية', rating: 4.6, reviews: 98, badge: null },
-        { id: 7, name: 'نبات صبار زينة', category: 'plants', price: 25, oldPrice: null, stock: 80, emoji: '🌵', desc: 'نبات صبار مزهر مناسب للديكور الداخلي', rating: 4.4, reviews: 56, badge: 'new' },
-        { id: 8, name: 'بذور ريحان طازج', category: 'seeds', price: 8, oldPrice: null, stock: 250, emoji: '🌿', desc: 'بذور ريحان إيطالي', rating: 4.1, reviews: 34, badge: null },
-        { id: 9, name: 'مجرفة يدوية ستانلس', category: 'tools', price: 55, oldPrice: 70, stock: 42, emoji: '⛏️', desc: 'مجرفة يدوية من الستانلس ستيل مع مقبض خشبي', rating: 4.9, reviews: 178, badge: 'hot' },
-        { id: 10, name: 'سماد عضوي طبيعي', category: 'fertilizers', price: 38, oldPrice: null, stock: 120, emoji: '🌱', desc: 'سماد عضوي طبيعي 100%', rating: 4.5, reviews: 92, badge: null },
-        { id: 11, name: 'شجرة ليمون صغيرة', category: 'plants', price: 95, oldPrice: 130, stock: 35, emoji: '🍋', desc: 'شتلة ليمون عمر 3 سنوات في أصيص', rating: 4.7, reviews: 145, badge: 'sale' },
-        { id: 12, name: 'بذور جزر عضوي', category: 'seeds', price: 10, oldPrice: null, stock: 180, emoji: '🥕', desc: 'بذور جزر عضوي', rating: 4.3, reviews: 28, badge: 'new' },
-        { id: 13, name: 'خراطيم ري بالتنقيط', category: 'tools', price: 120, oldPrice: 160, stock: 28, emoji: '💧', desc: 'خرطوم ري بالتنقيط 50 متر مع ملحقات', rating: 4.6, reviews: 67, badge: 'sale' },
-        { id: 14, name: 'مبيد فطري شامل', category: 'pesticides', price: 42, oldPrice: null, stock: 90, emoji: '🧴', desc: 'مبيد فطري شامل لعلاج أمراض النبات', rating: 4.4, reviews: 51, badge: null },
-        { id: 15, name: 'أصيص سيراميك كبير', category: 'materials', price: 65, oldPrice: 80, stock: 75, emoji: '🏺', desc: 'أصيص سيراميك فاخر بقطر 30 سم', rating: 4.8, reviews: 89, badge: 'hot' },
-        { id: 16, name: 'نبات فلودندرون', category: 'plants', price: 45, oldPrice: null, stock: 60, emoji: '🌿', desc: 'نبات فلودندرون للديكور الداخلي', rating: 4.2, reviews: 37, badge: null },
-        { id: 17, name: 'بذور فراولة', category: 'seeds', price: 15, oldPrice: 20, stock: 140, emoji: '🍓', desc: 'بذور فراولة هجينة عالية الإنتاج', rating: 4.6, reviews: 112, badge: 'sale' },
-        { id: 18, name: 'مقص تقليم احترافي', category: 'tools', price: 75, oldPrice: null, stock: 55, emoji: '✂️', desc: 'مقص تقليم احترافي مع غمد أمان', rating: 4.8, reviews: 134, badge: 'hot' },
-        { id: 19, name: 'سماد بوتاسيوم', category: 'fertilizers', price: 32, oldPrice: null, stock: 100, emoji: '🔬', desc: 'سماد بوتاسيوم سائل لتقوية الأزهار', rating: 4.3, reviews: 45, badge: null },
-        { id: 20, name: 'بيت نمو 5x5م', category: 'materials', price: 250, oldPrice: 350, stock: 12, emoji: '🏗️', desc: 'بيت نمو مقاوم للأشعة فوق البنفسجية', rating: 4.7, reviews: 78, badge: 'sale' }
-      ],
-      categories: [
-        { id: 'plants', name: 'النباتات', emoji: '🌱' },
-        { id: 'seeds', name: 'البذور', emoji: '🌾' },
-        { id: 'tools', name: 'الأدوات الزراعية', emoji: '🔧' },
-        { id: 'fertilizers', name: 'الأسمدة', emoji: '🧪' },
-        { id: 'pesticides', name: 'المبيدات', emoji: '🛡️' },
-        { id: 'materials', name: 'المواد الزراعية', emoji: '📦' }
-      ],
-      orders: [
-        { id: 1001, customer: 'أحمد محمد', email: 'ahmed@email.com', phone: '0555123456', items: [{ productId: 1, qty: 2 }, { productId: 4, qty: 1 }], total: 215, status: 'completed', date: '2026-05-18' },
-        { id: 1002, customer: 'سارة علي', email: 'sara@email.com', phone: '0555987654', items: [{ productId: 11, qty: 1 }], total: 95, status: 'pending', date: '2026-05-19' },
-        { id: 1003, customer: 'خالد العمري', email: 'khaled@email.com', phone: '0555456789', items: [{ productId: 9, qty: 1 }, { productId: 18, qty: 1 }], total: 130, status: 'completed', date: '2026-05-17' }
-      ],
-      customers: [
-        { id: 1, name: 'أحمد محمد', email: 'ahmed@email.com', phone: '0555123456', orders: 8, totalSpent: 1250, date: '2025-11-15' },
-        { id: 2, name: 'سارة علي', email: 'sara@email.com', phone: '0555987654', orders: 5, totalSpent: 680, date: '2025-12-20' },
-        { id: 3, name: 'خالد العمري', email: 'khaled@email.com', phone: '0555456789', orders: 12, totalSpent: 2100, date: '2025-09-10' }
-      ],
-      discounts: [
-        { id: 1, code: 'AGRI20', percent: 20, uses: 45, maxUses: 100, status: 'active' },
-        { id: 2, code: 'SUMMER10', percent: 10, uses: 89, maxUses: 200, status: 'active' }
-      ],
-      ads: [
-        { id: 1, title: 'عروض الموسم الزراعي', text: 'خصومات على البذور والأسمدة المختارة لفترة محدودة.', buttonText: 'تسوق العروض', category: 'offers', emoji: '🌾', imageUrl: '', active: true },
-        { id: 2, title: 'مستلزمات الري الحديثة', text: 'جهز مزرعتك بخراطيم وتنقيط وأدوات ري عملية.', buttonText: 'عرض الأدوات', category: 'tools', emoji: '💧', imageUrl: '', active: true },
-        { id: 3, title: 'نباتات منزلية جاهزة', text: 'اختيارات جميلة للبيت والمكتب مع عناية سهلة.', buttonText: 'عرض النباتات', category: 'plants', emoji: '🪴', imageUrl: '', active: true }
-      ],
-      reviews: [
-        { id: 1, customer: 'أحمد محمد', product: 'شجرة زيتون صغيرة', rating: 5, comment: 'شجرة ممتازة وجذورها قوية.', date: '2026-05-15' },
-        { id: 2, customer: 'سارة علي', product: 'بذور طماطم كرزية', rating: 4, comment: 'بذور جيدة وتحتاج وقتا للإنبات.', date: '2026-05-12' }
-      ],
-      cart: [],
-      wishlist: [],
-      nextProductId: 21,
-      nextOrderId: 1004,
-      nextAdId: 4,
-      totalRevenue: 85420
-    };
-
-    let state = loadData();
-    let currentCategory = 'all';
-    let currentSort = 'featured';
-    let currentStockFilter = 'all';
-    let editingProductId = null;
-
-    const $ = selector => document.querySelector(selector);
-    const $$ = selector => [...document.querySelectorAll(selector)];
-    const STORE_WHATSAPP_NUMBER = '96896017822';
-    const WHATSAPP_CHANNEL_URL = 'https://whatsapp.com/channel/0029VbBwEAu7IUYNRVJOtX3X?utm_source=chatgpt.com';
-    const YOUTUBE_CHANNEL_URL = 'https://youtube.com/@abuhassan1ai?si=KP1hLLJ6wiBpCGYX';
-    const BLOG_URL = 'https://zahratalarjwan.blogspot.com/';
-    const BLOG_FEED_URL = 'https://zahratalarjwan.blogspot.com/feeds/posts/default?alt=json&max-results=3';
-    const BLOG_FEED_JSONP_URL = 'https://zahratalarjwan.blogspot.com/feeds/posts/default?alt=json-in-script&max-results=3';
-    const ADMIN_PASSCODE = 'Asdf@#$1234';
-    const money = value => `${Number(value || 0).toFixed(3)} ر.ع`;
-
-    function escapeHtml(value = '') {
-      return String(value).replace(/[&<>"']/g, char => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;'
-      }[char]));
-    }
-
-    function safeAttr(value = '') {
-      return escapeHtml(value).replace(/`/g, '&#96;');
-    }
-
-    function productVisual(product, className = '') {
-      if (product.imageUrl) {
-        return `<img class="${className}" src="${safeAttr(product.imageUrl)}" alt="${safeAttr(product.name)}" loading="lazy" onerror="this.replaceWith(document.createTextNode('${safeAttr(product.emoji || '🌿')}'))">`;
-      }
-      return `<span class="product-fallback">${product.emoji || '🌿'}</span>`;
-    }
-
-    function adVisual(ad) {
-      if (ad.imageUrl) {
-        return `<img src="${safeAttr(ad.imageUrl)}" alt="${safeAttr(ad.title)}" loading="lazy" onerror="this.replaceWith(document.createTextNode('${safeAttr(ad.emoji || '🌿')}'))">`;
-      }
-      return ad.emoji || '🌿';
-    }
-
-    function loadData() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const data = raw ? JSON.parse(raw) : structuredClone(initialData);
-      data.products = data.products.map(product => ({
-        stock: 0,
-        rating: 0,
-        reviews: 0,
-        badge: null,
-        oldPrice: null,
-        desc: '',
-        imageUrl: '',
-        ...product,
-        stock: Number.isFinite(Number(product.stock)) ? Number(product.stock) : 0
-      }));
-      data.cart = (data.cart || []).filter(item => data.products.some(product => product.id === item.productId));
-      data.wishlist = [...new Set(data.wishlist || [])].filter(id => data.products.some(product => product.id === id));
-      data.ads = (data.ads || structuredClone(initialData.ads)).map(ad => ({
-        title: '',
-        text: '',
-        buttonText: 'عرض المزيد',
-        category: 'offers',
-        linkUrl: '',
-        emoji: '🌿',
-        imageUrl: '',
-        active: true,
-        ...ad
-      }));
-      data.nextProductId = Math.max(data.nextProductId || 1, ...data.products.map(product => product.id + 1));
-      data.nextOrderId = Math.max(data.nextOrderId || 1000, ...data.orders.map(order => order.id + 1));
-      data.nextAdId = Math.max(data.nextAdId || 1, ...data.ads.map(ad => ad.id + 1));
-      saveData(data);
-      return data;
-    }
-
-    function saveData(data = state) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
-
-    function productById(id) {
-      return state.products.find(product => product.id === Number(id));
-    }
-
-    function categoryLabel(id) {
-      const category = state.categories.find(item => item.id === id);
-      return category ? `${category.emoji} ${category.name}` : categoryNames[id] || id;
-    }
-
-    function showNotification(message, type = 'success') {
-      const el = $('#notification');
-      el.textContent = message;
-      el.className = `notification ${type} show`;
-      clearTimeout(showNotification.timer);
-      showNotification.timer = setTimeout(() => el.classList.remove('show'), 2600);
-    }
-
-    function renderNav() {
-      const links = [{ id: 'all', label: 'الرئيسية', page: 'home', emoji: '🏠' }, ...state.categories.map(category => ({ ...category, label: category.name })), { id: 'offers', label: 'العروض', emoji: '🔥' }];
-      $('#nav').innerHTML = links.map(link => `<button type="button" class="${link.id === currentCategory ? 'active' : ''}" data-${link.page ? `page="${link.page}"` : `category="${link.id}"`}>${link.emoji} ${link.label}</button>`).join('');
-    }
-
-    function createProductCard(product) {
-      const wished = state.wishlist.includes(product.id);
-      const discount = product.oldPrice ? Math.round((product.oldPrice - product.price) / product.oldPrice * 100) : 0;
-      const stars = '⭐'.repeat(Math.max(0, Math.round(product.rating)));
-      const stockLevel = Math.max(8, Math.min(100, Math.round((product.stock / 60) * 100)));
-      const stockText = product.stock <= 0 ? 'غير متوفر' : product.stock <= 10 ? 'قرب النفاد' : 'متوفر الآن';
-      return `
-        <article class="card product" style="--stock-level:${stockLevel}%">
-          <div class="product-image">
-            ${productVisual(product)}
-            ${discount ? `<span class="pill sale">-${discount}%</span>` : ''}
-          </div>
-          <div class="product-body">
-            <span class="pill">${categoryLabel(product.category)}</span>
-            <h3>${product.name}</h3>
-            <div class="muted">${stars} (${product.reviews} تقييم)</div>
-            <div class="product-meta">
-              <span class="product-chip">🚚 شحن سريع</span>
-              <span class="product-chip">🌿 ${stockText}</span>
-              ${discount ? '<span class="product-chip">🔥 عرض نشط</span>' : ''}
+    <!-- Payment Failure Modal -->
+    <div class="modal-overlay" id="paymentFailureModal">
+        <div class="modal-card">
+            <div class="failure-icon-wrapper" style="margin-bottom: 1.5rem; text-align: center;">
+                <i class="fa-solid fa-circle-xmark" style="font-size: 5rem; color: #ef4444; filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.4));"></i>
             </div>
-            <div><span class="price">${money(product.price)}</span>${product.oldPrice ? `<span class="old">${money(product.oldPrice)}</span>` : ''}</div>
-            <div class="stock-meter" aria-hidden="true"><span></span></div>
-            <div class="product-actions">
-              <button class="btn" type="button" data-add="${product.id}" ${product.stock <= 0 ? 'disabled' : ''}>${product.stock <= 0 ? 'نفذ' : 'أضف للسلة'}</button>
-              <button class="square" type="button" data-wish="${product.id}" title="المفضلة">${wished ? '♥' : '♡'}</button>
-              <button class="square" type="button" data-view="${product.id}" title="عرض سريع">⌕</button>
-              <button class="square" type="button" data-share-whatsapp="${product.id}" title="مشاركة واتساب">↗</button>
-            </div>
-          </div>
-        </article>`;
-    }
-
-    function renderCategories() {
-      $('#categoriesGrid').innerHTML = state.categories.map(category => {
-        const count = state.products.filter(product => product.category === category.id).length;
-        return `<button class="category-card" type="button" data-category="${category.id}">
-          <span class="category-icon">${category.emoji}</span>
-          <strong>${category.name}</strong>
-          <div class="muted">${count} منتج</div>
-        </button>`;
-      }).join('');
-    }
-
-    function productsFor(category) {
-      let products = category === 'offers'
-        ? state.products.filter(product => product.oldPrice || product.badge === 'sale')
-        : category === 'all'
-          ? [...state.products]
-          : state.products.filter(product => product.category === category);
-
-      if (currentStockFilter === 'available') products = products.filter(product => product.stock > 0);
-      if (currentStockFilter === 'sale') products = products.filter(product => product.oldPrice || product.badge === 'sale');
-      if (currentStockFilter === 'low') products = products.filter(product => product.stock > 0 && product.stock <= 10);
-
-      const rank = product => (product.badge === 'hot' ? 3 : 0) + (product.oldPrice ? 2 : 0) + (product.stock > 0 ? 1 : 0);
-      return products.sort((a, b) => {
-        if (currentSort === 'price-low') return a.price - b.price;
-        if (currentSort === 'price-high') return b.price - a.price;
-        if (currentSort === 'rating') return (b.rating || 0) - (a.rating || 0);
-        return rank(b) - rank(a);
-      });
-    }
-
-    function renderProducts(category = currentCategory) {
-      const products = productsFor(category);
-      $('#shopTitle').textContent = categoryNames[category] || categoryLabel(category);
-      $('#shopSubtitle').textContent = `${products.length} منتج`;
-      $('#shopProducts').innerHTML = products.length ? products.map(createProductCard).join('') : emptyState('لا توجد منتجات في هذا القسم');
-      $$('#quickFilters [data-stock-filter]').forEach(button => button.classList.toggle('active', button.dataset.stockFilter === currentStockFilter));
-      renderNav();
-    }
-
-    function renderFeatured() {
-      const featured = state.products.filter(product => product.badge === 'hot' || product.badge === 'sale' || product.oldPrice).slice(0, 8);
-      $('#featuredProducts').innerHTML = featured.map(createProductCard).join('');
-      $('#statProducts').textContent = state.products.length;
-    }
-
-    function blogFallback(message = 'تعذر تحميل مواضيع البلوجر الآن.') {
-      return `
-        <a class="card blog-card" href="${BLOG_URL}" target="_blank" rel="noopener">
-          <div class="blog-thumb">🌺</div>
-          <div>
-            <strong>مدونة زهرة الأرجوان</strong>
-            <p class="muted">${message} اضغط هنا لزيارة المدونة مباشرة.</p>
-          </div>
-        </a>`;
-    }
-
-    function extractBlogImage(html = '') {
-      const match = String(html).match(/<img[^>]+src=["']([^"']+)["']/i);
-      return match ? match[1] : '';
-    }
-
-    function loadBlogFeedWithJsonp() {
-      return new Promise((resolve, reject) => {
-        const callbackName = `bloggerFeed_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-        const script = document.createElement('script');
-        window[callbackName] = data => {
-          resolve(data);
-          script.remove();
-          delete window[callbackName];
-        };
-        script.onerror = () => {
-          script.remove();
-          delete window[callbackName];
-          reject(new Error('blogger-jsonp'));
-        };
-        script.src = `${BLOG_FEED_JSONP_URL}&callback=${callbackName}`;
-        document.head.appendChild(script);
-      });
-    }
-
-    async function loadBlogFeed() {
-      try {
-        const response = await fetch(BLOG_FEED_URL);
-        if (!response.ok) throw new Error('blog-feed');
-        return await response.json();
-      } catch {
-        return loadBlogFeedWithJsonp();
-      }
-    }
-
-    async function renderBlogPosts() {
-      const box = $('#blogPosts');
-      if (!box) return;
-      box.innerHTML = blogFallback('جاري تحميل آخر المواضيع...');
-      try {
-        const feed = await loadBlogFeed();
-        const posts = (feed.feed?.entry || []).slice(0, 3);
-        box.innerHTML = posts.length ? posts.map(post => {
-          const title = escapeHtml(post.title?.$t || 'موضوع جديد');
-          const link = post.link?.find(item => item.rel === 'alternate')?.href || BLOG_URL;
-          const content = post.content?.$t || post.summary?.$t || '';
-          const image = extractBlogImage(content);
-          const summary = escapeHtml(content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 120));
-          return `
-            <a class="card blog-card" href="${safeAttr(link)}" target="_blank" rel="noopener">
-              <div class="blog-thumb">${image ? `<img src="${safeAttr(image)}" alt="${title}" loading="lazy">` : '🌺'}</div>
-              <div>
-                <strong>${title}</strong>
-                <p class="muted">${summary || 'اقرأ المزيد من النصائح الزراعية.'}</p>
-              </div>
-            </a>`;
-        }).join('') : blogFallback('لا توجد مواضيع منشورة بعد.');
-      } catch {
-        box.innerHTML = blogFallback();
-      }
-    }
-
-    let currentAdIndex = 0;
-    let adTimer = null;
-
-    function renderAdSlider() {
-      const ads = state.ads.filter(ad => ad.active);
-      const slider = $('#adSlider');
-      if (!ads.length) {
-        slider.innerHTML = '';
-        return;
-      }
-      currentAdIndex = Math.min(currentAdIndex, ads.length - 1);
-      slider.innerHTML = `
-        <div class="ad-slider-frame">
-          ${ads.map((ad, index) => `
-            <button class="ad-slide ${index === currentAdIndex ? 'active' : ''}" type="button" data-ad-open="${ad.id}">
-              <div>
-                <h2>${escapeHtml(ad.title)}</h2>
-                <p>${escapeHtml(ad.text)}</p>
-                <span class="btn accent">${escapeHtml(ad.buttonText || 'عرض المزيد')}</span>
-              </div>
-              <div class="ad-media">${adVisual(ad)}</div>
-            </button>
-          `).join('')}
-          <div class="ad-controls">
-            ${ads.map((ad, index) => `<button class="ad-dot ${index === currentAdIndex ? 'active' : ''}" type="button" data-ad-dot="${index}" aria-label="الإعلان ${index + 1}"></button>`).join('')}
-          </div>
-        </div>`;
-      startAdTimer();
-    }
-
-    function setAdSlide(index) {
-      const ads = state.ads.filter(ad => ad.active);
-      if (!ads.length) return;
-      currentAdIndex = ((Number(index) % ads.length) + ads.length) % ads.length;
-      $$('.ad-slide').forEach((slide, slideIndex) => slide.classList.toggle('active', slideIndex === currentAdIndex));
-      $$('.ad-dot').forEach((dot, dotIndex) => dot.classList.toggle('active', dotIndex === currentAdIndex));
-      startAdTimer();
-    }
-
-    function startAdTimer() {
-      clearInterval(adTimer);
-      const ads = state.ads.filter(ad => ad.active);
-      if (ads.length <= 1) return;
-      adTimer = setInterval(() => setAdSlide(currentAdIndex + 1), 4500);
-    }
-
-    function openAd(id) {
-      const ad = state.ads.find(item => item.id === Number(id));
-      if (!ad) return;
-      const link = (ad.linkUrl || '').trim();
-      if (link) {
-        window.open(link, '_blank', 'noopener');
-        return;
-      }
-      filterByCategory(ad.category || 'offers');
-    }
-
-    function renderWishlist() {
-      const products = state.products.filter(product => state.wishlist.includes(product.id));
-      $('#wishlistProducts').innerHTML = products.length ? products.map(createProductCard).join('') : emptyState('المفضلة فارغة');
-    }
-
-    function emptyState(text) {
-      return `<div class="card" style="grid-column:1/-1; padding:40px; text-align:center"><div style="font-size:48px">🔎</div><h3>${text}</h3></div>`;
-    }
-
-    function showPage(page) {
-      $$('.page').forEach(el => el.classList.remove('active'));
-      $(`#${page}Page`).classList.add('active');
-      $('#store').style.display = 'block';
-      $('#admin').classList.remove('active');
-      if (page === 'shop') {
-        currentCategory = currentCategory || 'all';
-        renderProducts(currentCategory);
-      }
-      if (page === 'wishlist') renderWishlist();
-      if (page === 'checkout') renderCheckout();
-      $$('.mobile-nav button[data-page]').forEach(button => button.classList.toggle('active', button.dataset.page === page));
-      $$('.mobile-nav button[data-cart-open]').forEach(button => button.classList.remove('active'));
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function filterByCategory(category) {
-      currentCategory = category;
-      showPage('shop');
-    }
-
-    function addToCart(id) {
-      const product = productById(id);
-      if (!product || product.stock <= 0) return showNotification('هذا المنتج غير متوفر', 'warning');
-      const item = state.cart.find(row => row.productId === product.id);
-      if (item) {
-        if (item.qty >= product.stock) return showNotification('الكمية المطلوبة غير متوفرة في المخزون', 'warning');
-        item.qty += 1;
-      } else {
-        state.cart.push({ productId: product.id, qty: 1 });
-      }
-      saveData();
-      updateCounters();
-      showNotification(`تم إضافة "${product.name}" إلى السلة`);
-    }
-
-    function toggleWishlist(id) {
-      const product = productById(id);
-      if (!product) return;
-      const exists = state.wishlist.includes(product.id);
-      state.wishlist = exists ? state.wishlist.filter(item => item !== product.id) : [...state.wishlist, product.id];
-      saveData();
-      updateCounters();
-      renderFeatured();
-      renderProducts(currentCategory);
-      if ($('#wishlistPage').classList.contains('active')) renderWishlist();
-      showNotification(exists ? 'تمت الإزالة من المفضلة' : 'تمت الإضافة إلى المفضلة', exists ? 'info' : 'success');
-    }
-
-    function cartTotals() {
-      const subtotal = state.cart.reduce((sum, item) => {
-        const product = productById(item.productId);
-        return sum + (product ? product.price * item.qty : 0);
-      }, 0);
-      const shipping = subtotal === 0 || subtotal >= 200 ? 0 : 25;
-      const tax = subtotal * 0.15;
-      return { subtotal, shipping, tax, total: subtotal + shipping + tax };
-    }
-
-    function renderCart() {
-      const body = $('#cartItems');
-      if (!state.cart.length) {
-        body.innerHTML = emptyState('السلة فارغة');
-        $('#cartFooter').innerHTML = '';
-        return;
-      }
-      body.innerHTML = state.cart.map(item => {
-        const product = productById(item.productId);
-        if (!product) return '';
-        return `<div class="cart-item">
-          <div class="cart-emoji">${productVisual(product)}</div>
-          <div>
-            <strong>${product.name}</strong>
-            <div class="muted">${money(product.price * item.qty)}</div>
-            <div class="row" style="margin-top:8px">
-              <button class="square" type="button" data-qty="${product.id}" data-change="-1">−</button>
-              <strong>${item.qty}</strong>
-              <button class="square" type="button" data-qty="${product.id}" data-change="1">+</button>
-              <button class="square" type="button" data-remove="${product.id}">🗑️</button>
-            </div>
-          </div>
-        </div>`;
-      }).join('');
-      const totals = cartTotals();
-      $('#cartFooter').innerHTML = `
-        <div class="row between"><span>المجموع</span><strong>${money(totals.subtotal)}</strong></div>
-        <div class="row between"><span>الضريبة</span><strong>${money(totals.tax)}</strong></div>
-        <div class="row between"><span>الإجمالي</span><strong>${money(totals.total)}</strong></div>
-        <button class="btn" type="button" data-page="checkout" style="width:100%; margin-top:12px">إتمام الشراء</button>`;
-    }
-
-    function openCart() {
-      renderCart();
-      $('#drawerBackdrop').classList.add('active');
-      $('#cartDrawer').classList.add('active');
-    }
-
-    function closeCart() {
-      $('#drawerBackdrop').classList.remove('active');
-      $('#cartDrawer').classList.remove('active');
-    }
-
-    function changeQty(id, change) {
-      const product = productById(id);
-      const item = state.cart.find(row => row.productId === Number(id));
-      if (!product || !item) return;
-      item.qty += Number(change);
-      if (item.qty <= 0) state.cart = state.cart.filter(row => row.productId !== Number(id));
-      if (item.qty > product.stock) {
-        item.qty = product.stock;
-        showNotification('الكمية المطلوبة غير متوفرة', 'warning');
-      }
-      saveData();
-      updateCounters();
-      renderCart();
-      if ($('#checkoutPage').classList.contains('active')) renderCheckout();
-    }
-
-    function removeFromCart(id) {
-      state.cart = state.cart.filter(item => item.productId !== Number(id));
-      saveData();
-      updateCounters();
-      renderCart();
-    }
-
-    function updateCounters() {
-      $('#cartCount').textContent = state.cart.reduce((sum, item) => sum + item.qty, 0);
-      $('#wishlistCount').textContent = state.wishlist.length;
-    }
-
-    function renderCheckout() {
-      if (!state.cart.length) {
-        $('#checkoutItems').innerHTML = '<p class="muted">لا توجد منتجات في السلة.</p>';
-      } else {
-        $('#checkoutItems').innerHTML = state.cart.map(item => {
-          const product = productById(item.productId);
-          return product ? `<div class="row between"><span>${product.emoji} ${product.name} × ${item.qty}</span><strong>${money(product.price * item.qty)}</strong></div>` : '';
-        }).join('');
-      }
-      const totals = cartTotals();
-      $('#checkoutSubtotal').textContent = money(totals.subtotal);
-      $('#checkoutShipping').textContent = totals.shipping ? money(totals.shipping) : 'مجاني';
-      $('#checkoutTax').textContent = money(totals.tax);
-      $('#checkoutTotal').textContent = money(totals.total);
-    }
-
-    function placeOrder() {
-      if (!state.cart.length) return showNotification('السلة فارغة', 'error');
-      const name = $('#checkoutName').value.trim();
-      const phone = $('#checkoutPhone').value.trim();
-      const wilayat = $('#checkoutWilayat').value.trim();
-      const address = $('#checkoutAddress').value.trim();
-      if (!name || !phone || !wilayat) return showNotification('يرجى تعبئة الاسم والهاتف والولاية', 'error');
-
-      for (const item of state.cart) {
-        const product = productById(item.productId);
-        if (!product || product.stock < item.qty) return showNotification(`المخزون لا يكفي للمنتج: ${product ? product.name : item.productId}`, 'error');
-      }
-
-      const totals = cartTotals();
-      const orderItems = structuredClone(state.cart);
-      state.cart.forEach(item => {
-        const product = productById(item.productId);
-        product.stock -= item.qty;
-      });
-      const order = {
-        id: state.nextOrderId++,
-        customer: name,
-        email: $('#checkoutEmail').value.trim(),
-        phone,
-        wilayat,
-        address,
-        items: orderItems,
-        total: totals.total,
-        status: 'pending',
-        date: new Date().toISOString().slice(0, 10)
-      };
-      state.orders.unshift(order);
-      state.totalRevenue += totals.total;
-      state.cart = [];
-      saveData();
-      updateCounters();
-      renderFeatured();
-      sendInvoiceToWhatsApp(order, totals);
-      showNotification('تم تأكيد الطلب بنجاح');
-      showPage('home');
-    }
-
-    function buildInvoiceText(order, totals) {
-      const lines = [
-        `فاتورة طلب جديد من زهرة الأرجوان`,
-        `رقم الطلب: #${order.id}`,
-        `التاريخ: ${order.date}`,
-        '',
-        `العميل: ${order.customer}`,
-        `الهاتف: ${order.phone}`,
-        `البريد: ${order.email || 'غير مسجل'}`,
-        `الولاية: ${order.wilayat}`,
-        `العنوان: ${order.address || 'غير مسجل'}`,
-        '',
-        'المنتجات:'
-      ];
-      order.items.forEach(item => {
-        const product = productById(item.productId);
-        if (product) lines.push(`- ${product.name} × ${item.qty} = ${money(product.price * item.qty)}`);
-      });
-      lines.push(
-        '',
-        `المجموع الفرعي: ${money(totals.subtotal)}`,
-        `الشحن: ${totals.shipping ? money(totals.shipping) : 'مجاني'}`,
-        `الضريبة 15%: ${money(totals.tax)}`,
-        `الإجمالي: ${money(totals.total)}`
-      );
-      return lines.join('\n');
-    }
-
-    function sendInvoiceToWhatsApp(order, totals) {
-      const invoiceText = buildInvoiceText(order, totals);
-      const whatsappUrl = `https://wa.me/${STORE_WHATSAPP_NUMBER}?text=${encodeURIComponent(invoiceText)}`;
-      const opened = window.open(whatsappUrl, '_blank', 'noopener');
-      if (!opened) {
-        window.location.href = whatsappUrl;
-      }
-    }
-
-    function quickView(id) {
-      const product = productById(id);
-      if (!product) return;
-      const discount = product.oldPrice ? Math.round((product.oldPrice - product.price) / product.oldPrice * 100) : 0;
-      openModal(product.name, `
-        <div class="form-grid">
-          <div class="product-image" style="height:260px">${productVisual(product)}</div>
-          <div>
-            <span class="pill">${categoryLabel(product.category)}</span>
-            <h2>${product.name}</h2>
-            <p class="muted">${product.desc}</p>
-            <div><span class="price">${money(product.price)}</span>${product.oldPrice ? `<span class="old">${money(product.oldPrice)}</span>` : ''}</div>
-            <div class="product-meta">
-              <span class="product-chip">⭐ ${product.rating} من 5</span>
-              <span class="product-chip">📦 ${product.stock > 0 ? `متوفر: ${product.stock} قطعة` : 'غير متوفر'}</span>
-              ${discount ? `<span class="product-chip">خصم ${discount}%</span>` : ''}
-            </div>
-            <div class="card" style="padding:12px; margin-top:12px">
-              <strong>اقتراح سريع للعناية</strong>
-              <p class="muted" style="margin:6px 0 0">احفظ المنتج في المفضلة للرجوع إليه، وتواصل عبر واتساب إذا احتجت توصية بالكمية المناسبة.</p>
-            </div>
-          </div>
-        </div>`,
-        `<button class="btn" type="button" data-add="${product.id}" ${product.stock <= 0 ? 'disabled' : ''}>أضف للسلة</button>
-         <button class="btn accent" type="button" data-share-whatsapp="${product.id}">مشاركة واتساب</button>
-         <button class="btn secondary" type="button" data-share="${product.id}">نسخ الرابط</button>`);
-    }
-
-    function productShareUrl(product) {
-      return `${location.origin}${location.pathname}#product-${product.id}`;
-    }
-
-    function absoluteAssetUrl(path) {
-      try {
-        return new URL(path, location.href).href;
-      } catch {
-        return path || '';
-      }
-    }
-
-    function productShareText(product) {
-      const lines = [
-        `🌺 ${product.name}`,
-        `السعر: ${money(product.price)}`,
-        product.oldPrice ? `السعر السابق: ${money(product.oldPrice)}` : '',
-        `القسم: ${categoryLabel(product.category).replace(/[^\p{L}\p{N}\s]/gu, '').trim()}`,
-        product.stock > 0 ? `المتوفر: ${product.stock} قطعة` : 'غير متوفر حاليا',
-        '',
-        product.desc,
-        '',
-        `رابط الشراء: ${productShareUrl(product)}`
-      ].filter(Boolean);
-      if (product.imageUrl) lines.push(`صورة المنتج: ${absoluteAssetUrl(product.imageUrl)}`);
-      return lines.join('\n');
-    }
-
-    function shareProductToWhatsApp(id) {
-      const product = productById(id);
-      if (!product) return;
-      const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(productShareText(product))}`;
-      window.open(whatsappUrl, '_blank', 'noopener');
-    }
-
-    async function shareProduct(id) {
-      const product = productById(id);
-      if (!product) return;
-      const text = productShareText(product);
-      const url = productShareUrl(product);
-      if (navigator.share) {
-        await navigator.share({ title: product.name, text, url }).catch(() => {});
-        return;
-      }
-      await navigator.clipboard?.writeText(text).catch(() => {});
-      showNotification('تم نسخ رابط المنتج');
-    }
-
-    function openModal(title, body, foot = '') {
-      $('#modalTitle').textContent = title;
-      $('#modalBody').innerHTML = body;
-      $('#modalFoot').innerHTML = foot;
-      $('#modalBackdrop').classList.add('active');
-    }
-
-    function closeModal() {
-      $('#modalBackdrop').classList.remove('active');
-    }
-
-    function handleSearch(query) {
-      const box = $('#searchResults');
-      const text = query.trim();
-      if (text.length < 2) {
-        box.classList.remove('active');
-        return;
-      }
-      const matches = state.products.filter(product =>
-        product.name.includes(text) || product.desc.includes(text) || categoryLabel(product.category).includes(text)
-      ).slice(0, 8);
-      box.innerHTML = matches.length ? matches.map(product => `
-        <button class="search-result" type="button" data-view="${product.id}">
-          <span style="font-size:28px">${product.emoji}</span>
-          <span><strong>${product.name}</strong><br><small>${money(product.price)}</small></span>
-        </button>`).join('') : '<div style="padding:16px">لا توجد نتائج</div>';
-      box.classList.add('active');
-    }
-
-    function performSearch() {
-      const query = $('#searchInput').value.trim();
-      if (!query) return;
-      const matches = state.products.filter(product => product.name.includes(query) || product.desc.includes(query));
-      showPage('shop');
-      $('#shopTitle').textContent = `نتائج البحث: ${query}`;
-      $('#shopSubtitle').textContent = `${matches.length} نتيجة`;
-      $('#shopProducts').innerHTML = matches.length ? matches.map(createProductCard).join('') : emptyState('لا توجد نتائج مطابقة');
-      $('#searchResults').classList.remove('active');
-    }
-
-    function showImageSearch() {
-      openModal('التعرف على المنتج من الصورة', `
-        <div class="image-search-panel">
-          <div class="image-drop">
-            <strong>ارفع صورة المنتج أو النبات</strong>
-            <p class="muted" style="margin:0">سيبحث الموقع عن أقرب منتجات مشابهة داخل المتجر.</p>
-            <input id="imageSearchInput" type="file" accept="image/*">
-          </div>
-          <div id="imageSearchPreview" class="image-search-preview">
-            <img id="imageSearchPhoto" alt="الصورة المختارة">
-            <div>
-              <strong id="imageSearchName">صورة المنتج</strong>
-              <p id="imageSearchHint" class="muted">جاري التحليل...</p>
-            </div>
-          </div>
-          <div id="imageSearchResults" class="image-match-list"></div>
+            <h2 style="font-size: 2rem; font-weight: 800; color: white; margin-bottom: 1rem; text-align: center;">فشلت عملية الدفع</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1rem; text-align: center;" id="failureModalMessage">عذراً، لم نتمكن من إتمام عملية الدفع. يرجى التحقق من بيانات بطاقتك والمحاولة مجدداً.</p>
+            <button class="btn-primary" onclick="closeFailureModal()" style="width: 100%; background: #ef4444; box-shadow: 0 15px 30px rgba(239, 68, 68, 0.3);">إغلاق ومراجعة السلة</button>
         </div>
-      `);
-    }
+    </div>
 
-    function imageKeywordMap() {
-      return [
-        { category: 'plants', words: ['plant', 'tree', 'leaf', 'flower', 'seedling', 'olive', 'lemon', 'cactus', 'نبات', 'شجرة', 'شتلة', 'زهرة', 'ليمون', 'زيتون', 'صبار'] },
-        { category: 'seeds', words: ['seed', 'tomato', 'carrot', 'basil', 'strawberry', 'بذور', 'طماطم', 'جزر', 'ريحان', 'فراولة'] },
-        { category: 'tools', words: ['tool', 'sprayer', 'hose', 'scissor', 'shovel', 'مقص', 'مرشة', 'خرطوم', 'مجرفة', 'اداة', 'أداة'] },
-        { category: 'fertilizers', words: ['fertilizer', 'npk', 'potassium', 'سماد', 'بوتاسيوم'] },
-        { category: 'pesticides', words: ['pesticide', 'insect', 'fungus', 'مبيد', 'حشري', 'فطري'] },
-        { category: 'materials', words: ['soil', 'pot', 'greenhouse', 'تربة', 'اصيص', 'أصيص', 'بيت نمو'] }
-      ];
-    }
-
-    function analyzeImageColors(file) {
-      return new Promise(resolve => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const size = 48;
-          canvas.width = size;
-          canvas.height = size;
-          const ctx = canvas.getContext('2d', { willReadFrequently: true });
-          ctx.drawImage(img, 0, 0, size, size);
-          const data = ctx.getImageData(0, 0, size, size).data;
-          let green = 0, brown = 0, bright = 0, total = 0;
-          for (let i = 0; i < data.length; i += 16) {
-            const r = data[i], g = data[i + 1], b = data[i + 2];
-            total += 1;
-            if (g > r * 1.08 && g > b * 1.08) green += 1;
-            if (r > 90 && g > 55 && g < 150 && b < 110) brown += 1;
-            if ((r + g + b) / 3 > 190) bright += 1;
-          }
-          URL.revokeObjectURL(img.src);
-          resolve({
-            green: green / total,
-            brown: brown / total,
-            bright: bright / total
-          });
-        };
-        img.onerror = () => resolve({ green: 0, brown: 0, bright: 0 });
-        img.src = URL.createObjectURL(file);
-      });
-    }
-
-    function scoreProductsFromImage(file, colorStats) {
-      const name = file.name.toLowerCase();
-      const categoryScores = Object.fromEntries(state.categories.map(category => [category.id, 0]));
-      imageKeywordMap().forEach(group => {
-        group.words.forEach(word => {
-          if (name.includes(word.toLowerCase())) categoryScores[group.category] += 38;
-        });
-      });
-      if (colorStats.green > .18) categoryScores.plants += 24;
-      if (colorStats.green > .12) categoryScores.seeds += 10;
-      if (colorStats.brown > .12) categoryScores.materials += 22;
-      if (colorStats.bright > .62) categoryScores.tools += 8;
-
-      return state.products.map(product => {
-        const haystack = `${product.name} ${product.desc} ${categoryLabel(product.category)}`.toLowerCase();
-        const wordScore = name.split(/[\s_.-]+/).filter(word => word.length > 2 && haystack.includes(word)).length * 18;
-        const categoryScore = categoryScores[product.category] || 0;
-        const popularity = Math.min(16, Math.round((product.rating || 0) * 2 + (product.reviews || 0) / 35));
-        const stock = product.stock > 0 ? 8 : -20;
-        return { product, score: Math.max(8, Math.min(96, categoryScore + wordScore + popularity + stock)) };
-      }).sort((a, b) => b.score - a.score).slice(0, 6);
-    }
-
-    async function handleImageSearchFile(file) {
-      if (!file || !file.type.startsWith('image/')) {
-        showNotification('اختر صورة صالحة للمنتج', 'warning');
-        return;
-      }
-      const preview = $('#imageSearchPreview');
-      const photo = $('#imageSearchPhoto');
-      const hint = $('#imageSearchHint');
-      const name = $('#imageSearchName');
-      const resultsBox = $('#imageSearchResults');
-      photo.src = URL.createObjectURL(file);
-      name.textContent = file.name;
-      hint.textContent = 'جاري قراءة الصورة ومقارنتها بالمنتجات...';
-      preview.classList.add('active');
-      resultsBox.innerHTML = '';
-
-      const colorStats = await analyzeImageColors(file);
-      const matches = scoreProductsFromImage(file, colorStats);
-      hint.textContent = colorStats.green > .18
-        ? 'تبدو الصورة قريبة من النباتات أو المنتجات الخضراء.'
-        : colorStats.brown > .12
-          ? 'تبدو الصورة قريبة من التربة أو المواد الزراعية.'
-          : 'تمت مطابقة الصورة مع منتجات المتجر حسب أقرب إشارات متاحة.';
-
-      resultsBox.innerHTML = matches.map(({ product, score }) => `
-        <button class="image-match" type="button" data-view="${product.id}">
-          <span class="image-match-thumb">${productVisual(product)}</span>
-          <span><strong>${product.name}</strong><br><small class="muted">${categoryLabel(product.category)} - ${money(product.price)}</small></span>
-          <span class="match-score">${score}%</span>
-        </button>
-      `).join('');
-    }
-
-    function isAdminUnlocked() {
-      return sessionStorage.getItem('agriAdminUnlocked') === 'true';
-    }
-
-    function requestAdminAccess() {
-      if (isAdminUnlocked()) {
-        toggleAdmin();
-        return;
-      }
-      openModal('دخول الإدارة', `
-        <div class="admin-locked">
-          <span class="logo-mark">🔐</span>
-          <h3>الرجاء إدخال رمز الدخول</h3>
-          <p class="muted">هذا الرمز يحمي لوحة الإدارة من الاستخدام العادي على النسخة الثابتة.</p>
-          <label for="adminPasscode" style="text-align:right">رمز الدخول</label>
-          <input id="adminPasscode" type="password" autocomplete="current-password" placeholder="••••••••">
-        </div>`, `<button class="btn" type="button" data-admin-login>دخول</button>`);
-      setTimeout(() => $('#adminPasscode')?.focus(), 50);
-    }
-
-    function unlockAdmin() {
-      const input = $('#adminPasscode');
-      if (!input || input.value !== ADMIN_PASSCODE) {
-        showNotification('رمز الدخول غير صحيح', 'error');
-        return;
-      }
-      sessionStorage.setItem('agriAdminUnlocked', 'true');
-      closeModal();
-      toggleAdmin();
-    }
-
-    function toggleAdmin() {
-      $('#store').style.display = 'none';
-      $('#admin').classList.add('active');
-      showAdminSection('dashboard');
-      window.scrollTo(0, 0);
-    }
-
-    function showAdminSection(section) {
-      if (!isAdminUnlocked()) {
-        requestAdminAccess();
-        return;
-      }
-      $$('.admin-nav').forEach(button => button.classList.toggle('active', button.dataset.admin === section));
-      const titleMap = {
-        dashboard: 'لوحة المعلومات',
-        products: 'إدارة المنتجات',
-        orders: 'إدارة الطلبات',
-        customers: 'العملاء',
-        inventory: 'المخزون',
-        ads: 'إدارة الإعلانات',
-        discounts: 'الخصومات',
-        reviews: 'التقييمات',
-        settings: 'الإعدادات'
-      };
-      $('#adminTitle').textContent = titleMap[section] || section;
-      const renderers = {
-        dashboard: renderAdminDashboard,
-        products: renderAdminProducts,
-        orders: renderAdminOrders,
-        customers: renderAdminCustomers,
-        inventory: renderAdminInventory,
-        ads: renderAdminAds,
-        discounts: renderAdminDiscounts,
-        reviews: renderAdminReviews,
-        settings: renderAdminSettings
-      };
-      $('#adminBody').innerHTML = renderers[section]();
-    }
-
-    function renderAdminDashboard() {
-      return `
-        <div class="admin-grid">
-          <div class="card admin-card"><span>إجمالي المبيعات</span><strong>${money(state.totalRevenue)}</strong></div>
-          <div class="card admin-card"><span>الطلبات</span><strong>${state.orders.length}</strong></div>
-          <div class="card admin-card"><span>العملاء</span><strong>${state.customers.length}</strong></div>
-          <div class="card admin-card"><span>المنتجات</span><strong>${state.products.length}</strong></div>
-        </div>
-        <h3>آخر الطلبات</h3>
-        ${ordersTable(state.orders.slice(0, 6))}`;
-    }
-
-    function renderAdminProducts() {
-      return `
-        <div class="row between" style="margin-bottom:14px">
-          <h3>قائمة المنتجات</h3>
-          <button class="btn" type="button" data-product-new>إضافة منتج</button>
-        </div>
-        <table><thead><tr><th>المنتج</th><th>القسم</th><th>السعر</th><th>المخزون</th><th>إجراءات</th></tr></thead>
-        <tbody>${state.products.map(product => `<tr>
-          <td>${product.emoji} <strong>${product.name}</strong></td>
-          <td>${categoryLabel(product.category)}</td>
-          <td>${money(product.price)}</td>
-          <td>${product.stock}</td>
-          <td><button class="square" data-product-edit="${product.id}">✏️</button> <button class="square" data-product-delete="${product.id}">🗑️</button></td>
-        </tr>`).join('')}</tbody></table>`;
-    }
-
-    function ordersTable(orders) {
-      return `<table><thead><tr><th>رقم الطلب</th><th>العميل</th><th>المبلغ</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr></thead>
-      <tbody>${orders.map(order => `<tr>
-        <td>#${order.id}</td><td>${order.customer}</td><td>${money(order.total)}</td><td>${statusText(order.status)}</td><td>${order.date}</td>
-        <td>${order.status === 'pending' ? `<button class="square" data-order-status="${order.id}" data-status="completed">✅</button> <button class="square" data-order-status="${order.id}" data-status="cancelled">✕</button>` : ''}</td>
-      </tr>`).join('')}</tbody></table>`;
-    }
-
-    function renderAdminOrders() {
-      return ordersTable(state.orders);
-    }
-
-    function renderAdminCustomers() {
-      return `<table><thead><tr><th>العميل</th><th>البريد</th><th>الهاتف</th><th>الطلبات</th><th>المشتريات</th></tr></thead>
-      <tbody>${state.customers.map(customer => `<tr><td>${customer.name}</td><td>${customer.email}</td><td>${customer.phone}</td><td>${customer.orders}</td><td>${money(customer.totalSpent)}</td></tr>`).join('')}</tbody></table>`;
-    }
-
-    function renderAdminInventory() {
-      const total = state.products.reduce((sum, product) => sum + product.stock, 0);
-      const low = state.products.filter(product => product.stock > 0 && product.stock <= 10).length;
-      const out = state.products.filter(product => product.stock <= 0).length;
-      return `<div class="admin-grid">
-        <div class="card admin-card"><span>إجمالي المخزون</span><strong>${total}</strong></div>
-        <div class="card admin-card"><span>مخزون منخفض</span><strong>${low}</strong></div>
-        <div class="card admin-card"><span>نفد المخزون</span><strong>${out}</strong></div>
-      </div>
-      <table><thead><tr><th>المنتج</th><th>المخزون</th><th>الحالة</th><th>إجراء</th></tr></thead>
-      <tbody>${state.products.map(product => `<tr><td>${product.emoji} ${product.name}</td><td>${product.stock}</td><td>${product.stock > 10 ? 'جيد' : product.stock > 0 ? 'منخفض' : 'نفد'}</td><td><button class="square" data-restock="${product.id}">📦</button></td></tr>`).join('')}</tbody></table>`;
-    }
-
-    function renderAdminAds() {
-      return `
-        <div class="row between" style="margin-bottom:14px">
-          <h3>إعلانات السلايدر</h3>
-          <button class="btn" type="button" data-ad-new>إضافة إعلان</button>
-        </div>
-        <table><thead><tr><th>الإعلان</th><th>الرابط</th><th>القسم</th><th>الحالة</th><th>إجراءات</th></tr></thead>
-        <tbody>${state.ads.map(ad => `<tr>
-          <td>${ad.imageUrl ? `<span style="display:inline-block;width:48px;height:34px;vertical-align:middle;border-radius:6px;overflow:hidden;background:var(--secondary)"><img src="${safeAttr(ad.imageUrl)}" alt="" style="width:100%;height:100%;object-fit:cover"></span>` : ad.emoji} <strong>${escapeHtml(ad.title)}</strong><div class="muted">${escapeHtml(ad.text)}</div></td>
-          <td>${ad.linkUrl ? `<a href="${safeAttr(ad.linkUrl)}" target="_blank" rel="noopener">فتح الرابط</a>` : '<span class="muted">القسم فقط</span>'}</td>
-          <td>${categoryNames[ad.category] || categoryLabel(ad.category)}</td>
-          <td>${ad.active ? 'نشط' : 'متوقف'}</td>
-          <td>
-            <button class="square" data-ad-edit="${ad.id}">✏️</button>
-            <button class="square" data-ad-toggle="${ad.id}">${ad.active ? '⏸️' : '▶️'}</button>
-            <button class="square" data-ad-delete="${ad.id}">🗑️</button>
-          </td>
-        </tr>`).join('')}</tbody></table>`;
-    }
-
-    function renderAdminDiscounts() {
-      return `<table><thead><tr><th>الكود</th><th>النسبة</th><th>الاستخدام</th><th>الحالة</th></tr></thead>
-      <tbody>${state.discounts.map(discount => `<tr><td><strong>${discount.code}</strong></td><td>${discount.percent}%</td><td>${discount.uses}/${discount.maxUses}</td><td>${discount.status === 'active' ? 'نشط' : 'متوقف'}</td></tr>`).join('')}</tbody></table>`;
-    }
-
-    function renderAdminReviews() {
-      return state.reviews.map(review => `<div class="card" style="padding:16px; margin-bottom:12px">
-        <div class="row between"><strong>${review.customer} - ${review.product}</strong><span>${'⭐'.repeat(review.rating)}</span></div>
-        <p class="muted">${review.comment}</p><small>${review.date}</small>
-      </div>`).join('');
-    }
-
-    function renderAdminSettings() {
-      return `<div class="card" style="padding:20px"><h3>إعدادات المتجر</h3>
-        <div class="form-grid">
-          <div class="form-group"><label>اسم المتجر</label><input value="زهرة الأرجوان - المتجر الزراعي"></div>
-          <div class="form-group"><label>البريد</label><input value="info@agristore.com"></div>
-          <div class="form-group"><label>نسبة الضريبة</label><input value="15"></div>
-          <div class="form-group"><label>حد الشحن المجاني</label><input value="200"></div>
-        </div>
-        <button class="btn" type="button" onclick="showNotification('تم حفظ الإعدادات')">حفظ</button>
-      </div>`;
-    }
-
-    function statusText(status) {
-      return { pending: 'قيد الانتظار', completed: 'مكتمل', cancelled: 'ملغي' }[status] || status;
-    }
-
-    function showProductForm(product = null) {
-      editingProductId = product ? product.id : null;
-      openModal(product ? 'تعديل المنتج' : 'إضافة منتج', `
-        <div class="form-grid">
-          <div class="form-group full"><label>اسم المنتج</label><input id="prodName" value="${product ? product.name : ''}"></div>
-          <div class="form-group"><label>القسم</label><select id="prodCategory">${state.categories.map(category => `<option value="${category.id}" ${product && product.category === category.id ? 'selected' : ''}>${category.emoji} ${category.name}</option>`).join('')}</select></div>
-          <div class="form-group"><label>السعر</label><input id="prodPrice" type="number" value="${product ? product.price : ''}"></div>
-          <div class="form-group"><label>السعر القديم</label><input id="prodOldPrice" type="number" value="${product && product.oldPrice ? product.oldPrice : ''}"></div>
-          <div class="form-group"><label>المخزون</label><input id="prodStock" type="number" value="${product ? product.stock : ''}"></div>
-          <div class="form-group"><label>الرمز</label><input id="prodEmoji" value="${product ? product.emoji : '🌿'}"></div>
-          <div class="form-group full"><label>رابط صورة المنتج</label><input id="prodImageUrl" type="url" placeholder="https://example.com/image.jpg" value="${product && product.imageUrl && !product.imageUrl.startsWith('data:') ? safeAttr(product.imageUrl) : ''}"></div>
-          <div class="form-group full"><label>أو اختر صورة من الجهاز</label><input id="prodImageFile" type="file" accept="image/*"><small class="muted">إذا اخترت صورة من الجهاز سيتم حفظها داخل المتصفح لهذا المتجر.</small></div>
-          <div class="form-group full"><label>الوصف</label><textarea id="prodDesc" rows="3">${product ? product.desc : ''}</textarea></div>
-        </div>`, `<button class="btn" type="button" data-save-product>حفظ المنتج</button>`);
-    }
-
-    function readImageFile(input) {
-      const file = input.files && input.files[0];
-      if (!file) return Promise.resolve('');
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    async function saveProductFromForm() {
-      const name = $('#prodName').value.trim();
-      const price = Number($('#prodPrice').value);
-      if (!name || !Number.isFinite(price) || price <= 0) return showNotification('يرجى إدخال اسم وسعر صحيحين', 'error');
-      const selectedImage = await readImageFile($('#prodImageFile'));
-      const typedImage = $('#prodImageUrl').value.trim();
-      const currentProduct = editingProductId ? productById(editingProductId) : null;
-      const payload = {
-        name,
-        category: $('#prodCategory').value,
-        price,
-        oldPrice: Number($('#prodOldPrice').value) || null,
-        stock: Math.max(0, Number($('#prodStock').value) || 0),
-        emoji: $('#prodEmoji').value.trim() || '🌿',
-        imageUrl: selectedImage || typedImage || (currentProduct ? currentProduct.imageUrl : ''),
-        desc: $('#prodDesc').value.trim(),
-        rating: 0,
-        reviews: 0,
-        badge: null
-      };
-      if (editingProductId) {
-        const product = currentProduct;
-        Object.assign(product, payload, { rating: product.rating, reviews: product.reviews, badge: product.badge });
-      } else {
-        state.products.push({ id: state.nextProductId++, ...payload });
-      }
-      saveData();
-      closeModal();
-      renderAll();
-      showAdminSection('products');
-      showNotification('تم حفظ المنتج');
-    }
-
-    function showAdForm(ad = null) {
-      openModal(ad ? 'تعديل الإعلان' : 'إضافة إعلان', `
-        <div class="form-grid">
-          <div class="form-group full"><label>عنوان الإعلان</label><input id="adTitle" value="${ad ? safeAttr(ad.title) : ''}"></div>
-          <div class="form-group full"><label>نص الإعلان</label><textarea id="adText" rows="3">${ad ? escapeHtml(ad.text) : ''}</textarea></div>
-          <div class="form-group"><label>نص الزر</label><input id="adButtonText" value="${ad ? safeAttr(ad.buttonText) : 'عرض المزيد'}"></div>
-          <div class="form-group"><label>القسم عند الضغط</label><select id="adCategory">
-            <option value="offers" ${ad && ad.category === 'offers' ? 'selected' : ''}>العروض</option>
-            ${state.categories.map(category => `<option value="${category.id}" ${ad && ad.category === category.id ? 'selected' : ''}>${category.emoji} ${category.name}</option>`).join('')}
-          </select></div>
-          <div class="form-group full"><label>رابط الإعلان عند الضغط</label><input id="adLinkUrl" type="url" placeholder="https://example.com/page" value="${ad && ad.linkUrl ? safeAttr(ad.linkUrl) : ''}"><small class="muted">إذا تركته فارغا سينتقل الإعلان إلى القسم المختار.</small></div>
-          <div class="form-group"><label>الرمز</label><input id="adEmoji" value="${ad ? safeAttr(ad.emoji) : '🌿'}"></div>
-          <div class="form-group"><label>الحالة</label><select id="adActive"><option value="true" ${!ad || ad.active ? 'selected' : ''}>نشط</option><option value="false" ${ad && !ad.active ? 'selected' : ''}>متوقف</option></select></div>
-          <div class="form-group full"><label>رابط صورة الإعلان</label><input id="adImageUrl" type="url" placeholder="https://example.com/banner.jpg" value="${ad && ad.imageUrl && !ad.imageUrl.startsWith('data:') ? safeAttr(ad.imageUrl) : ''}"></div>
-          <div class="form-group full"><label>أو اختر صورة من الجهاز</label><input id="adImageFile" type="file" accept="image/*"><small class="muted">الصورة ستظهر داخل سلايدر الإعلانات في الصفحة الرئيسية.</small></div>
-        </div>`, `<button class="btn" type="button" data-save-ad="${ad ? ad.id : ''}">حفظ الإعلان</button>`);
-    }
-
-    async function saveAdFromForm(id) {
-      const title = $('#adTitle').value.trim();
-      if (!title) return showNotification('يرجى إدخال عنوان الإعلان', 'error');
-      const selectedImage = await readImageFile($('#adImageFile'));
-      const typedImage = $('#adImageUrl').value.trim();
-      const currentAd = id ? state.ads.find(ad => ad.id === Number(id)) : null;
-      const payload = {
-        title,
-        text: $('#adText').value.trim(),
-        buttonText: $('#adButtonText').value.trim() || 'عرض المزيد',
-        category: $('#adCategory').value,
-        linkUrl: $('#adLinkUrl').value.trim(),
-        emoji: $('#adEmoji').value.trim() || '🌿',
-        imageUrl: selectedImage || typedImage || (currentAd ? currentAd.imageUrl : ''),
-        active: $('#adActive').value === 'true'
-      };
-      if (currentAd) {
-        Object.assign(currentAd, payload);
-      } else {
-        state.ads.push({ id: state.nextAdId++, ...payload });
-      }
-      saveData();
-      closeModal();
-      renderAll();
-      showAdminSection('ads');
-      showNotification('تم حفظ الإعلان');
-    }
-
-    function toggleAd(id) {
-      const ad = state.ads.find(item => item.id === Number(id));
-      if (!ad) return;
-      ad.active = !ad.active;
-      saveData();
-      renderAdSlider();
-      showAdminSection('ads');
-    }
-
-    function deleteAd(id) {
-      if (!confirm('هل تريد حذف هذا الإعلان؟')) return;
-      state.ads = state.ads.filter(ad => ad.id !== Number(id));
-      saveData();
-      renderAdSlider();
-      showAdminSection('ads');
-      showNotification('تم حذف الإعلان', 'warning');
-    }
-
-    function deleteProduct(id) {
-      if (!confirm('هل تريد حذف هذا المنتج؟')) return;
-      state.products = state.products.filter(product => product.id !== Number(id));
-      state.cart = state.cart.filter(item => item.productId !== Number(id));
-      state.wishlist = state.wishlist.filter(productId => productId !== Number(id));
-      saveData();
-      renderAll();
-      showAdminSection('products');
-      showNotification('تم حذف المنتج', 'warning');
-    }
-
-    function updateOrderStatus(id, status) {
-      const order = state.orders.find(item => item.id === Number(id));
-      if (!order) return;
-      order.status = status;
-      saveData();
-      showAdminSection('orders');
-      showNotification('تم تحديث حالة الطلب');
-    }
-
-    function restock(id) {
-      const product = productById(id);
-      if (!product) return;
-      const qty = Number(prompt(`أدخل الكمية المضافة إلى "${product.name}"`, '50'));
-      if (!Number.isFinite(qty) || qty <= 0) return;
-      product.stock += qty;
-      saveData();
-      showAdminSection('inventory');
-      renderFeatured();
-      renderProducts(currentCategory);
-      showNotification('تم تحديث المخزون');
-    }
-
-    function toggleTheme() {
-      document.body.toggleAttribute('data-theme');
-    }
-
-    function renderAll() {
-      renderNav();
-      renderAdSlider();
-      renderCategories();
-      renderFeatured();
-      renderProducts(currentCategory);
-      renderBlogPosts();
-      updateCounters();
-    }
-
-    document.addEventListener('click', event => {
-      const target = event.target.closest('button');
-      if (!target) {
-        if (!event.target.closest('.search')) $('#searchResults').classList.remove('active');
-        return;
-      }
-      if (target.dataset.page) {
-        closeCart();
-        showPage(target.dataset.page);
-      }
-      if (target.dataset.category) filterByCategory(target.dataset.category);
-      if (target.dataset.add) addToCart(target.dataset.add);
-      if (target.dataset.wish) toggleWishlist(target.dataset.wish);
-      if (target.dataset.shareWhatsapp) shareProductToWhatsApp(target.dataset.shareWhatsapp);
-      if (target.dataset.share) shareProduct(target.dataset.share);
-      if (target.dataset.cartOpen !== undefined) openCart();
-      if (target.dataset.stockFilter) {
-        currentStockFilter = target.dataset.stockFilter;
-        renderProducts(currentCategory);
-      }
-      if (target.dataset.view) {
-        $('#searchResults').classList.remove('active');
-        quickView(target.dataset.view);
-      }
-      if (target.dataset.qty) changeQty(target.dataset.qty, target.dataset.change);
-      if (target.dataset.remove) removeFromCart(target.dataset.remove);
-      if (target.dataset.admin) showAdminSection(target.dataset.admin);
-      if (target.dataset.adminLogin !== undefined) unlockAdmin();
-      if (target.dataset.productNew !== undefined) showProductForm();
-      if (target.dataset.productEdit) showProductForm(productById(target.dataset.productEdit));
-      if (target.dataset.productDelete) deleteProduct(target.dataset.productDelete);
-      if (target.dataset.saveProduct !== undefined) saveProductFromForm();
-      if (target.dataset.adDot !== undefined) setAdSlide(target.dataset.adDot);
-      if (target.dataset.adOpen) openAd(target.dataset.adOpen);
-      if (target.dataset.adNew !== undefined) showAdForm();
-      if (target.dataset.adEdit) showAdForm(state.ads.find(ad => ad.id === Number(target.dataset.adEdit)));
-      if (target.dataset.adToggle) toggleAd(target.dataset.adToggle);
-      if (target.dataset.adDelete) deleteAd(target.dataset.adDelete);
-      if (target.dataset.saveAd !== undefined) saveAdFromForm(target.dataset.saveAd);
-      if (target.dataset.orderStatus) updateOrderStatus(target.dataset.orderStatus, target.dataset.status);
-      if (target.dataset.restock) restock(target.dataset.restock);
-    });
-
-    $('#searchInput').addEventListener('input', event => handleSearch(event.target.value));
-    $('#searchInput').addEventListener('keydown', event => {
-      if (event.key === 'Enter') performSearch();
-    });
-    $('#searchBtn').addEventListener('click', performSearch);
-    $('#imageSearchBtn').addEventListener('click', showImageSearch);
-    document.addEventListener('change', event => {
-      if (event.target.id === 'imageSearchInput') {
-        handleImageSearchFile(event.target.files?.[0]);
-      }
-    });
-    $('#sortProducts').addEventListener('change', event => {
-      currentSort = event.target.value;
-      renderProducts(currentCategory);
-    });
-    $('#cartBtn').addEventListener('click', openCart);
-    $('#closeCart').addEventListener('click', closeCart);
-    $('#drawerBackdrop').addEventListener('click', closeCart);
-    $('#closeModal').addEventListener('click', closeModal);
-    $('#modalBackdrop').addEventListener('click', event => {
-      if (event.target.id === 'modalBackdrop') closeModal();
-    });
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Enter' && $('#modalBackdrop').classList.contains('active') && $('#adminPasscode')) {
-        unlockAdmin();
-      }
-      if (event.key === 'Escape' && $('#modalBackdrop').classList.contains('active')) {
-        closeModal();
-      }
-    });
-    $('#themeBtn').addEventListener('click', toggleTheme);
-    $('#adminThemeBtn').addEventListener('click', toggleTheme);
-    $('#adminBtn').addEventListener('click', requestAdminAccess);
-    $('#backToStore').addEventListener('click', () => {
-      $('#admin').classList.remove('active');
-      $('#store').style.display = 'block';
-      renderAll();
-    });
-    $('#placeOrderBtn').addEventListener('click', placeOrder);
-
-    let deferredInstallPrompt = null;
-    window.addEventListener('beforeinstallprompt', event => {
-      event.preventDefault();
-      deferredInstallPrompt = event;
-      if (!localStorage.getItem('agriInstallDismissed')) {
-        $('#installHint').classList.add('show');
-      }
-    });
-    $('#installAppBtn').addEventListener('click', async () => {
-      if (!deferredInstallPrompt) return;
-      deferredInstallPrompt.prompt();
-      await deferredInstallPrompt.userChoice;
-      deferredInstallPrompt = null;
-      $('#installHint').classList.remove('show');
-    });
-    $('#dismissInstallBtn').addEventListener('click', () => {
-      localStorage.setItem('agriInstallDismissed', 'true');
-      $('#installHint').classList.remove('show');
-    });
-
-    function openSharedProductFromUrl() {
-      const match = location.hash.match(/^#product-(\d+)$/);
-      if (!match) return;
-      const product = productById(match[1]);
-      if (product) {
-        showPage('shop');
-        quickView(product.id);
-      }
-    }
-
-    window.addEventListener('hashchange', openSharedProductFromUrl);
-
-    if ('serviceWorker' in navigator && window.isSecureContext) {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
-    }
-
-    renderAll();
-    openSharedProductFromUrl();
-  </script>
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

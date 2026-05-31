@@ -1,0 +1,17 @@
+{
+  "name": "arjwan-store",
+  "version": "1.0.0",
+  "description": "Zahrat Alarjwan Modernized Storefront",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "node-fetch": "^3.3.2"
+  }
+}
