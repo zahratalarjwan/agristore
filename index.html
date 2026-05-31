@@ -21,6 +21,7 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -48,6 +49,10 @@
         </nav>
 
         <div class="nav-actions">
+            <!-- PWA Install Button -->
+            <button id="installAppBtn" class="btn-install" style="display: none;">
+                <i class="fa-solid fa-circle-down"></i> <span>تحميل التطبيق</span>
+            </button>
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
                 <input type="text" id="productSearch" placeholder="ابحث عن منتج..." oninput="searchProducts()">
@@ -64,6 +69,13 @@
     </header>
 
     <main>
+        <!-- Stories Section -->
+        <section class="stories-section" id="storiesSection" style="display: none;" data-aos="fade-down">
+            <div class="stories-container" id="storiesContainer">
+                <!-- Circular story badges will be injected here -->
+            </div>
+        </section>
+
         <!-- Dynamic Hero Slider -->
         <section class="hero-slider-container" id="home">
             <div class="slider-wrapper" id="heroSliderWrapper">
@@ -311,6 +323,38 @@
             <h2 style="font-size: 2rem; font-weight: 800; color: white; margin-bottom: 1rem; text-align: center;">فشلت عملية الدفع</h2>
             <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1rem; text-align: center;" id="failureModalMessage">عذراً، لم نتمكن من إتمام عملية الدفع. يرجى التحقق من بيانات بطاقتك والمحاولة مجدداً.</p>
             <button class="btn-primary" onclick="closeFailureModal()" style="width: 100%; background: #ef4444; box-shadow: 0 15px 30px rgba(239, 68, 68, 0.3);">إغلاق ومراجعة السلة</button>
+        </div>
+    </div>
+
+    <!-- Story Viewer Modal -->
+    <div class="story-modal" id="storyViewerModal">
+        <div class="story-modal-overlay" onclick="closeStoryViewer()"></div>
+        <div class="story-viewer-card">
+            <!-- Progress Bars -->
+            <div class="story-progress-container" id="storyProgressContainer"></div>
+            
+            <!-- Story Header -->
+            <div class="story-viewer-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="app_icon.png" class="story-viewer-avatar" alt="Logo">
+                    <span class="story-viewer-title" id="storyViewerTitle">اسم القصة</span>
+                </div>
+                <i class="fa-solid fa-xmark story-viewer-close" onclick="closeStoryViewer()"></i>
+            </div>
+            
+            <!-- Story Content -->
+            <div class="story-viewer-content" id="storyViewerContent">
+                <!-- 9:16 Image will be dynamically injected here -->
+            </div>
+            
+            <!-- Story Navigation Taps -->
+            <div class="story-tap-zone left" onclick="prevStory()"></div>
+            <div class="story-tap-zone right" onclick="nextStory()"></div>
+            
+            <!-- Story Action Button -->
+            <div class="story-viewer-footer" id="storyViewerFooter" style="display: none;">
+                <a href="#" class="btn-primary" id="storyActionBtn" style="width: 100%; text-align: center;">تسوق الآن</a>
+            </div>
         </div>
     </div>
 

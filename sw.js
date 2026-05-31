@@ -1,35 +1,61 @@
-const CACHE_NAME = 'zahrat-alarjwan-v6';
-const APP_SHELL = [
-  './',
-  './index.html',
-  './manifest.webmanifest',
-  './icons/zahrat-alarjwan-logo.jpg',
-  './icons/whatsapp.svg'
+const CACHE_NAME = 'arjwan-store-v2';
+const ASSETS = [
+  '/',
+  '/index.html',
+  '/admin.html',
+  '/style.css',
+  '/script.js',
+  '/manifest.json',
+  '/app_icon.png',
+  '/glassy_botanical_hero.png',
+  '/agricultural_glass_hero.png',
+  '/matjarna_hero_luxury_1778254117070.png'
 ];
 
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))
+// Install Event - cache core files
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(ASSETS))
+      .then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys => Promise.all(
-      keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-    ))
+// Activate Event - clear old caches
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-  event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
-      const copy = response.clone();
-      caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
-      return response;
-    }).catch(() => caches.match('./index.html')))
+// Fetch Event - network-first fallback to cache
+self.addEventListener('fetch', e => {
+  // Only handle HTTP/HTTPS schemes (exclude chrome-extension, etc.)
+  if (!e.request.url.startsWith('http')) return;
+
+  // For API endpoints, skip caching
+  if (e.request.url.includes('/api/')) {
+    return;
+  }
+
+  e.respondWith(
+    fetch(e.request)
+      .then(response => {
+        // Clone the response and cache it
+        const resClone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(e.request, resClone);
+        });
+        return response;
+      })
+      .catch(() => caches.match(e.request))
   );
 });

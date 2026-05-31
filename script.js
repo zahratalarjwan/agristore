@@ -29,6 +29,8 @@ function init() {
     startFomoPopups();
     checkOmPayStatus();
     checkPaymentCallback();
+    renderStories();
+    initPwaInstall();
     
     // Initialize AOS
     if (typeof AOS !== 'undefined') {
@@ -723,3 +725,189 @@ window.selectPaymentMethod = selectPaymentMethod;
 window.payWithOmPay = payWithOmPay;
 window.closeSuccessModal = closeSuccessModal;
 window.closeFailureModal = closeFailureModal;
+
+// --- PWA & Service Worker Support ---
+function initPwaInstall() {
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('PWA Service Worker registered!', reg))
+            .catch(err => console.error('PWA Service Worker failed:', err));
+    }
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('installAppBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installBtn) installBtn.style.display = 'flex';
+    });
+
+    if (installBtn) {
+        installBtn.addEventListener('click', () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('App successfully installed!');
+                }
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            });
+        });
+    }
+}
+
+// --- Instagram-style Vertical Stories Slider (9:16) ---
+let activeStoryIndex = 0;
+let storyTimer = null;
+let storyProgressInterval = null;
+let storyDuration = 5000; // 5 seconds per story
+let storiesList = JSON.parse(localStorage.getItem('aljawan_stories')) || [];
+
+// Seed default stories if empty
+if (storiesList.length === 0) {
+    storiesList = [
+        { id: 1, title: "عروض الصيف", image: "matjarna_hero_luxury_1778254117070.png", link: "#products" },
+        { id: 2, title: "أسمدة فاخرة", image: "glassy_botanical_hero.png", link: "#products" },
+        { id: 3, title: "بذور مهجنة", image: "agricultural_glass_hero.png", link: "#products" }
+    ];
+    localStorage.setItem('aljawan_stories', JSON.stringify(storiesList));
+}
+
+function renderStories() {
+    const container = document.getElementById('storiesContainer');
+    const section = document.getElementById('storiesSection');
+    if (!container || !section) return;
+
+    if (storiesList.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    
+    // Check viewed stories from localStorage
+    const viewedStories = JSON.parse(localStorage.getItem('aljawan_viewed_stories')) || [];
+
+    container.innerHTML = storiesList.map((story, index) => {
+        const isViewed = viewedStories.includes(story.id);
+        return `
+            <div class="story-badge" onclick="openStoryViewer(${index})">
+                <div class="story-ring ${isViewed ? 'viewed' : ''}">
+                    <div class="story-img-wrapper">
+                        <img src="${story.image}" alt="${story.title}" onerror="this.src='app_icon.png'">
+                    </div>
+                </div>
+                <span class="story-title">${story.title}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function openStoryViewer(index) {
+    activeStoryIndex = index;
+    const modal = document.getElementById('storyViewerModal');
+    if (!modal) return;
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Stop scrolling background
+    
+    // Mark story as viewed
+    const viewedStories = JSON.parse(localStorage.getItem('aljawan_viewed_stories')) || [];
+    if (!viewedStories.includes(storiesList[activeStoryIndex].id)) {
+        viewedStories.push(storiesList[activeStoryIndex].id);
+        localStorage.setItem('aljawan_viewed_stories', JSON.stringify(viewedStories));
+        renderStories(); // Rerender ring styles
+    }
+
+    showActiveStory();
+}
+
+function closeStoryViewer() {
+    const modal = document.getElementById('storyViewerModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    clearStoryTimers();
+}
+
+function clearStoryTimers() {
+    clearTimeout(storyTimer);
+    clearInterval(storyProgressInterval);
+}
+
+function showActiveStory() {
+    clearStoryTimers();
+    
+    const story = storiesList[activeStoryIndex];
+    const imgContainer = document.getElementById('storyViewerContent');
+    const titleContainer = document.getElementById('storyViewerTitle');
+    const footerContainer = document.getElementById('storyViewerFooter');
+    const actionBtn = document.getElementById('storyActionBtn');
+    
+    if (!imgContainer || !titleContainer) return;
+    
+    titleContainer.textContent = story.title;
+    imgContainer.innerHTML = `<img src="${story.image}" alt="${story.title}" onerror="this.src='app_icon.png'">`;
+    
+    if (story.link && story.link.trim() !== '') {
+        actionBtn.href = story.link;
+        footerContainer.style.display = 'block';
+    } else {
+        footerContainer.style.display = 'none';
+    }
+    
+    // Render progress bar ticks
+    const progressContainer = document.getElementById('storyProgressContainer');
+    if (progressContainer) {
+        progressContainer.innerHTML = storiesList.map((_, idx) => `
+            <div class="story-progress-bar">
+                <div class="story-progress-fill" id="progressFill_${idx}" style="width: ${idx < activeStoryIndex ? '100%' : '0%'}"></div>
+            </div>
+        `).join('');
+    }
+    
+    // Start progress fill animation
+    let start = Date.now();
+    const fillEl = document.getElementById(`progressFill_${activeStoryIndex}`);
+    
+    storyProgressInterval = setInterval(() => {
+        let elapsed = Date.now() - start;
+        let pct = Math.min((elapsed / storyDuration) * 100, 100);
+        if (fillEl) fillEl.style.width = pct + '%';
+        
+        if (elapsed >= storyDuration) {
+            clearInterval(storyProgressInterval);
+            nextStory();
+        }
+    }, 50);
+}
+
+function nextStory() {
+    if (activeStoryIndex < storiesList.length - 1) {
+        activeStoryIndex++;
+        showActiveStory();
+    } else {
+        closeStoryViewer();
+    }
+}
+
+function prevStory() {
+    if (activeStoryIndex > 0) {
+        activeStoryIndex--;
+        showActiveStory();
+    } else {
+        // Restart current story if it is the first one
+        showActiveStory();
+    }
+}
+
+// Expose stories functions globally
+window.openStoryViewer = openStoryViewer;
+window.closeStoryViewer = closeStoryViewer;
+window.nextStory = nextStory;
+window.prevStory = prevStory;
+window.renderStories = renderStories;
+window.initPwaInstall = initPwaInstall;
