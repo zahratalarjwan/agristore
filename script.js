@@ -170,29 +170,31 @@ function renderProducts(filter = 'الكل', searchTerm = '') {
                     ${outOfStock ? `<span style="position:absolute; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-weight:900; color:#ef4444; font-size:1.2rem;">نفذت الكمية</span>` : ''}
                 </div>
                 <div class="product-info">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                    <div class="product-meta-row">
                         <span class="product-cat">${p.category}</span>
-                        <div style="color:var(--secondary); font-size:0.8rem;">
+                        <div class="product-rating">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                            <span style="color:var(--text-muted); margin-right:3px;">(4.8)</span>
+                            <span class="rating-value">(4.8)</span>
                         </div>
                     </div>
                     <a href="#" class="product-name">${p.name}</a>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <div style="display:flex; flex-direction:column;">
-                            <span class="product-price" style="color:${hasOffer ? 'var(--primary)' : 'var(--secondary)'}">${Number(displayPrice).toFixed(3)} ر.ع</span>
-                            ${hasOffer ? `<del style="font-size:0.85rem; color:var(--text-muted); opacity:0.6;">${Number(p.price).toFixed(3)} ر.ع</del>` : ''}
+                    <div class="product-price-row">
+                        <div class="price-container">
+                            <span class="product-price ${hasOffer ? 'has-offer' : ''}">${Number(displayPrice).toFixed(3)} ر.ع</span>
+                            ${hasOffer ? `<del class="original-price">${Number(p.price).toFixed(3)} ر.ع</del>` : ''}
                         </div>
-                        <span style="font-size: 0.8rem; font-weight:700; color: ${outOfStock ? '#ef4444' : (lowStock ? '#fbbf24' : '#10b981')}">
-                            ${outOfStock ? 'غير متوفر' : (lowStock ? `باقي ${p.stock} فقط!` : 'متوفر')}
+                        <span class="stock-status ${outOfStock ? 'out' : (lowStock ? 'low' : 'in')}">
+                            ${outOfStock ? 'غير متوفر' : (lowStock ? `باقي ${p.stock}` : 'متوفر')}
                         </span>
                     </div>
-                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-                        <button class="add-btn" style="flex: 1;" onclick="addToCart(${p.id})" ${outOfStock ? 'disabled' : ''}>
-                            <i class="fa-solid fa-cart-plus"></i> ${outOfStock ? 'غير متوفر' : 'إضافة للسلة'}
+                    <div class="product-actions">
+                        <button class="add-btn" onclick="addToCart(${p.id})" ${outOfStock ? 'disabled' : ''}>
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span class="add-btn-text">${outOfStock ? 'غير متوفر' : 'إضافة للسلة'}</span>
                         </button>
-                        <button class="add-btn" style="width: 50px; background: #25d366; border-color: #25d366;" onclick="shareProductOnWhatsApp(${p.id})">
+                        <button class="whatsapp-share-btn" onclick="shareProductOnWhatsApp(${p.id})">
                             <i class="fa-brands fa-whatsapp"></i>
+                            <span class="share-btn-text">مشاركة</span>
                         </button>
                     </div>
                 </div>
@@ -268,7 +270,9 @@ function updateCartUI() {
     const totalAmount = document.getElementById('totalAmount');
     
     const count = cart.reduce((acc, item) => acc + item.quantity, 0);
-    cartCount.textContent = count;
+    if (cartCount) cartCount.textContent = count;
+    const mobileCartCount = document.getElementById('mobileCartCount');
+    if (mobileCartCount) mobileCartCount.textContent = count;
 
     if (cart.length === 0) {
         cartItemsList.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted);">السلة فارغة حالياً</div>`;
