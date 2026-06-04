@@ -20,8 +20,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="style.css?v=3">
-    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -49,10 +48,6 @@
         </nav>
 
         <div class="nav-actions">
-            <!-- PWA Install Button -->
-            <button id="installAppBtn" class="btn-install" style="display: none;">
-                <i class="fa-solid fa-circle-down"></i> <span>تحميل التطبيق</span>
-            </button>
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
                 <input type="text" id="productSearch" placeholder="ابحث عن منتج..." oninput="searchProducts()">
@@ -69,13 +64,6 @@
     </header>
 
     <main>
-        <!-- Stories Section -->
-        <section class="stories-section" id="storiesSection" style="display: none;" data-aos="fade-down">
-            <div class="stories-container" id="storiesContainer">
-                <!-- Circular story badges will be injected here -->
-            </div>
-        </section>
-
         <!-- Dynamic Hero Slider -->
         <section class="hero-slider-container" id="home">
             <div class="slider-wrapper" id="heroSliderWrapper">
@@ -184,29 +172,6 @@
             </div>
         </section>
     </main>
-
-    <!-- Mobile Bottom Navigation -->
-    <nav class="mobile-bottom-nav">
-        <a href="#home" class="nav-item active" onclick="document.querySelectorAll('.mobile-bottom-nav .nav-item').forEach(i=>i.classList.remove('active')); this.classList.add('active');">
-            <i class="fa-solid fa-house"></i>
-            <span>الرئيسية</span>
-        </a>
-        <a href="#products" class="nav-item" onclick="document.querySelectorAll('.mobile-bottom-nav .nav-item').forEach(i=>i.classList.remove('active')); this.classList.add('active');">
-            <i class="fa-solid fa-store"></i>
-            <span>المتجر</span>
-        </a>
-        <a href="#" class="nav-item" onclick="toggleCart(); return false;">
-            <div style="position: relative;">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span class="cart-badge-mobile" id="mobileCartCount">0</span>
-            </div>
-            <span>السلة</span>
-        </a>
-        <a href="https://wa.me/96896017822" class="nav-item" target="_blank">
-            <i class="fa-brands fa-whatsapp"></i>
-            <span>تواصل</span>
-        </a>
-    </nav>
 
     <!-- Footer -->
     <footer>
@@ -320,16 +285,6 @@
     <!-- FOMO Recent Sales Popup -->
     <div class="fomo-popup" id="fomoPopup"></div>
 
-    <!-- Product Quick View Modal -->
-    <div class="modal-overlay" id="productModal" onclick="if(event.target === this) closeProductModal()">
-        <div class="modal-card product-modal-card">
-            <i class="fa-solid fa-xmark modal-close-btn" onclick="closeProductModal()"></i>
-            <div id="productModalContent">
-                <!-- Dynamically injected by JS -->
-            </div>
-        </div>
-    </div>
-
     <!-- Payment Success Modal -->
     <div class="modal-overlay" id="paymentSuccessModal">
         <div class="modal-card">
@@ -359,41 +314,9 @@
         </div>
     </div>
 
-    <!-- Story Viewer Modal -->
-    <div class="story-modal" id="storyViewerModal">
-        <div class="story-modal-overlay" onclick="closeStoryViewer()"></div>
-        <div class="story-viewer-card">
-            <!-- Progress Bars -->
-            <div class="story-progress-container" id="storyProgressContainer"></div>
-            
-            <!-- Story Header -->
-            <div class="story-viewer-header">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="app_icon.png" class="story-viewer-avatar" alt="Logo">
-                    <span class="story-viewer-title" id="storyViewerTitle">اسم القصة</span>
-                </div>
-                <i class="fa-solid fa-xmark story-viewer-close" onclick="closeStoryViewer()"></i>
-            </div>
-            
-            <!-- Story Content -->
-            <div class="story-viewer-content" id="storyViewerContent">
-                <!-- 9:16 Image will be dynamically injected here -->
-            </div>
-            
-            <!-- Story Navigation Taps -->
-            <div class="story-tap-zone left" onclick="prevStory()"></div>
-            <div class="story-tap-zone right" onclick="nextStory()"></div>
-            
-            <!-- Story Action Button -->
-            <div class="story-viewer-footer" id="storyViewerFooter" style="display: none;">
-                <a href="#" class="btn-primary" id="storyActionBtn" style="width: 100%; text-align: center;">تسوق الآن</a>
-            </div>
-        </div>
-    </div>
-
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js?v=3"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
