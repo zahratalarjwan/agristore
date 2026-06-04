@@ -320,6 +320,16 @@
     <!-- FOMO Recent Sales Popup -->
     <div class="fomo-popup" id="fomoPopup"></div>
 
+    <!-- Product Quick View Modal -->
+    <div class="modal-overlay" id="productModal" onclick="if(event.target === this) closeProductModal()">
+        <div class="modal-card product-modal-card">
+            <i class="fa-solid fa-xmark modal-close-btn" onclick="closeProductModal()"></i>
+            <div id="productModalContent">
+                <!-- Dynamically injected by JS -->
+            </div>
+        </div>
+    </div>
+
     <!-- Payment Success Modal -->
     <div class="modal-overlay" id="paymentSuccessModal">
         <div class="modal-card">

@@ -31,6 +31,7 @@ function init() {
     checkPaymentCallback();
     renderStories();
     initPwaInstall();
+    checkUrlForProduct();
     
     // Initialize AOS
     if (typeof AOS !== 'undefined') {
@@ -164,7 +165,7 @@ function renderProducts(filter = 'الكل', searchTerm = '') {
 
         return `
             <div class="product-card" data-aos="fade-up">
-                <div class="product-img">
+                <div class="product-img" onclick="openProductModal(${p.id})" style="cursor: pointer;">
                     <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='glassy_botanical_hero.png'">
                     ${hasOffer ? `<span style="position:absolute; top:15px; right:15px; background:var(--secondary); color:var(--bg-dark); padding:5px 12px; border-radius:50px; font-weight:800; font-size:0.8rem;">خصم</span>` : ''}
                     ${outOfStock ? `<span style="position:absolute; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-weight:900; color:#ef4444; font-size:1.2rem;">نفذت الكمية</span>` : ''}
@@ -177,7 +178,7 @@ function renderProducts(filter = 'الكل', searchTerm = '') {
                             <span class="rating-value">(4.8)</span>
                         </div>
                     </div>
-                    <a href="#" class="product-name">${p.name}</a>
+                    <a href="#" class="product-name" onclick="openProductModal(${p.id}); return false;">${p.name}</a>
                     <div class="product-price-row">
                         <div class="price-container">
                             <span class="product-price ${hasOffer ? 'has-offer' : ''}">${Number(displayPrice).toFixed(3)} ر.ع</span>
@@ -396,14 +397,16 @@ function shareProductOnWhatsApp(id) {
     if (!product) return;
 
     const price = product.offerPrice ? product.offerPrice : product.price;
-    const storeUrl = window.location.href.split('#')[0]; // Base URL
+    // Strip query parameters to get base URL
+    const storeUrl = window.location.origin + window.location.pathname;
+    const shareUrl = `${storeUrl}?product=${product.id}`;
     
     let message = `*🌿 منتج مميز من متجر زهرة الارجوان*%0A%0A`;
     message += `*الاسم:* ${product.name}%0A`;
     message += `*السعر:* ${Number(price).toFixed(3)} ر.ع%0A`;
     if (product.desc) message += `*الوصف:* ${product.desc}%0A`;
-    message += `%0A🔗 *رابط الشراء:* ${storeUrl}#products%0A`;
-    message += `%0Aتصفح المزيد في متجرنا! ✨`;
+    message += `%0A🔗 *رابط المنتج المباشر:* ${shareUrl}%0A`;
+    message += `%0Aتصفح واشترِ المنتج الآن! ✨`;
 
     const whatsappUrl = `https://wa.me/?text=${message}`;
     window.open(whatsappUrl, '_blank');
@@ -914,4 +917,96 @@ window.closeStoryViewer = closeStoryViewer;
 window.nextStory = nextStory;
 window.prevStory = prevStory;
 window.renderStories = renderStories;
+
+// --- Product Quick View Modal Logic ---
+
+function openProductModal(id) {
+    const product = products.find(p => p.id == id);
+    if (!product) return;
+
+    const modal = document.getElementById('productModal');
+    const content = document.getElementById('productModalContent');
+    if (!modal || !content) return;
+
+    const displayPrice = product.offerPrice ? product.offerPrice : product.price;
+    const hasOffer = product.offerPrice !== null && product.offerPrice < product.price;
+    const lowStock = product.stock > 0 && product.stock < 10;
+    const outOfStock = product.stock <= 0;
+
+    content.innerHTML = `
+        <div class="product-modal-grid">
+            <div class="product-modal-img">
+                <img src="${product.image}" alt="${product.name}" onerror="this.src='glassy_botanical_hero.png'">
+            </div>
+            <div class="product-modal-info">
+                <div>
+                    <span class="product-cat" style="display:block; margin-bottom:0.25rem;">${product.category}</span>
+                    <h3 class="product-modal-name">${product.name}</h3>
+                    
+                    <div style="color:var(--secondary); font-size:0.85rem; margin-bottom:1rem; display:flex; align-items:center; gap:4px;">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                        <span style="color:var(--text-muted);">(4.8 التقييم العام)</span>
+                    </div>
+
+                    <div class="product-modal-price">
+                        <span style="color:${hasOffer ? 'var(--primary)' : 'var(--secondary)'}">${Number(displayPrice).toFixed(3)} ر.ع</span>
+                        ${hasOffer ? `<del style="font-size:1rem; color:var(--text-muted); opacity:0.6; margin-right:8px; text-decoration:line-through;">${Number(product.price).toFixed(3)} ر.ع</del>` : ''}
+                    </div>
+
+                    <p class="product-modal-desc">${product.desc || 'منتج زراعي ذو جودة عالية، مناسب للاستخدام الزراعي في ظروف سلطنة عمان البيئية لتحقيق أقصى إنتاجية.'}</p>
+                </div>
+
+                <div>
+                    <div style="margin-bottom:1rem; display:flex; align-items:center; gap:8px;">
+                        <span style="font-size:0.9rem; font-weight:700;">حالة المنتج:</span>
+                        <span style="font-size:0.9rem; font-weight:800; color: ${outOfStock ? '#ef4444' : (lowStock ? '#fbbf24' : '#10b981')}">
+                            ${outOfStock ? 'نفذت الكمية' : (lowStock ? `باقي ${product.stock} قطع فقط!` : 'متوفر في المخزن')}
+                        </span>
+                    </div>
+
+                    <div class="product-actions" style="margin-top:0;">
+                        <button class="add-btn" style="padding:1.1rem; font-size:1rem;" onclick="addToCart(${product.id}); closeProductModal();" ${outOfStock ? 'disabled' : ''}>
+                            <i class="fa-solid fa-cart-plus"></i> ${outOfStock ? 'غير متوفر' : 'إضافة إلى السلة'}
+                        </button>
+                        <button class="whatsapp-share-btn" style="width: 60px;" onclick="shareProductOnWhatsApp(${product.id})">
+                            <i class="fa-brands fa-whatsapp" style="font-size:1.5rem;"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Update URL query parameter without reloading
+    const newUrl = window.location.origin + window.location.pathname + '?product=' + id;
+    window.history.replaceState({ path: newUrl }, '', newUrl);
+}
+
+function closeProductModal() {
+    const modal = document.getElementById('productModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+
+    // Remove query parameter from URL
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({ path: cleanUrl }, '', cleanUrl);
+}
+
+function checkUrlForProduct() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('product');
+    if (productId) {
+        // Delay slightly to allow AOS and content to initialize
+        setTimeout(() => {
+            openProductModal(productId);
+        }, 1200);
+    }
+}
+
+// Expose modal functions to window
+window.openProductModal = openProductModal;
+window.closeProductModal = closeProductModal;
 window.initPwaInstall = initPwaInstall;

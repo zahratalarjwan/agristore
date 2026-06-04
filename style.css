@@ -927,3 +927,102 @@ footer {
     z-index: 20;
     padding: 1rem 0 0.5rem;
 }
+
+/* Product Details Modal Styling */
+.product-modal-card {
+    max-width: 700px !important;
+    padding: 2.5rem !important;
+    position: relative;
+}
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 10;
+}
+.modal-close-btn:hover {
+    color: white;
+    transform: scale(1.1);
+}
+.product-modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2rem;
+    margin-top: 0.5rem;
+    text-align: right;
+}
+.product-modal-img {
+    width: 100%;
+    height: 340px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+}
+.product-modal-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.product-modal-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.product-modal-name {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: white;
+    line-height: 1.4;
+}
+.product-modal-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 1rem 0;
+}
+.product-modal-price {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .product-modal-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 85vh !important;
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        border-radius: 24px 24px 0 0 !important;
+        transform: translateY(100%) !important;
+        transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1) !important;
+        padding: 2.5rem 1.25rem 1.5rem !important;
+        overflow-y: auto;
+    }
+    .modal-overlay.active .product-modal-card {
+        transform: translateY(0) !important;
+    }
+    .product-modal-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    .product-modal-img {
+        height: 200px;
+    }
+    .product-modal-name {
+        font-size: 1.3rem;
+    }
+    .product-modal-desc {
+        font-size: 0.85rem;
+        margin: 0.75rem 0;
+    }
+}
