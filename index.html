@@ -4,9 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#0b1120">
-    <meta name="description"
-        content="زهرة الارجوان - وجهتك الأولى لأجود المستلزمات الزراعية، الأسمدة، والبذور في سلطنة عمان. تميز زراعي بلا حدود.">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description" content="متجر زهرة الارجوان - وجهتك الأولى والأفضل لأجود المستلزمات الزراعية، الأسمدة، والبذور، والمبيدات في سلطنة عمان. استشارات هندسية وتميز زراعي بلا حدود.">
+    <meta name="keywords" content="زراعة, أسمدة, بذور, مبيدات, زهرة الارجوان, سلطنة عمان, مسقط, صحار, مستلزمات زراعية">
+    <meta name="author" content="زهرة الارجوان">
+    
+    <!-- OpenGraph / Social Meta Tags -->
+    <meta property="og:title" content="زهرة الارجوان | تميز زراعي بلا حدود">
+    <meta property="og:description" content="متجر زهرة الارجوان - وجهتك الأولى لأجود المستلزمات الزراعية والأسمدة في سلطنة عمان.">
+    <meta property="og:image" content="https://arjwan-om.com/matjarna_hero_luxury_1778254117070.png">
+    <meta property="og:url" content="https://arjwan-om.com">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_OM">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="زهرة الارجوان | المستلزمات الزراعية في عمان">
+    <meta name="twitter:description" content="اكتشف أفضل الأسمدة والبذور بأسعار منافسة في متجر زهرة الارجوان.">
+    <meta name="twitter:image" content="https://arjwan-om.com/matjarna_hero_luxury_1778254117070.png">
+
+    <!-- Structured Data JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "زهرة الارجوان",
+      "image": "https://arjwan-om.com/matjarna_hero_luxury_1778254117070.png",
+      "@id": "https://arjwan-om.com",
+      "url": "https://arjwan-om.com",
+      "telephone": "+96896017822",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "الشارع العام",
+        "addressLocality": "منح",
+        "addressRegion": "الداخلية",
+        "postalCode": "111",
+        "addressCountry": "OM"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 23.5859,
+        "longitude": 58.4059
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Saturday"
+        ],
+        "opens": "08:00",
+        "closes": "21:00"
+      }
+    }
+    </script>
     <title>زهرة الارجوان | تميز زراعي بلا حدود</title>
 
     <!-- Google Fonts: Cairo -->
@@ -20,8 +73,32 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Google Analytics Placeholder -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script> -->
+
+    <!-- Meta Pixel Code Placeholder -->
+    <!-- <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', 'YOUR_PIXEL_ID');
+      fbq('track', 'PageView');
+    </script> -->
+    </head>
 
 <body>
 
@@ -40,14 +117,19 @@
 
         <nav id="desktopNav">
             <ul>
-                <li><a href="#home" class="active">الرئيسية</a></li>
-                <li><a href="#products">المتجر</a></li>
-                <li><a href="#about">عن المؤسسة</a></li>
-                <li><a href="#contact">تواصل معنا</a></li>
+                <li><a href="#home" class="active" data-i18n="home">الرئيسية</a></li>
+                <li><a href="#products" data-i18n="store">المتجر</a></li>
+                <li><a href="#about" data-i18n="about">عن المؤسسة</a></li>
+                <li><a href="#contact" data-i18n="contact">تواصل معنا</a></li>
             </ul>
         </nav>
 
         <div class="nav-actions">
+            <button class="btn-lang" onclick="toggleLanguage()" style="background:none; border:1px solid var(--primary); border-radius:5px; padding:2px 8px; color:var(--primary); font-weight:bold; cursor:pointer;">EN</button>
+            <!-- PWA Install Button -->
+            <button id="installAppBtn" class="btn-install" style="display: none;">
+                <i class="fa-solid fa-circle-down"></i> <span>تحميل التطبيق</span>
+            </button>
             <div class="search-box">
                 <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
                 <input type="text" id="productSearch" placeholder="ابحث عن منتج..." oninput="searchProducts()">
@@ -64,6 +146,13 @@
     </header>
 
     <main>
+        <!-- Stories Section -->
+        <section class="stories-section" id="storiesSection" style="display: none;" data-aos="fade-down">
+            <div class="stories-container" id="storiesContainer">
+                <!-- Circular story badges will be injected here -->
+            </div>
+        </section>
+
         <!-- Dynamic Hero Slider -->
         <section class="hero-slider-container" id="home">
             <div class="slider-wrapper" id="heroSliderWrapper">
@@ -75,8 +164,8 @@
                             <h1>مستقبلك الأخضر يبدأ بلمسة احترافية</h1>
                             <p>نقدم أجود أنواع الأسمدة، البذور المهجنة، والمبيدات الآمنة لضمان إنتاجية استثنائية لمزرعتك.</p>
                             <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                                <a href="#products" class="btn-primary">استعرض المنتجات</a>
-                                <a href="https://wa.me/96896017822" class="btn-primary" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); box-shadow: none;">استشارة المهندس</a>
+                                <a href="#products" class="btn-primary" data-i18n="browse_products">استعرض المنتجات</a>
+                                <a href="https://wa.me/96896017822" class="btn-primary" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); box-shadow: none;" data-i18n="consult_engineer">استشارة المهندس</a>
                             </div>
                         </div>
                     </div>
@@ -173,6 +262,29 @@
         </section>
     </main>
 
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <a href="#home" class="nav-item active" onclick="document.querySelectorAll('.mobile-bottom-nav .nav-item').forEach(i=>i.classList.remove('active')); this.classList.add('active');">
+            <i class="fa-solid fa-house"></i>
+            <span data-i18n="home">الرئيسية</span>
+        </a>
+        <a href="#products" class="nav-item" onclick="document.querySelectorAll('.mobile-bottom-nav .nav-item').forEach(i=>i.classList.remove('active')); this.classList.add('active');">
+            <i class="fa-solid fa-store"></i>
+            <span data-i18n="store">المتجر</span>
+        </a>
+        <a href="#" class="nav-item" onclick="toggleCart(); return false;">
+            <div style="position: relative;">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span class="cart-badge-mobile" id="mobileCartCount">0</span>
+            </div>
+            <span data-i18n="cart">السلة</span>
+        </a>
+        <a href="https://wa.me/96896017822" class="nav-item" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i>
+            <span data-i18n="contact_short">تواصل</span>
+        </a>
+    </nav>
+
     <!-- Footer -->
     <footer>
         <div class="footer-grid">
@@ -192,9 +304,9 @@
             <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
                 <h3>روابط سريعة</h3>
                 <ul class="footer-links">
-                    <li><a href="#home">الرئيسية</a></li>
-                    <li><a href="#products">المتجر</a></li>
-                    <li><a href="#about">عن المؤسسة</a></li>
+                    <li><a href="#home" data-i18n="home">الرئيسية</a></li>
+                    <li><a href="#products" data-i18n="store">المتجر</a></li>
+                    <li><a href="#about" data-i18n="about">عن المؤسسة</a></li>
                     <li><a href="admin.html" style="color: var(--primary);"><i class="fa-solid fa-user-lock" style="margin-left: 5px;"></i> لوحة التحكم</a></li>
                 </ul>
             </div>
@@ -275,9 +387,29 @@
     </div>
 
     <!-- Floating WhatsApp -->
-    <a href="https://wa.me/96896017822" class="whatsapp-float" target="_blank">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
+    
+    <!-- Smart WhatsApp Widget -->
+    <div class="wa-widget-container" id="waWidgetContainer">
+        <div class="wa-widget-window" id="waWidgetWindow">
+            <div class="wa-header">
+                <div><i class="fa-brands fa-whatsapp"></i> <span data-i18n="wa_support">الدعم الفني المباشر</span></div>
+                <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleWaWidget()"></i>
+            </div>
+            <div class="wa-body">
+                <div class="wa-message">
+                    <span data-i18n="wa_welcome">مرحباً بك في زهرة الارجوان! كيف يمكننا مساعدتك اليوم؟ 🌿</span>
+                </div>
+            </div>
+            <div class="wa-footer">
+                <input type="text" id="waInput" placeholder="اكتب رسالتك هنا..." data-i18n-placeholder="wa_placeholder">
+                <button onclick="sendWaMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <button class="whatsapp-float" onclick="toggleWaWidget()">
+            <i class="fa-brands fa-whatsapp"></i>
+        </button>
+    </div>
+        
 
     <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
@@ -314,9 +446,80 @@
         </div>
     </div>
 
+    
+    <!-- Product Details Modal -->
+    <div class="modal-overlay" id="productDetailModal">
+        <div class="modal-card" style="padding: 0; overflow: hidden; max-width: 500px;">
+            <div style="position: relative; height: 350px;">
+                <img id="detailImage" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                <button onclick="closeProductModal()" style="position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(255,255,255,0.9); color: #ef4444; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div style="padding: 2rem; background: var(--bg-surface);">
+                <span id="detailCat" style="color: var(--primary); font-size: 0.85rem; font-weight: 700; text-transform: uppercase;"></span>
+                <h2 id="detailName" style="font-size: 1.5rem; font-weight: 800; color: var(--text-light); margin-bottom: 0.5rem;"></h2>
+                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 1rem;">
+                    <span id="detailPrice" style="font-size: 1.5rem; font-weight: 900; color: var(--secondary);"></span>
+                    <del id="detailOldPrice" style="font-size: 1rem; color: var(--text-muted); display: none;"></del>
+                </div>
+                <p id="detailDesc" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.6;"></p>
+                
+                <!-- Reviews Section -->
+                <div style="margin-bottom: 1.5rem; background: rgba(0,0,0,0.02); padding: 10px; border-radius: 12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                        <span style="font-weight:700; color:var(--text-light);" data-i18n="customer_reviews">تقييمات العملاء</span>
+                        <div id="detailStars" style="color:var(--secondary); font-size:0.9rem;"></div>
+                    </div>
+                    <div id="detailReviews" style="max-height: 100px; overflow-y:auto; font-size:0.85rem; color:var(--text-muted); margin-bottom: 10px;"></div>
+                    
+                    <div style="display:flex; gap:5px; align-items:center;">
+                        <input type="text" id="reviewInput" placeholder="أضف تقييمك..." style="flex:1; padding:8px; border:1px solid var(--glass-border); border-radius:8px; background:var(--bg-surface); color:var(--text-light); font-family:var(--font-cairo); font-size:0.85rem;">
+                        <button onclick="addReview()" style="padding:8px 12px; background:var(--primary); color:#fff; border:none; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+                    </div>
+                </div>
+        
+                <div style="display: flex; gap: 10px;">
+                    <button id="detailAddBtn" class="btn-primary" style="flex: 1; padding: 1rem; color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px;"></button>
+                    <button id="detailShareBtn" class="btn-primary" style="background: #25d366; box-shadow: none; padding: 1rem 1.5rem; color: #fff;"><i class="fa-brands fa-whatsapp"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Viewer Modal -->
+    <div class="story-modal" id="storyViewerModal">
+        <div class="story-modal-overlay" onclick="closeStoryViewer()"></div>
+        <div class="story-viewer-card">
+            <!-- Progress Bars -->
+            <div class="story-progress-container" id="storyProgressContainer"></div>
+            
+            <!-- Story Header -->
+            <div class="story-viewer-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <img src="app_icon.png" class="story-viewer-avatar" alt="Logo">
+                    <span class="story-viewer-title" id="storyViewerTitle">اسم القصة</span>
+                </div>
+                <i class="fa-solid fa-xmark story-viewer-close" onclick="closeStoryViewer()"></i>
+            </div>
+            
+            <!-- Story Content -->
+            <div class="story-viewer-content" id="storyViewerContent">
+                <!-- 9:16 Image will be dynamically injected here -->
+            </div>
+            
+            <!-- Story Navigation Taps -->
+            <div class="story-tap-zone left" onclick="prevStory()"></div>
+            <div class="story-tap-zone right" onclick="nextStory()"></div>
+            
+            <!-- Story Action Button -->
+            <div class="story-viewer-footer" id="storyViewerFooter" style="display: none;">
+                <a href="#" class="btn-primary" id="storyActionBtn" style="width: 100%; text-align: center;">تسوق الآن</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script src="script.js?v=4" defer></script>
 </body>
 
 </html>

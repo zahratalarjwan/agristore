@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
@@ -240,6 +241,7 @@
             <li class="nav-item"><a class="nav-link" onclick="showTab('products')"><i class="fa-solid fa-boxes-stacked"></i> المنتجات</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('orders')"><i class="fa-solid fa-cart-shopping"></i> الطلبات الواردة</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('slider')"><i class="fa-solid fa-images"></i> السلايدر والإعلانات</a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('stories')"><i class="fa-solid fa-circle-play"></i> قصص إنستجرام (Stories)</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('offers')"><i class="fa-solid fa-percent"></i> العروض والخصومات</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('coupons')"><i class="fa-solid fa-ticket"></i> كودات الخصم</a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('settings')"><i class="fa-solid fa-gears"></i> الإعدادات العامة</a></li>
@@ -265,8 +267,20 @@
                 <div class="stat-card"><i class="fa-solid fa-warehouse"></i><span class="stat-val" id="lowStockCount">0</span><span class="stat-label">تنبيهات المخزون</span></div>
             </div>
 
+            <!-- Charts Section -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div class="admin-card" style="margin-bottom: 0;">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fa-solid fa-chart-line"></i> مبيعات الأسبوع الأخير</h3>
+                    <canvas id="salesChart" style="max-height: 220px;"></canvas>
+                </div>
+                <div class="admin-card" style="margin-bottom: 0;">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fa-solid fa-chart-pie"></i> توزيع فئات المنتجات</h3>
+                    <canvas id="categoriesChart" style="max-height: 220px;"></canvas>
+                </div>
+            </div>
+
             <div class="admin-card">
-                <h3>أحدث الطلبات (محاكاة)</h3>
+                <h3>أحدث الطلبات</h3>
                 <div class="table-container">
                     <table>
                         <thead><tr><th>التاريخ</th><th>العميل</th><th>المبلغ</th><th>الحالة</th></tr></thead>
@@ -473,6 +487,37 @@
                     </table>
                 </div>
             </div>
+        <!-- Stories Tab -->
+        <div id="storiesTab" class="tab-content">
+            <div class="admin-card">
+                <h3>إضافة قصة تفاعلية جديدة (9:16)</h3>
+                <form id="storyForm" style="margin-top: 1.5rem;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>عنوان القصة (مثل: عروض الصيف)</label>
+                            <input type="text" id="storyTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label>رابط التوجيه عند الضغط (اختياري)</label>
+                            <input type="text" id="storyLink" placeholder="#products">
+                        </div>
+                        <div class="form-group">
+                            <label>صورة القصة (يفضل نسبة 9:16 طولية)</label>
+                            <input type="file" id="storyImgFile" accept="image/*">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem;">إضافة للقصص</button>
+                </form>
+            </div>
+            <div class="admin-card">
+                <h3>القصص النشطة حالياً</h3>
+                <div class="table-container">
+                    <table>
+                        <thead><tr><th>الصورة</th><th>العنوان</th><th>رابط التوجيه</th><th>الإجراء</th></tr></thead>
+                        <tbody id="adminStoryList"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
     <div class="toast" id="toast">تم الحفظ بنجاح</div>
@@ -482,6 +527,7 @@
         let products = JSON.parse(localStorage.getItem('aljawan_products')) || [];
         let slider = JSON.parse(localStorage.getItem('aljawan_slider')) || [];
         let coupons = JSON.parse(localStorage.getItem('aljawan_coupons')) || [];
+        let stories = JSON.parse(localStorage.getItem('aljawan_stories')) || [];
 
         // --- Auth ---
         function checkAuth() {
@@ -510,10 +556,12 @@
             renderAdminSlider();
             renderAdminCoupons();
             renderAdminOrders();
+            renderAdminStories();
             loadGeneralSettings();
             loadOfferSettings();
             loadOmPaySettings();
             setupMobileNav();
+            initDashboardCharts();
             
             setInterval(() => {
                 const now = new Date();
@@ -538,15 +586,38 @@
         function renderAdminOrders() {
             const orders = JSON.parse(localStorage.getItem('aljawan_orders')) || [];
             const list = document.getElementById('adminOrderList');
-            list.innerHTML = orders.map(o => `
+            
+            list.innerHTML = orders.map(o => {
+                const statusOptions = ['قيد الانتظار', 'تم الشحن', 'مكتمل', 'مدفوع (بوابة OmPay)', 'فشلت عملية الدفع'];
+                const optionsHtml = statusOptions.map(opt => `
+                    <option value="${opt}" ${o.status === opt ? 'selected' : ''}>${opt}</option>
+                `).join('');
+                
+                return `
                 <tr>
                     <td>${o.date}</td>
                     <td>${o.customer}<br><small>${o.phone}</small></td>
                     <td style="font-size: 0.8rem; max-width: 200px;">${o.items}</td>
                     <td style="color: var(--secondary); font-weight: 700;">${o.total}</td>
-                    <td><span style="color: ${o.status === 'مكتمل' ? 'var(--primary)' : 'var(--secondary)'}">${o.status}</span></td>
+                    <td>
+                        <select onchange="updateOrderStatus(${o.id}, this.value)" style="background: var(--bg-dark); border: 1px solid var(--glass-border); padding: 6px 12px; border-radius: 8px; color: white; font-family: var(--font-cairo); outline: none;">
+                            ${optionsHtml}
+                        </select>
+                    </td>
                 </tr>
-            `).reverse().join('');
+                `;
+            }).reverse().join('');
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const orders = JSON.parse(localStorage.getItem('aljawan_orders')) || [];
+            const index = orders.findIndex(o => o.id == orderId);
+            if (index > -1) {
+                orders[index].status = newStatus;
+                localStorage.setItem('aljawan_orders', JSON.stringify(orders));
+                renderAdminOrders();
+                showToast('تم تحديث حالة الطلب بنجاح');
+            }
         }
 
         function exportToGoogleSheets() {
@@ -815,10 +886,13 @@
             localStorage.setItem('aljawan_products', JSON.stringify(products));
             localStorage.setItem('aljawan_slider', JSON.stringify(slider));
             localStorage.setItem('aljawan_coupons', JSON.stringify(coupons));
+            localStorage.setItem('aljawan_stories', JSON.stringify(stories));
             renderAdminProducts();
             renderAdminSlider();
             renderAdminCoupons();
+            renderAdminStories();
             updateStats();
+            initDashboardCharts();
         }
 
         function resetProductForm() {
@@ -831,6 +905,124 @@
             const t = document.getElementById('toast');
             t.style.display = 'block';
             setTimeout(() => t.style.display = 'none', 3000);
+        }
+
+        // --- Stories Management ---
+        document.getElementById('storyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const file = document.getElementById('storyImgFile').files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                stories.push({
+                    id: Date.now(),
+                    title: document.getElementById('storyTitle').value.trim(),
+                    link: document.getElementById('storyLink').value.trim(),
+                    image: event.target.result
+                });
+                saveAndRefresh();
+                e.target.reset();
+                showToast('تمت إضافة القصة بنجاح');
+            };
+            if(file) reader.readAsDataURL(file);
+            else alert("يرجى اختيار صورة للقصة");
+        });
+
+        function renderAdminStories() {
+            const list = document.getElementById('adminStoryList');
+            if(!list) return;
+            list.innerHTML = stories.map(s => `
+                <tr>
+                    <td><img src="${s.image}" style="width:50px; height:80px; object-fit:cover; border-radius:5px;" onerror="this.src='app_icon.png'"></td>
+                    <td>${s.title}</td>
+                    <td>${s.link || '<span style="color:var(--text-muted)">لا يوجد</span>'}</td>
+                    <td><button class="btn btn-danger" onclick="deleteStory(${s.id})">حذف</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function deleteStory(id) {
+            if(confirm('هل أنت متأكد من حذف هذه القصة؟')) {
+                stories = stories.filter(s => s.id != id);
+                saveAndRefresh();
+            }
+        }
+
+        // --- Sales Trend and Categories distribution Chart.js ---
+        let salesChartInstance = null;
+        let categoriesChartInstance = null;
+
+        function initDashboardCharts() {
+            const salesCtx = document.getElementById('salesChart');
+            const categoriesCtx = document.getElementById('categoriesChart');
+            if (!salesCtx || !categoriesCtx) return;
+
+            if (salesChartInstance) salesChartInstance.destroy();
+            if (categoriesChartInstance) categoriesChartInstance.destroy();
+
+            const salesData = [15.200, 12.500, 24.900, 18.000, 32.500, 48.900, 38.000];
+            const salesLabels = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+
+            salesChartInstance = new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: salesLabels,
+                    datasets: [{
+                        label: 'المبيعات اليومية (ر.ع)',
+                        data: salesData,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#94a3b8', font: { family: 'Cairo' } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8', font: { family: 'Cairo' } }
+                        }
+                    }
+                }
+            });
+
+            const catLabels = ['أسمدة', 'بذور', 'مبيدات', 'أدوات'];
+            const catCounts = catLabels.map(label => products.filter(p => p.category === label).length);
+
+            categoriesChartInstance = new Chart(categoriesCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: catLabels,
+                    datasets: [{
+                        data: catCounts,
+                        backgroundColor: ['#10b981', '#fbbf24', '#3b82f6', '#ec4899'],
+                        borderWidth: 1,
+                        borderColor: '#0f172a'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#94a3b8',
+                                font: { family: 'Cairo', size: 11 }
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         // Handle Image File for Products

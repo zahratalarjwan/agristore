@@ -29,6 +29,9 @@ function init() {
     startFomoPopups();
     checkOmPayStatus();
     checkPaymentCallback();
+    checkDeepLink();
+    renderStories();
+    initPwaInstall();
     
     // Initialize AOS
     if (typeof AOS !== 'undefined') {
@@ -162,35 +165,37 @@ function renderProducts(filter = 'الكل', searchTerm = '') {
 
         return `
             <div class="product-card" data-aos="fade-up">
-                <div class="product-img">
+                <div class="product-img" onclick="openProductModal(${p.id})" style="cursor: pointer;">
                     <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='glassy_botanical_hero.png'">
                     ${hasOffer ? `<span style="position:absolute; top:15px; right:15px; background:var(--secondary); color:var(--bg-dark); padding:5px 12px; border-radius:50px; font-weight:800; font-size:0.8rem;">خصم</span>` : ''}
                     ${outOfStock ? `<span style="position:absolute; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-weight:900; color:#ef4444; font-size:1.2rem;">نفذت الكمية</span>` : ''}
                 </div>
                 <div class="product-info">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                    <div class="product-meta-row">
                         <span class="product-cat">${p.category}</span>
-                        <div style="color:var(--secondary); font-size:0.8rem;">
+                        <div class="product-rating">
                             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                            <span style="color:var(--text-muted); margin-right:3px;">(4.8)</span>
+                            <span class="rating-value">(4.8)</span>
                         </div>
                     </div>
-                    <a href="#" class="product-name">${p.name}</a>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <div style="display:flex; flex-direction:column;">
-                            <span class="product-price" style="color:${hasOffer ? 'var(--primary)' : 'var(--secondary)'}">${Number(displayPrice).toFixed(3)} ر.ع</span>
-                            ${hasOffer ? `<del style="font-size:0.85rem; color:var(--text-muted); opacity:0.6;">${Number(p.price).toFixed(3)} ر.ع</del>` : ''}
+                    <a href="javascript:void(0)" onclick="openProductModal(${p.id})" class="product-name">${p.name}</a>
+                    <div class="product-price-row">
+                        <div class="price-container">
+                            <span class="product-price ${hasOffer ? 'has-offer' : ''}">${Number(displayPrice).toFixed(3)} ر.ع</span>
+                            ${hasOffer ? `<del class="original-price">${Number(p.price).toFixed(3)} ر.ع</del>` : ''}
                         </div>
-                        <span style="font-size: 0.8rem; font-weight:700; color: ${outOfStock ? '#ef4444' : (lowStock ? '#fbbf24' : '#10b981')}">
-                            ${outOfStock ? 'غير متوفر' : (lowStock ? `باقي ${p.stock} فقط!` : 'متوفر')}
+                        <span class="stock-status ${outOfStock ? 'out' : (lowStock ? 'low' : 'in')}">
+                            ${outOfStock ? 'غير متوفر' : (lowStock ? `باقي ${p.stock}` : 'متوفر')}
                         </span>
                     </div>
-                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-                        <button class="add-btn" style="flex: 1;" onclick="addToCart(${p.id})" ${outOfStock ? 'disabled' : ''}>
-                            <i class="fa-solid fa-cart-plus"></i> ${outOfStock ? 'غير متوفر' : 'إضافة للسلة'}
+                    <div class="product-actions">
+                        <button class="add-btn" onclick="addToCart(${p.id})" ${outOfStock ? 'disabled' : ''}>
+                            <i class="fa-solid fa-cart-plus"></i>
+                            <span class="add-btn-text">${outOfStock ? 'غير متوفر' : 'إضافة للسلة'}</span>
                         </button>
-                        <button class="add-btn" style="width: 50px; background: #25d366; border-color: #25d366;" onclick="shareProductOnWhatsApp(${p.id})">
+                        <button class="whatsapp-share-btn" onclick="shareProductOnWhatsApp(${p.id})">
                             <i class="fa-brands fa-whatsapp"></i>
+                            <span class="share-btn-text">مشاركة</span>
                         </button>
                     </div>
                 </div>
@@ -266,7 +271,9 @@ function updateCartUI() {
     const totalAmount = document.getElementById('totalAmount');
     
     const count = cart.reduce((acc, item) => acc + item.quantity, 0);
-    cartCount.textContent = count;
+    if (cartCount) cartCount.textContent = count;
+    const mobileCartCount = document.getElementById('mobileCartCount');
+    if (mobileCartCount) mobileCartCount.textContent = count;
 
     if (cart.length === 0) {
         cartItemsList.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted);">السلة فارغة حالياً</div>`;
@@ -390,13 +397,13 @@ function shareProductOnWhatsApp(id) {
     if (!product) return;
 
     const price = product.offerPrice ? product.offerPrice : product.price;
-    const storeUrl = window.location.href.split('#')[0]; // Base URL
+    const storeUrl = window.location.href.split('#')[0].split('?')[0]; 
     
     let message = `*🌿 منتج مميز من متجر زهرة الارجوان*%0A%0A`;
     message += `*الاسم:* ${product.name}%0A`;
     message += `*السعر:* ${Number(price).toFixed(3)} ر.ع%0A`;
     if (product.desc) message += `*الوصف:* ${product.desc}%0A`;
-    message += `%0A🔗 *رابط الشراء:* ${storeUrl}#products%0A`;
+    message += `%0A🔗 *رابط الشراء:* ${storeUrl}?productId=${id}#products%0A`;
     message += `%0Aتصفح المزيد في متجرنا! ✨`;
 
     const whatsappUrl = `https://wa.me/?text=${message}`;
@@ -483,13 +490,13 @@ function renderNewProductsSlider() {
 
         return `
             <div class="product-card">
-                <div class="product-img">
+                <div class="product-img" onclick="openProductModal(${p.id})" style="cursor: pointer;">
                     <img src="${p.image}" alt="${p.name}" onerror="this.src='glassy_botanical_hero.png'">
                     <span style="position:absolute; top:15px; left:15px; background:var(--primary); color:white; padding:5px 12px; border-radius:50px; font-weight:800; font-size:0.7rem;">جديد</span>
                 </div>
                 <div class="product-info">
                     <span class="product-cat">${p.category}</span>
-                    <a href="#" class="product-name" style="font-size:1rem;">${p.name}</a>
+                    <a href="javascript:void(0)" onclick="openProductModal(${p.id})" class="product-name" style="font-size:1rem;">${p.name}</a>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span class="product-price" style="font-size:1.1rem;">${Number(displayPrice).toFixed(3)} ر.ع</span>
                     </div>
@@ -723,3 +730,369 @@ window.selectPaymentMethod = selectPaymentMethod;
 window.payWithOmPay = payWithOmPay;
 window.closeSuccessModal = closeSuccessModal;
 window.closeFailureModal = closeFailureModal;
+
+// --- PWA & Service Worker Support ---
+function initPwaInstall() {
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('PWA Service Worker registered!', reg))
+            .catch(err => console.error('PWA Service Worker failed:', err));
+    }
+
+    let deferredPrompt;
+    const installBtn = document.getElementById('installAppBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installBtn) installBtn.style.display = 'flex';
+    });
+
+    if (installBtn) {
+        installBtn.addEventListener('click', () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('App successfully installed!');
+                }
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            });
+        });
+    }
+}
+
+// --- Instagram-style Vertical Stories Slider (9:16) ---
+let activeStoryIndex = 0;
+let storyTimer = null;
+let storyProgressInterval = null;
+let storyDuration = 5000; // 5 seconds per story
+let storiesList = JSON.parse(localStorage.getItem('aljawan_stories')) || [];
+
+// Seed default stories if empty
+if (storiesList.length === 0) {
+    storiesList = [
+        { id: 1, title: "عروض الصيف", image: "matjarna_hero_luxury_1778254117070.png", link: "#products" },
+        { id: 2, title: "أسمدة فاخرة", image: "glassy_botanical_hero.png", link: "#products" },
+        { id: 3, title: "بذور مهجنة", image: "agricultural_glass_hero.png", link: "#products" }
+    ];
+    localStorage.setItem('aljawan_stories', JSON.stringify(storiesList));
+}
+
+function renderStories() {
+    const container = document.getElementById('storiesContainer');
+    const section = document.getElementById('storiesSection');
+    if (!container || !section) return;
+
+    if (storiesList.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+
+    section.style.display = 'block';
+    
+    // Check viewed stories from localStorage
+    const viewedStories = JSON.parse(localStorage.getItem('aljawan_viewed_stories')) || [];
+
+    container.innerHTML = storiesList.map((story, index) => {
+        const isViewed = viewedStories.includes(story.id);
+        return `
+            <div class="story-badge" onclick="openStoryViewer(${index})">
+                <div class="story-ring ${isViewed ? 'viewed' : ''}">
+                    <div class="story-img-wrapper">
+                        <img src="${story.image}" alt="${story.title}" onerror="this.src='app_icon.png'">
+                    </div>
+                </div>
+                <span class="story-title">${story.title}</span>
+            </div>
+        `;
+    }).join('');
+}
+
+function openStoryViewer(index) {
+    activeStoryIndex = index;
+    const modal = document.getElementById('storyViewerModal');
+    if (!modal) return;
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Stop scrolling background
+    
+    // Mark story as viewed
+    const viewedStories = JSON.parse(localStorage.getItem('aljawan_viewed_stories')) || [];
+    if (!viewedStories.includes(storiesList[activeStoryIndex].id)) {
+        viewedStories.push(storiesList[activeStoryIndex].id);
+        localStorage.setItem('aljawan_viewed_stories', JSON.stringify(viewedStories));
+        renderStories(); // Rerender ring styles
+    }
+
+    showActiveStory();
+}
+
+function closeStoryViewer() {
+    const modal = document.getElementById('storyViewerModal');
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    clearStoryTimers();
+}
+
+function clearStoryTimers() {
+    clearTimeout(storyTimer);
+    clearInterval(storyProgressInterval);
+}
+
+function showActiveStory() {
+    clearStoryTimers();
+    
+    const story = storiesList[activeStoryIndex];
+    const imgContainer = document.getElementById('storyViewerContent');
+    const titleContainer = document.getElementById('storyViewerTitle');
+    const footerContainer = document.getElementById('storyViewerFooter');
+    const actionBtn = document.getElementById('storyActionBtn');
+    
+    if (!imgContainer || !titleContainer) return;
+    
+    titleContainer.textContent = story.title;
+    imgContainer.innerHTML = `<img src="${story.image}" alt="${story.title}" onerror="this.src='app_icon.png'">`;
+    
+    if (story.link && story.link.trim() !== '') {
+        actionBtn.href = story.link;
+        footerContainer.style.display = 'block';
+    } else {
+        footerContainer.style.display = 'none';
+    }
+    
+    // Render progress bar ticks
+    const progressContainer = document.getElementById('storyProgressContainer');
+    if (progressContainer) {
+        progressContainer.innerHTML = storiesList.map((_, idx) => `
+            <div class="story-progress-bar">
+                <div class="story-progress-fill" id="progressFill_${idx}" style="width: ${idx < activeStoryIndex ? '100%' : '0%'}"></div>
+            </div>
+        `).join('');
+    }
+    
+    // Start progress fill animation
+    let start = Date.now();
+    const fillEl = document.getElementById(`progressFill_${activeStoryIndex}`);
+    
+    storyProgressInterval = setInterval(() => {
+        let elapsed = Date.now() - start;
+        let pct = Math.min((elapsed / storyDuration) * 100, 100);
+        if (fillEl) fillEl.style.width = pct + '%';
+        
+        if (elapsed >= storyDuration) {
+            clearInterval(storyProgressInterval);
+            nextStory();
+        }
+    }, 50);
+}
+
+function nextStory() {
+    if (activeStoryIndex < storiesList.length - 1) {
+        activeStoryIndex++;
+        showActiveStory();
+    } else {
+        closeStoryViewer();
+    }
+}
+
+function prevStory() {
+    if (activeStoryIndex > 0) {
+        activeStoryIndex--;
+        showActiveStory();
+    } else {
+        // Restart current story if it is the first one
+        showActiveStory();
+    }
+}
+
+// Expose stories functions globally
+window.openStoryViewer = openStoryViewer;
+window.closeStoryViewer = closeStoryViewer;
+window.nextStory = nextStory;
+window.prevStory = prevStory;
+window.renderStories = renderStories;
+window.initPwaInstall = initPwaInstall;
+
+
+function openProductModal(id) {
+    currentModalProductId = id;
+    renderModalReviews(id);
+    const p = products.find(prod => prod.id == id);
+    if (!p) return;
+    
+    const detailImage = document.getElementById('detailImage');
+    if (detailImage) detailImage.src = p.image;
+    
+    const detailCat = document.getElementById('detailCat');
+    if (detailCat) detailCat.textContent = p.category;
+    
+    const detailName = document.getElementById('detailName');
+    if (detailName) detailName.textContent = p.name;
+    
+    const displayPrice = p.offerPrice ? p.offerPrice : p.price;
+    const detailPrice = document.getElementById('detailPrice');
+    if (detailPrice) detailPrice.textContent = Number(displayPrice).toFixed(3) + ' ر.ع';
+    
+    const oldPriceEl = document.getElementById('detailOldPrice');
+    if (oldPriceEl) {
+        if (p.offerPrice && p.offerPrice < p.price) {
+            oldPriceEl.textContent = Number(p.price).toFixed(3) + ' ر.ع';
+            oldPriceEl.style.display = 'inline';
+        } else {
+            oldPriceEl.style.display = 'none';
+        }
+    }
+    
+    const detailDesc = document.getElementById('detailDesc');
+    if (detailDesc) detailDesc.textContent = p.desc || 'لا يوجد وصف متاح لهذا المنتج.';
+    
+    const addBtn = document.getElementById('detailAddBtn');
+    if (addBtn) {
+        if (p.stock <= 0) {
+            addBtn.disabled = true;
+            addBtn.innerHTML = 'نفذت الكمية';
+            addBtn.style.opacity = '0.5';
+        } else {
+            addBtn.disabled = false;
+            addBtn.innerHTML = '<i class="fa-solid fa-cart-plus"></i> أضف للسلة';
+            addBtn.style.opacity = '1';
+            addBtn.onclick = () => {
+                addToCart(p.id);
+                closeProductModal();
+            };
+        }
+    }
+    
+    const shareBtn = document.getElementById('detailShareBtn');
+    if (shareBtn) {
+        shareBtn.onclick = () => shareProductOnWhatsApp(p.id);
+    }
+    
+    const modal = document.getElementById('productDetailModal');
+    if (modal) modal.classList.add('active');
+}
+
+function closeProductModal() {
+    const modal = document.getElementById('productDetailModal');
+    if (modal) modal.classList.remove('active');
+}
+
+function checkDeepLink() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('productId');
+    if (productId) {
+        setTimeout(() => openProductModal(productId), 800);
+        
+        // Clean URL to avoid reopening on refresh
+        const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + window.location.hash;
+        window.history.replaceState({path: newUrl}, '', newUrl);
+    }
+}
+
+
+// --- Translation System ---
+const translations = {
+    en: {
+        home: "Home", store: "Store", about: "About Us", contact: "Contact",
+        browse_products: "Browse Products", consult_engineer: "Consult Engineer",
+        cart: "Cart", contact_short: "Contact",
+        wa_support: "Live Support", wa_welcome: "Welcome to Zahrat Alarjwan! How can we help you today? 🌿",
+        wa_placeholder: "Type your message...", customer_reviews: "Customer Reviews",
+        add_cart: "Add to Cart", out_stock: "Out of Stock", share: "Share"
+    },
+    ar: {
+        home: "الرئيسية", store: "المتجر", about: "عن المؤسسة", contact: "تواصل معنا",
+        browse_products: "استعرض المنتجات", consult_engineer: "استشارة المهندس",
+        cart: "السلة", contact_short: "تواصل",
+        wa_support: "الدعم الفني المباشر", wa_welcome: "مرحباً بك في زهرة الارجوان! كيف يمكننا مساعدتك اليوم؟ 🌿",
+        wa_placeholder: "اكتب رسالتك هنا...", customer_reviews: "تقييمات العملاء",
+        add_cart: "أضف للسلة", out_stock: "نفذت الكمية", share: "مشاركة"
+    }
+};
+
+let currentLang = localStorage.getItem('aljawan_lang') || 'ar';
+if(currentLang === 'en') applyLanguage('en');
+
+function toggleLanguage() {
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+    localStorage.setItem('aljawan_lang', currentLang);
+    applyLanguage(currentLang);
+}
+
+function applyLanguage(lang) {
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    document.querySelector('.btn-lang').textContent = lang === 'ar' ? 'EN' : 'عربي';
+    
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) el.textContent = translations[lang][key];
+    });
+    
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        if (translations[lang][key]) el.placeholder = translations[lang][key];
+    });
+    
+    // Re-render components with translated texts if needed
+    renderProducts(currentCategory, document.getElementById('productSearch') ? document.getElementById('productSearch').value : '');
+}
+
+// --- WhatsApp Widget Logic ---
+function toggleWaWidget() {
+    document.getElementById('waWidgetWindow').classList.toggle('active');
+}
+
+function sendWaMessage() {
+    const input = document.getElementById('waInput');
+    const msg = input.value.trim();
+    if(!msg) return;
+    
+    const settings = JSON.parse(localStorage.getItem('aljawan_settings')) || { whatsapp: '96896017822' };
+    const storePhone = settings.whatsapp.replace(/\+/g, '').replace(/\s/g, '');
+    
+    const url = `https://wa.me/${storePhone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+    input.value = '';
+    toggleWaWidget();
+}
+
+// --- Dynamic Reviews System ---
+let reviews = JSON.parse(localStorage.getItem('aljawan_reviews')) || {};
+let currentModalProductId = null;
+
+function addReview() {
+    const input = document.getElementById('reviewInput');
+    const msg = input.value.trim();
+    if(!msg || !currentModalProductId) return;
+    
+    if(!reviews[currentModalProductId]) reviews[currentModalProductId] = [];
+    reviews[currentModalProductId].push({ user: 'زائر', text: msg, date: new Date().toLocaleDateString('ar-OM') });
+    
+    localStorage.setItem('aljawan_reviews', JSON.stringify(reviews));
+    input.value = '';
+    renderModalReviews(currentModalProductId);
+}
+
+function renderModalReviews(id) {
+    const container = document.getElementById('detailReviews');
+    const stars = document.getElementById('detailStars');
+    if(!container || !stars) return;
+    
+    const prodReviews = reviews[id] || [];
+    
+    if(prodReviews.length === 0) {
+        container.innerHTML = '<span style="opacity:0.6;">لا توجد تقييمات بعد. كن أول من يقيّم!</span>';
+        stars.innerHTML = '<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> (5.0)';
+    } else {
+        container.innerHTML = prodReviews.map(r => `<div style="margin-bottom:8px; padding-bottom:8px; border-bottom:1px solid rgba(0,0,0,0.05);"><b>${r.user}</b> (${r.date}): ${r.text}</div>`).join('');
+        // Randomize rating slightly based on reviews count for realistic feel
+        const rating = (5.0 - (Math.random() * 0.4)).toFixed(1);
+        stars.innerHTML = `<i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i> (${rating})`;
+    }
+}
+        
