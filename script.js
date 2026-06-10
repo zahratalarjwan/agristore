@@ -77,13 +77,13 @@ function renderSlider() {
 
     wrapper.innerHTML = slidesData.map((s, index) => `
         <div class="slide ${index === 0 ? 'active' : ''}">
-            <div class="hero" style="background-image: linear-gradient(to bottom, rgba(11, 17, 32, 0.6), var(--bg-dark)), url('${s.image}')">
+            <div class="hero" style="background-image: linear-gradient(to bottom, rgba(250,249,246,0.15), rgba(250,249,246,0.98)), url('${s.image}')">
                 <div class="hero-content" data-aos="zoom-out">
                     <h1>${s.title}</h1>
                     <p>${s.desc}</p>
                     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
                         <a href="${s.link || '#products'}" class="btn-primary">استعرض الآن</a>
-                        <a href="https://wa.me/96896017822" class="btn-primary" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); box-shadow: none;">استشارة المهندس</a>
+                        <a href="https://wa.me/96896017822" class="btn-primary" style="background: rgba(109,40,217,0.05); border: 1px solid var(--border-dark); box-shadow: none;">استشارة المهندس</a>
                     </div>
                 </div>
             </div>
@@ -167,8 +167,8 @@ function renderProducts(filter = 'الكل', searchTerm = '') {
             <div class="product-card" data-aos="fade-up">
                 <div class="product-img" onclick="openProductModal(${p.id})" style="cursor: pointer;">
                     <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='glassy_botanical_hero.png'">
-                    ${hasOffer ? `<span style="position:absolute; top:15px; right:15px; background:var(--secondary); color:var(--bg-dark); padding:5px 12px; border-radius:50px; font-weight:800; font-size:0.8rem;">خصم</span>` : ''}
-                    ${outOfStock ? `<span style="position:absolute; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; font-weight:900; color:#ef4444; font-size:1.2rem;">نفذت الكمية</span>` : ''}
+                    ${hasOffer ? `<span class="badge-discount">خصم</span>` : ''}
+                    ${outOfStock ? `<span class="badge-outofstock">نفذت الكمية</span>` : ''}
                 </div>
                 <div class="product-info">
                     <div class="product-meta-row">
@@ -276,8 +276,9 @@ function updateCartUI() {
     if (mobileCartCount) mobileCartCount.textContent = count;
 
     if (cart.length === 0) {
-        cartItemsList.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted);">السلة فارغة حالياً</div>`;
+        cartItemsList.innerHTML = `<div style="text-align:center; padding: 3rem 2rem; color: var(--text-secondary); opacity: 0.7; font-weight: 600;">السلة فارغة حالياً</div>`;
         totalAmount.textContent = "0.000 ر.ع";
+        switchCartStep(1);
         return;
     }
 
@@ -326,9 +327,42 @@ function applyCoupon() {
 function toggleCart() {
     const drawer = document.getElementById('cartDrawer');
     const overlay = document.getElementById('cartOverlay');
+    if (!drawer || !overlay) return;
+
     drawer.classList.toggle('active');
     overlay.classList.toggle('active');
     document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+
+    if (drawer.classList.contains('active')) {
+        switchCartStep(1);
+    }
+}
+
+function switchCartStep(step) {
+    const step1 = document.getElementById('cartStep1');
+    const step2 = document.getElementById('cartStep2');
+    const title = document.getElementById('cartDrawerTitle');
+    const checkoutTotal = document.getElementById('checkoutTotalAmount');
+    const totalAmount = document.getElementById('totalAmount');
+
+    if (!step1 || !step2) return;
+
+    if (step === 2) {
+        if (cart.length === 0) {
+            showToast('سلة المشتريات فارغة');
+            return;
+        }
+        step1.style.display = 'none';
+        step2.style.display = 'block';
+        if (title) title.textContent = 'بيانات الطلب';
+        if (checkoutTotal && totalAmount) {
+            checkoutTotal.textContent = totalAmount.textContent;
+        }
+    } else {
+        step1.style.display = 'block';
+        step2.style.display = 'none';
+        if (title) title.textContent = 'سلة المشتريات';
+    }
 }
 
 function saveCart() {
@@ -492,7 +526,7 @@ function renderNewProductsSlider() {
             <div class="product-card">
                 <div class="product-img" onclick="openProductModal(${p.id})" style="cursor: pointer;">
                     <img src="${p.image}" alt="${p.name}" onerror="this.src='glassy_botanical_hero.png'">
-                    <span style="position:absolute; top:15px; left:15px; background:var(--primary); color:white; padding:5px 12px; border-radius:50px; font-weight:800; font-size:0.7rem;">جديد</span>
+                    <span class="badge-new">جديد</span>
                 </div>
                 <div class="product-info">
                     <span class="product-cat">${p.category}</span>
@@ -730,6 +764,7 @@ window.selectPaymentMethod = selectPaymentMethod;
 window.payWithOmPay = payWithOmPay;
 window.closeSuccessModal = closeSuccessModal;
 window.closeFailureModal = closeFailureModal;
+window.switchCartStep = switchCartStep;
 
 // --- PWA & Service Worker Support ---
 function initPwaInstall() {

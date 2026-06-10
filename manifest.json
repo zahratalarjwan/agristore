@@ -4,8 +4,8 @@
   "description": "وجهتك الأولى لأجود المستلزمات الزراعية، البذور، والأسمدة في سلطنة عمان.",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#0b1120",
-  "theme_color": "#0b1120",
+  "background_color": "#f5f7fa",
+  "theme_color": "#10b981",
   "orientation": "portrait",
   "icons": [
     {
