@@ -300,10 +300,38 @@ function updateCartUI() {
 
     let subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     
+    // Volume calculation
+    let totalVol = 0;
+    cart.forEach(item => {
+        if (item.volume) {
+            let num = parseFloat(item.volume);
+            if (!isNaN(num)) totalVol += (num * item.quantity);
+        }
+    });
+    const totalVolumeEl = document.getElementById('totalVolume');
+    const totalVolumeRow = document.getElementById('totalVolumeRow');
+    if (totalVolumeEl && totalVolumeRow) {
+        if (totalVol > 0) {
+            totalVolumeEl.textContent = totalVol;
+            totalVolumeRow.style.display = 'flex';
+        } else {
+            totalVolumeRow.style.display = 'none';
+        }
+    }
+    
+    const discountRow = document.getElementById('discountRow');
+    const discountAmountEl = document.getElementById('discountAmount');
+
     // Apply Coupon if any
     if (appliedCoupon) {
         const discount = subtotal * (appliedCoupon.percent / 100);
+        if (discountRow && discountAmountEl) {
+            discountAmountEl.textContent = "-" + discount.toFixed(3) + " ر.ع";
+            discountRow.style.display = 'flex';
+        }
         subtotal -= discount;
+    } else {
+        if (discountRow) discountRow.style.display = 'none';
     }
 
     totalAmount.textContent = subtotal.toFixed(3) + " ر.ع";
@@ -353,13 +381,13 @@ function switchCartStep(step) {
             return;
         }
         step1.style.display = 'none';
-        step2.style.display = 'block';
+        step2.style.display = 'flex';
         if (title) title.textContent = 'بيانات الطلب';
         if (checkoutTotal && totalAmount) {
             checkoutTotal.textContent = totalAmount.textContent;
         }
     } else {
-        step1.style.display = 'block';
+        step1.style.display = 'flex';
         step2.style.display = 'none';
         if (title) title.textContent = 'سلة المشتريات';
     }
@@ -399,8 +427,20 @@ function sendToWhatsApp() {
     message += `----------------------------%0A`;
     
     cart.forEach((item, index) => {
-        message += `${index + 1}. *${item.name}* (عدد ${item.quantity}) = ${(item.price * item.quantity).toFixed(3)} ر.ع%0A`;
+        let volText = item.volume ? ` [الحجم: ${item.volume}]` : '';
+        message += `${index + 1}. *${item.name}*${volText} (عدد ${item.quantity}) = ${(item.price * item.quantity).toFixed(3)} ر.ع%0A`;
     });
+    
+    let totalVol = 0;
+    cart.forEach(item => {
+        if (item.volume) {
+            let num = parseFloat(item.volume);
+            if (!isNaN(num)) totalVol += (num * item.quantity);
+        }
+    });
+    if (totalVol > 0) {
+        message += `📦 *الحجم الإجمالي:* ${totalVol}%0A`;
+    }
     
     message += `----------------------------%0A`;
     message += `💰 *الإجمالي النهائي:* ${document.getElementById('totalAmount').textContent}%0A`;
@@ -804,16 +844,15 @@ let activeStoryIndex = 0;
 let storyTimer = null;
 let storyProgressInterval = null;
 let storyDuration = 5000; // 5 seconds per story
-let storiesList = JSON.parse(localStorage.getItem('aljawan_stories')) || [];
+let storiesList = JSON.parse(localStorage.getItem('aljawan_stories_v2')) || [];
 
 // Seed default stories if empty
 if (storiesList.length === 0) {
     storiesList = [
-        { id: 1, title: "عروض الصيف", image: "matjarna_hero_luxury_1778254117070.png", link: "#products" },
-        { id: 2, title: "أسمدة فاخرة", image: "glassy_botanical_hero.png", link: "#products" },
-        { id: 3, title: "بذور مهجنة", image: "agricultural_glass_hero.png", link: "#products" }
+        { id: 1, title: "اشترك وتابع جديدنا", image: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg", link: "https://whatsapp.com/channel/0029VbBwEAu7IUYNRVJOtX3X", direct: true },
+        { id: 2, title: "قناة يوتيوب", image: "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg", link: "https://www.youtube.com/@abuhassan1ai", direct: true }
     ];
-    localStorage.setItem('aljawan_stories', JSON.stringify(storiesList));
+    localStorage.setItem('aljawan_stories_v2', JSON.stringify(storiesList));
 }
 
 function renderStories() {
@@ -833,14 +872,13 @@ function renderStories() {
 
     container.innerHTML = storiesList.map((story, index) => {
         const isViewed = viewedStories.includes(story.id);
+        const onClickAction = story.direct ? `window.open('${story.link}', '_blank')` : `openStoryViewer(${index})`;
         return `
-            <div class="story-badge" onclick="openStoryViewer(${index})">
-                <div class="story-ring ${isViewed ? 'viewed' : ''}">
-                    <div class="story-img-wrapper">
-                        <img src="${story.image}" alt="${story.title}" onerror="this.src='app_icon.png'">
-                    </div>
+            <div class="story-badge glass-rect" onclick="${onClickAction}">
+                <div class="story-img-wrapper">
+                    <img src="${story.image}" alt="${story.title}" onerror="this.src='app_icon.png'">
                 </div>
-                <span class="story-title">${story.title}</span>
+                <span class="story-title-inline">${story.title}</span>
             </div>
         `;
     }).join('');

@@ -151,6 +151,7 @@
     <main>
         <!-- Stories Section -->
         <section class="stories-section" id="storiesSection" style="display: none;" data-aos="fade-down">
+            <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 1rem; padding: 0 5px;">تابع جديدنا عبر قنواتنا</h3>
             <div class="stories-container" id="storiesContainer">
                 <!-- Circular story badges will be injected here -->
             </div>
@@ -354,6 +355,14 @@
                     <button class="btn-coupon" onclick="applyCoupon()">تطبيق</button>
                 </div>
 
+                <div class="total-row" id="totalVolumeRow" style="display: none; font-size: 0.9rem; color: var(--text-muted); border-bottom: none; padding-bottom: 0;">
+                    <span>الحجم الإجمالي:</span>
+                    <span id="totalVolume">0</span>
+                </div>
+                <div class="total-row" id="discountRow" style="display: none; font-size: 0.95rem; color: var(--danger); border-bottom: none; padding-bottom: 0;">
+                    <span>الخصم:</span>
+                    <span id="discountAmount">0.000 ر.ع</span>
+                </div>
                 <div class="total-row">
                     <span>الإجمالي:</span>
                     <span id="totalAmount">0.000 ر.ع</span>
@@ -532,7 +541,6 @@
             <!-- Story Header -->
             <div class="story-viewer-header">
                 <div style="display: flex; align-items: center; gap: 10px;">
-                    <img src="app_icon.png" class="story-viewer-avatar" alt="Logo">
                     <span class="story-viewer-title" id="storyViewerTitle">اسم القصة</span>
                 </div>
                 <i class="fa-solid fa-xmark story-viewer-close" onclick="closeStoryViewer()"></i>
