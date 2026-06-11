@@ -1,4 +1,5 @@
 // --- Configuration & State ---
+const GOOGLE_SHEETS_API_URL = ""; // ضع رابط Web App الخاص بـ Google Apps Script هنا
 let products = JSON.parse(localStorage.getItem('aljawan_products')) || [];
 let cart = JSON.parse(localStorage.getItem('aljawan_cart')) || [];
 let slider = JSON.parse(localStorage.getItem('aljawan_slider')) || [];
@@ -18,7 +19,24 @@ if (products.length === 0) {
 
 // --- Core Functions ---
 
+function fetchProductsFromDB() {
+    fetch(GOOGLE_SHEETS_API_URL + "?action=getProducts")
+        .then(res => res.json())
+        .then(data => {
+            if(data && data.length > 0) {
+                products = data;
+                localStorage.setItem('aljawan_products', JSON.stringify(products));
+                renderProducts(currentCategory);
+                renderNewProductsSlider();
+            }
+        })
+        .catch(err => console.error('Error fetching from DB:', err));
+}
+
 function init() {
+    if (GOOGLE_SHEETS_API_URL) {
+        fetchProductsFromDB();
+    }
     renderSlider();
     renderProducts();
     updateCartUI();
