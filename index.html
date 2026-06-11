@@ -395,6 +395,45 @@
                         <label for="custLoc"><i class="fa-solid fa-location-dot"></i> الولاية / العنوان</label>
                         <input type="text" id="custLoc" placeholder="مثال: مسقط، السيب">
                     </div>
+
+                    <!-- Shipping Destination -->
+                    <div class="form-group">
+                        <label for="shippingCountry"><i class="fa-solid fa-truck"></i> وجهة الشحن</label>
+                        <select id="shippingCountry" onchange="calculateShipping()" style="width:100%; padding:0.65rem 1rem; background:var(--bg); border:1.5px solid var(--border-dark); border-radius:var(--radius-md); color:var(--text); font-size:0.85rem; font-family:var(--font-ar);">
+                            <option value="OM">داخل عمان (محلي)</option>
+                            <option value="UAE">الإمارات (UAE)</option>
+                            <option value="KSA">السعودية (KSA)</option>
+                            <option value="KWI">الكويت (KWI)</option>
+                            <option value="BAH">البحرين (BAH)</option>
+                            <option value="QA">قطر (QA)</option>
+                        </select>
+                    </div>
+                    <div id="shippingCostRow" style="display:none; padding:0.75rem 1rem; background:var(--primary-light); border-radius:var(--radius-md); margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:0.9rem;">
+                        <span><i class="fa-solid fa-truck-fast" style="color:var(--primary); margin-left:6px;"></i> رسوم الشحن الدولي:</span>
+                        <span id="shippingCostValue" style="color:var(--primary);">0.000 ر.ع</span>
+                    </div>
+                    
+                    <!-- Gift Option -->
+                    <div style="margin-top: 15px; margin-bottom: 15px; padding: 0.5rem; border: 1px dashed var(--primary); border-radius: var(--radius-md); background: #fff;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: bold; color: var(--primary); margin: 0;">
+                            <input type="checkbox" id="isGift" onchange="toggleGiftFields()" style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;">
+                            إرسال الطلب كهدية 🎁 لمن تحب
+                        </label>
+                    </div>
+
+                    <!-- Gift Details Fields -->
+                    <div id="giftFields" style="display: none; background: var(--primary-light); padding: 1rem; border-radius: var(--radius-md); border: 1px solid rgba(109,40,217,0.1); margin-bottom: 1rem;">
+                        <h4 style="margin-bottom: 10px; color: var(--primary); font-size: 0.9rem; font-weight: 800;"><i class="fa-solid fa-gift"></i> بيانات المستلم (المهدى إليه)</h4>
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <input type="text" id="giftName" placeholder="الاسم بالكامل" style="padding: 0.6rem;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <input type="tel" id="giftPhone" placeholder="رقم الهاتف للتواصل معه" style="padding: 0.6rem;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <textarea id="giftMessage" placeholder="اكتب رسالة إهداء ترفق مع الطلب (اختياري)..." rows="2" style="padding: 0.6rem; width: 100%; border: 1.5px solid var(--border-dark); border-radius: var(--radius-md); font-family: var(--font-ar); resize: none; outline: none;"></textarea>
+                        </div>
+                    </div>
                     
                     <!-- Payment Method Selector -->
                     <div class="payment-methods-selector" id="ompaySelectorContainer" style="display: none;">

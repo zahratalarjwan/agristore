@@ -6,6 +6,31 @@ let slider = JSON.parse(localStorage.getItem('aljawan_slider')) || [];
 let coupons = JSON.parse(localStorage.getItem('aljawan_coupons')) || [];
 let currentCategory = 'الكل';
 let appliedCoupon = null;
+let currentShippingCost = 0;
+
+// GCC Shipping Rates (أسعار الشحن الأصلية + 0.5 ريال لكل كيلو)
+const GCC_SHIPPING_RATES = {
+    // Weight(kg): { UAE, KSA, KWI, BAH, QA }
+    0.5:  { UAE: 2.50, KSA: 3.50, KWI: 3.50, BAH: 3.50, QA: 3.50 },
+    1.0:  { UAE: 2.50, KSA: 3.50, KWI: 4.00, BAH: 4.00, QA: 4.50 },
+    1.5:  { UAE: 3.50, KSA: 4.50, KWI: 4.50, BAH: 4.80, QA: 4.50 },
+    2.0:  { UAE: 4.50, KSA: 4.50, KWI: 5.50, BAH: 5.50, QA: 5.00 },
+    2.5:  { UAE: 4.50, KSA: 4.50, KWI: 5.50, BAH: 6.00, QA: 5.50 },
+    3.0:  { UAE: 4.50, KSA: 5.50, KWI: 6.20, BAH: 6.50, QA: 6.30 },
+    3.5:  { UAE: 4.50, KSA: 5.50, KWI: 6.20, BAH: 7.00, QA: 6.30 },
+    4.0:  { UAE: 5.00, KSA: 6.50, KWI: 6.80, BAH: 7.50, QA: 7.00 },
+    4.5:  { UAE: 5.00, KSA: 7.50, KWI: 7.50, BAH: 7.80, QA: 7.30 },
+    5.0:  { UAE: 5.00, KSA: 7.50, KWI: 7.70, BAH: 7.80, QA: 7.70 }
+};
+const GCC_EXTRA_PER_KG = { UAE: 1.50, KSA: 1.50, KWI: 1.50, BAH: 1.50, QA: 1.50 }; // +0.5 على 1.00 الأصلي
+const GCC_COUNTRY_NAMES = {
+    OM: 'عمان (محلي)',
+    UAE: 'الإمارات',
+    KSA: 'السعودية',
+    KWI: 'الكويت',
+    BAH: 'البحرين',
+    QA: 'قطر'
+};
 
 // Default products if none exist
 if (products.length === 0) {
@@ -433,10 +458,89 @@ function showToast(msg) {
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
+function toggleGiftFields() {
+    const isGift = document.getElementById('isGift').checked;
+    const giftFields = document.getElementById('giftFields');
+    if (isGift) {
+        giftFields.style.display = 'block';
+    } else {
+        giftFields.style.display = 'none';
+    }
+}
+
+// --- GCC Shipping Calculator ---
+function calculateShipping() {
+    const country = document.getElementById('shippingCountry').value;
+    const costRow = document.getElementById('shippingCostRow');
+    const costValue = document.getElementById('shippingCostValue');
+    const checkoutTotal = document.getElementById('checkoutTotalAmount');
+    
+    if (country === 'OM') {
+        currentShippingCost = 0;
+        if (costRow) costRow.style.display = 'none';
+        // Recalculate checkout total without shipping
+        if (checkoutTotal) {
+            checkoutTotal.textContent = document.getElementById('totalAmount').textContent;
+        }
+        return;
+    }
+    
+    // Calculate total weight from cart volumes
+    let totalWeight = 0;
+    cart.forEach(item => {
+        if (item.volume) {
+            let num = parseFloat(item.volume);
+            if (!isNaN(num)) totalWeight += (num * item.quantity);
+        }
+    });
+    
+    // Default minimum 0.5 kg if no volume set
+    if (totalWeight <= 0) totalWeight = 0.5;
+    
+    // Find shipping rate
+    let shippingCost = 0;
+    const weights = Object.keys(GCC_SHIPPING_RATES).map(Number).sort((a, b) => a - b);
+    
+    if (totalWeight <= weights[weights.length - 1]) {
+        // Find matching weight bracket
+        for (let i = 0; i < weights.length; i++) {
+            if (totalWeight <= weights[i]) {
+                shippingCost = GCC_SHIPPING_RATES[weights[i]][country];
+                break;
+            }
+        }
+    } else {
+        // Over 5kg: base rate for 5kg + extra per kg
+        const base = GCC_SHIPPING_RATES[5.0][country];
+        const extraKgs = Math.ceil(totalWeight - 5.0);
+        shippingCost = base + (extraKgs * GCC_EXTRA_PER_KG[country]);
+    }
+    
+    currentShippingCost = shippingCost;
+    
+    if (costRow && costValue) {
+        costValue.textContent = shippingCost.toFixed(3) + ' ر.ع';
+        costRow.style.display = 'flex';
+    }
+    
+    // Update checkout total with shipping
+    if (checkoutTotal) {
+        const productTotal = parseFloat(document.getElementById('totalAmount').textContent) || 0;
+        checkoutTotal.textContent = (productTotal + shippingCost).toFixed(3) + ' ر.ع';
+    }
+}
+
 function sendToWhatsApp() {
     const name = document.getElementById('custName').value.trim();
     const phone = document.getElementById('custPhone').value.trim();
     const loc = document.getElementById('custLoc').value.trim();
+    const shippingCountry = document.getElementById('shippingCountry').value;
+    
+    // Gift Details
+    const isGift = document.getElementById('isGift') ? document.getElementById('isGift').checked : false;
+    const giftName = document.getElementById('giftName') ? document.getElementById('giftName').value.trim() : '';
+    const giftPhone = document.getElementById('giftPhone') ? document.getElementById('giftPhone').value.trim() : '';
+    const giftMessage = document.getElementById('giftMessage') ? document.getElementById('giftMessage').value.trim() : '';
 
     if (!name || !phone || !loc) {
         showToast('يرجى تعبئة جميع البيانات لإتمام الطلب');
@@ -452,7 +556,19 @@ function sendToWhatsApp() {
     message += `👤 *الاسم:* ${name}%0A`;
     message += `📱 *الهاتف:* ${phone}%0A`;
     message += `📍 *الموقع:* ${loc}%0A`;
+    message += `🌍 *وجهة الشحن:* ${GCC_COUNTRY_NAMES[shippingCountry] || shippingCountry}%0A`;
     if (appliedCoupon) message += `🎟️ *كوبون الخصم:* ${appliedCoupon.code} (${appliedCoupon.percent}%)%0A`;
+    
+    if (isGift) {
+        message += `----------------------------%0A`;
+        message += `🎁 *الطلب عبارة عن هدية* 🎁%0A`;
+        message += `*المهدى إليه:* ${giftName}%0A`;
+        message += `*هاتف المستلم:* ${giftPhone}%0A`;
+        if (giftMessage) {
+            message += `*رسالة الهدية:* "${giftMessage}"%0A`;
+        }
+    }
+    
     message += `----------------------------%0A`;
     
     cart.forEach((item, index) => {
@@ -472,7 +588,13 @@ function sendToWhatsApp() {
     }
     
     message += `----------------------------%0A`;
-    message += `💰 *الإجمالي النهائي:* ${document.getElementById('totalAmount').textContent}%0A`;
+    message += `💰 *إجمالي المنتجات:* ${document.getElementById('totalAmount').textContent}%0A`;
+    
+    if (currentShippingCost > 0) {
+        message += `🚚 *رسوم الشحن الدولي (${GCC_COUNTRY_NAMES[shippingCountry]}):* ${currentShippingCost.toFixed(3)} ر.ع%0A`;
+        const productTotal = parseFloat(document.getElementById('totalAmount').textContent) || 0;
+        message += `💵 *الإجمالي الكلي مع الشحن:* ${(productTotal + currentShippingCost).toFixed(3)} ر.ع%0A`;
+    }
     
     // Save Order Locally for Admin (New Feature)
     const newOrder = {
