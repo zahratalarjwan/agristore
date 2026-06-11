@@ -399,7 +399,7 @@
                     <!-- Shipping Destination -->
                     <div class="form-group">
                         <label for="shippingCountry"><i class="fa-solid fa-truck"></i> وجهة الشحن</label>
-                        <select id="shippingCountry" onchange="calculateShipping()" style="width:100%; padding:0.65rem 1rem; background:var(--bg); border:1.5px solid var(--border-dark); border-radius:var(--radius-md); color:var(--text); font-size:0.85rem; font-family:var(--font-ar);">
+                        <select id="shippingCountry" style="width:100%; padding:0.65rem 1rem; background:var(--bg); border:1.5px solid var(--border-dark); border-radius:var(--radius-md); color:var(--text); font-size:0.85rem; font-family:var(--font-ar);">
                             <option value="OM">داخل عمان (محلي)</option>
                             <option value="UAE">الإمارات (UAE)</option>
                             <option value="KSA">السعودية (KSA)</option>
@@ -408,15 +408,15 @@
                             <option value="QA">قطر (QA)</option>
                         </select>
                     </div>
-                    <div id="shippingCostRow" style="display:none; padding:0.75rem 1rem; background:var(--primary-light); border-radius:var(--radius-md); margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:0.9rem;">
+                    <div id="shippingCostRow" style="display:none; padding:0.75rem 1rem; background:var(--primary-light); border-radius:var(--radius-md); margin-bottom:1rem; justify-content:space-between; align-items:center; font-weight:700; font-size:0.9rem;">
                         <span><i class="fa-solid fa-truck-fast" style="color:var(--primary); margin-left:6px;"></i> رسوم الشحن الدولي:</span>
                         <span id="shippingCostValue" style="color:var(--primary);">0.000 ر.ع</span>
                     </div>
                     
                     <!-- Gift Option -->
                     <div style="margin-top: 15px; margin-bottom: 15px; padding: 0.5rem; border: 1px dashed var(--primary); border-radius: var(--radius-md); background: #fff;">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: bold; color: var(--primary); margin: 0;">
-                            <input type="checkbox" id="isGift" onchange="toggleGiftFields()" style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: bold; color: var(--primary); margin: 0; width: 100%;">
+                            <input type="checkbox" id="isGift" style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;">
                             إرسال الطلب كهدية 🎁 لمن تحب
                         </label>
                     </div>

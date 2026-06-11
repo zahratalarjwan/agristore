@@ -108,6 +108,19 @@ function setupEventListeners() {
         if (window.scrollY > 50) header.classList.add('scrolled');
         else header.classList.remove('scrolled');
     });
+
+    // Mobile-friendly event listeners for checkout form
+    const shippingSelect = document.getElementById('shippingCountry');
+    if (shippingSelect) {
+        shippingSelect.addEventListener('change', calculateShipping);
+        shippingSelect.addEventListener('input', calculateShipping);
+    }
+    
+    const giftCheckbox = document.getElementById('isGift');
+    if (giftCheckbox) {
+        giftCheckbox.addEventListener('change', toggleGiftFields);
+        giftCheckbox.addEventListener('click', () => setTimeout(toggleGiftFields, 10));
+    }
 }
 
 // --- Slider Logic ---
