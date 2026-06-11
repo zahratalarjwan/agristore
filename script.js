@@ -51,17 +51,28 @@ function init() {
     renderStories();
     initPwaInstall();
     
-    // Initialize AOS
+    // Initialize AOS - disable on mobile to prevent layout issues
+    const isMobile = window.innerWidth <= 768;
     if (typeof AOS !== 'undefined') {
-        AOS.init({ duration: 1000, once: true, offset: 50 });
+        AOS.init({ 
+            duration: isMobile ? 0 : 1000, 
+            once: true, 
+            offset: isMobile ? 0 : 50,
+            disable: isMobile
+        });
     }
 
-    // Hide Preloader
+    // Hide Preloader and fix layout on mobile
     setTimeout(() => {
         const preloader = document.getElementById('preloader');
         if (preloader) {
             preloader.style.opacity = '0';
-            setTimeout(() => preloader.style.display = 'none', 600);
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                // Force layout recalculation to fix mobile scroll bug
+                window.dispatchEvent(new Event('resize'));
+                window.scrollTo(0, 0);
+            }, 600);
         }
     }, 1000);
 }

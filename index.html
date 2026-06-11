@@ -314,7 +314,7 @@
                     <li><a href="#home" data-i18n="home">الرئيسية</a></li>
                     <li><a href="#products" data-i18n="store">المتجر</a></li>
                     <li><a href="#about" data-i18n="about">عن المؤسسة</a></li>
-                    <li><a href="policies.html">السياسات والشروط</a></li>
+                    <li><a href="javascript:void(0)" onclick="document.getElementById('policiesModal').style.display='block'">السياسات والشروط</a></li>
                     <li><a href="admin.html" style="color: var(--primary);"><i class="fa-solid fa-user-lock" style="margin-left: 5px;"></i> لوحة التحكم</a></li>
                 </ul>
             </div>
@@ -563,7 +563,48 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Policies Modal -->
+    <div id="policiesModal" style="display:none; position:fixed; inset:0; z-index:9000; background:rgba(28,25,23,0.7); backdrop-filter:blur(6px); overflow-y:auto;">
+        <div style="max-width:700px; margin:60px auto; background:var(--surface); border-radius:var(--radius-lg); padding:2rem; position:relative; border:1px solid var(--border); box-shadow:var(--shadow-xl);">
+            <button onclick="document.getElementById('policiesModal').style.display='none'" style="position:absolute; top:1rem; left:1rem; background:var(--bg); border:none; width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+            <h1 style="text-align:center; font-size:1.6rem; font-weight:900; color:var(--primary); margin-bottom:2rem;">السياسات والشروط</h1>
+            
+            <h2 style="color:var(--primary); font-weight:800; border-bottom:2px solid var(--border); padding-bottom:.5rem; margin-bottom:1rem;">1. شروط الاستخدام</h2>
+            <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:.8rem;">مرحباً بك في متجر زهرة الارجوان. باستخدامك لهذا المتجر، فإنك توافق على الالتزام بشروط الاستخدام التالية.</p>
+            <ul style="color:var(--text-secondary); line-height:1.8; padding-right:1.5rem; margin-bottom:1.5rem;">
+                <li>جميع محتويات صفحات هذا المتجر هي لمعلوماتك العامة فقط وتخضع للتغيير دون إشعار.</li>
+                <li>يتحمل المستخدم المسؤولية الكاملة عن استخدام أي معلومات أو مواد من هذا المتجر.</li>
+                <li>يُحظر الاستخدام غير المصرح به لهذا المتجر.</li>
+            </ul>
+
+            <h2 style="color:var(--primary); font-weight:800; border-bottom:2px solid var(--border); padding-bottom:.5rem; margin-bottom:1rem;">2. سياسة الخصوصية</h2>
+            <ul style="color:var(--text-secondary); line-height:1.8; padding-right:1.5rem; margin-bottom:1.5rem;">
+                <li><strong>جمع البيانات:</strong> نقوم بجمع المعلومات الأساسية اللازمة لمعالجة الطلبات كالاسم، رقم الهاتف، والعنوان.</li>
+                <li><strong>استخدام البيانات:</strong> تُستخدم بياناتك فقط لتوصيل الطلبات والتواصل بخصوص طلبك.</li>
+                <li><strong>حماية البيانات:</strong> لا نشارك بياناتك مع أي طرف ثالث لأغراض تسويقية.</li>
+            </ul>
+
+            <h2 style="color:var(--primary); font-weight:800; border-bottom:2px solid var(--border); padding-bottom:.5rem; margin-bottom:1rem;">3. سياسة الشحن والتوصيل</h2>
+            <ul style="color:var(--text-secondary); line-height:1.8; padding-right:1.5rem; margin-bottom:1.5rem;">
+                <li>نوفر خدمة التوصيل لمختلف ولايات سلطنة عمان.</li>
+                <li>تختلف رسوم الشحن باختلاف الولاية وحجم الشحنة، ويتم توضيحها قبل تأكيد الطلب.</li>
+                <li>مدة التوصيل تتراوح بين يوم إلى ثلاثة أيام عمل.</li>
+            </ul>
+
+            <h2 style="color:var(--primary); font-weight:800; border-bottom:2px solid var(--border); padding-bottom:.5rem; margin-bottom:1rem;">4. الاسترجاع والاستبدال</h2>
+            <ul style="color:var(--text-secondary); line-height:1.8; padding-right:1.5rem; margin-bottom:1.5rem;">
+                <li>يمكن استبدال المنتج التالف خلال 3 أيام من تاريخ الاستلام بحالته الأصلية.</li>
+                <li>لا يمكن استرجاع البذور والأسمدة والمبيدات المفتوحة لأسباب تتعلق بسلامة المحاصيل.</li>
+                <li>يجب التواصل معنا مباشرة عبر الواتساب للإبلاغ عن أي ضرر.</li>
+            </ul>
+
+            <div style="text-align:center; margin-top:2rem;">
+                <button onclick="document.getElementById('policiesModal').style.display='none'" style="background:var(--primary); color:#fff; border:none; padding:.8rem 2rem; border-radius:var(--radius-md); font-weight:800; font-size:1rem; cursor:pointer;">إغلاق</button>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
     <script src="script.js?v=5" defer></script>
 </body>
