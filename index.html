@@ -1,651 +1,1186 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-
+<html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="description" content="متجر زهرة الارجوان - وجهتك الأولى والأفضل لأجود المستلزمات الزراعية، الأسمدة، والبذور، والمبيدات في سلطنة عمان. استشارات هندسية وتميز زراعي بلا حدود.">
-    <meta name="keywords" content="زراعة, أسمدة, بذور, مبيدات, زهرة الارجوان, سلطنة عمان, مسقط, صحار, مستلزمات زراعية">
-    <meta name="author" content="زهرة الارجوان">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>متجر غصن المتك | نباتات، بذور، مبيدات، أسمدة وأنظمة ري حديث - سلطنة عُمان</title>
+    <meta name="description" content="متجر غصن المتك - وجهتك الأولى للنباتات الطبيعية والنوادر، البذور، المبيدات الآمنة، الأسمدة العضوية، وأنظمة الري الحديث في سلطنة عُمان بأسعار الجملة.">
     
-    <!-- OpenGraph / Social Meta Tags -->
-    <meta property="og:title" content="زهرة الارجوان | تميز زراعي بلا حدود">
-    <meta property="og:description" content="متجر زهرة الارجوان - وجهتك الأولى لأجود المستلزمات الزراعية والأسمدة في سلطنة عمان.">
-    <meta property="og:image" content="https://arjwan-om.com/matjarna_hero_luxury_1778254117070.png">
-    <meta property="og:url" content="https://arjwan-om.com">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ar_OM">
-    
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="زهرة الارجوان | المستلزمات الزراعية في عمان">
-    <meta name="twitter:description" content="اكتشف أفضل الأسمدة والبذور بأسعار منافسة في متجر زهرة الارجوان.">
-    <meta name="twitter:image" content="https://arjwan-om.com/matjarna_hero_luxury_1778254117070.png">
-
-    <!-- Structured Data JSON-LD -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "زهرة الارجوان",
-      "image": "https://arjwan-om.com/matjarna_hero_luxury_1778254117070.png",
-      "@id": "https://arjwan-om.com",
-      "url": "https://arjwan-om.com",
-      "telephone": "+96896017822",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "الشارع العام",
-        "addressLocality": "منح",
-        "addressRegion": "الداخلية",
-        "postalCode": "111",
-        "addressCountry": "OM"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 23.5859,
-        "longitude": 58.4059
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Saturday"
-        ],
-        "opens": "08:00",
-        "closes": "21:00"
-      }
-    }
-    </script>
-    <title>زهرة الارجوان | تميز زراعي بلا حدود</title>
-
-    <!-- Google Fonts: Cairo + Inter -->
+    <!-- Google Fonts: Alexandria & Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Font Awesome & AOS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="style.css?v=5">
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Google Analytics Placeholder -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script> -->
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#15803d', // Deep Emerald Green
+                            600: '#166534',
+                            700: '#14532d',
+                            800: '#0e3a20',
+                            900: '#072413',
+                            dark: '#08170e',
+                            gold: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Alexandria', 'sans-serif'],
+                        mono: ['Outfit', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#f8faf8] text-gray-800 dark:bg-[#07130c] dark:text-gray-100 transition-colors duration-300 font-sans antialiased selection:bg-brand-500 selection:text-white pb-20 lg:pb-0">
 
-    <!-- Meta Pixel Code Placeholder -->
-    <!-- <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', 'YOUR_PIXEL_ID');
-      fbq('track', 'PageView');
-    </script> -->
-    </head>
-
-<body>
-
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="loader-content">
-            <img src="logo.jpeg" alt="Logo" class="loader-logo" onerror="this.style.display='none'">
-            <h2 style="margin-top: 1rem; font-weight: 800; color: var(--primary);">زهرة الارجوان</h2>
-            <p style="color: var(--text-secondary); font-size: 0.9rem;">جاري تحضير عالمك الأخضر...</p>
+    <!-- Top Announcement Bar -->
+    <div id="announcement-bar" class="bg-brand-900 text-brand-100 text-[11px] sm:text-xs py-2 px-3 text-center font-medium flex items-center justify-between border-b border-brand-800/40 relative z-50">
+        <div class="hidden md:flex items-center gap-4 opacity-90">
+            <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> متجر غصن المتك: ضمان جودة المنتجات وتوصيل مبرد لكافة المحافظات 🇴🇲</span>
+        </div>
+        <div class="mx-auto flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            <span id="announcement-text">🌱 <strong>عروض غصن المتك:</strong> شحن مجاني للطلبات فوق <strong>25 ر.ع</strong> + بذور عضوية هدية!</span>
+        </div>
+        <div class="hidden md:flex items-center gap-3 text-[11px]">
+            <span class="bg-brand-800/80 px-2 py-0.5 rounded text-emerald-300 font-mono font-bold">🇴🇲 OMR (ر.ع)</span>
         </div>
     </div>
 
-    <!-- Header Navigation -->
-    <header id="mainHeader">
-        <a href="#home" class="logo">
-            <img src="logo.jpeg" alt="Logo" class="logo-img" onerror="this.style.display='none'">
-            <span>زهرة الارجوان</span>
-        </a>
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#091a11]/95 backdrop-blur-md border-b border-gray-200/70 dark:border-gray-800 transition-all shadow-sm">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20 gap-3">
+                
+                <!-- Mobile Menu Button & Logo -->
+                <div class="flex items-center gap-2">
+                    <button id="mobile-menu-toggle" class="p-2 rounded-xl text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 lg:hidden" aria-label="القائمة">
+                        <i data-lucide="menu" class="w-5 h-5"></i>
+                    </button>
 
-        <nav id="desktopNav">
-            <ul>
-                <li><a href="#home" class="active" data-i18n="home">الرئيسية</a></li>
-                <li><a href="#products" data-i18n="store">المتجر</a></li>
-                <li><a href="#about" data-i18n="about">عن المؤسسة</a></li>
-                <li><a href="#contact" data-i18n="contact">تواصل معنا</a></li>
-            </ul>
-        </nav>
+                    <a href="#" class="flex items-center gap-2.5 group">
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-brand-700 via-brand-600 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform duration-300">
+                            <i data-lucide="leaf" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-xl sm:text-2xl font-black tracking-tight text-gray-900 dark:text-white">غصن المتك</span>
+                                <span class="text-[10px] px-1.5 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold">عُمان 🇴🇲</span>
+                            </div>
+                            <span class="text-[10px] text-gray-500 dark:text-gray-400 hidden sm:inline">نباتات • بذور • مبيدات • أنظمة ري • أدوات</span>
+                        </div>
+                    </a>
+                </div>
 
-        <div class="nav-actions">
-            <button class="btn-lang" onclick="toggleLanguage()" style="background:none; border:1px solid var(--primary); border-radius:5px; padding:2px 8px; color:var(--primary); font-weight:bold; cursor:pointer;">EN</button>
-            <!-- PWA Install Button -->
-            <button id="installAppBtn" class="btn-install" style="display: none;">
-                <i class="fa-solid fa-circle-down"></i> <span>تحميل التطبيق</span>
-            </button>
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass" style="color: var(--primary);"></i>
-                <input type="text" id="productSearch" placeholder="ابحث عن منتج..." oninput="searchProducts()">
+                <!-- Desktop Search Bar -->
+                <div class="hidden lg:flex flex-1 max-w-md mx-6 relative">
+                    <div class="relative w-full">
+                        <input type="text" id="desktop-search-input" placeholder="ابحث عن نباتات، بذور، مبيدات، شبكات ري، أسمدة، أدوات..." 
+                            class="w-full bg-gray-100/90 dark:bg-gray-800/90 border border-transparent dark:border-gray-700/80 rounded-full py-2.5 pr-11 pl-10 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white dark:focus:bg-gray-900 transition-all text-gray-800 dark:text-gray-100">
+                        <div class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                        </div>
+                        <button id="clear-search-btn" class="hidden absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div id="search-results-dropdown" class="hidden absolute top-full mt-2 w-full bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-800 overflow-hidden z-50 transition-all max-h-96 overflow-y-auto">
+                    </div>
+                </div>
+
+                <!-- Header Actions (Admin Button, Theme, Wizard, Wishlist, Cart) -->
+                <div class="flex items-center gap-1.5 sm:gap-2">
+                    
+                    <!-- Admin Panel Access Button -->
+                    <button id="open-admin-btn" class="flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl bg-gray-900 hover:bg-black text-white dark:bg-emerald-950/80 dark:hover:bg-emerald-900 dark:text-emerald-300 border border-gray-700 dark:border-emerald-800/50 shadow-sm transition active:scale-95" title="لوحة تحكم إدارة غصن المتك">
+                        <i data-lucide="shield" class="w-4 h-4 text-emerald-400"></i>
+                        <span class="hidden sm:inline">لوحة الإدارة</span>
+                    </button>
+
+                    <!-- Plant & Agriculture Wizard Button -->
+                    <button id="open-care-wizard-btn" class="hidden md:flex items-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-700 dark:text-brand-300 hover:bg-brand-100 dark:hover:bg-brand-900/60 border border-brand-200/70 dark:border-brand-800/40 transition">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-brand-500"></i>
+                        <span>مساعد الاختيار</span>
+                    </button>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 sm:p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" aria-label="تبديل الوضع">
+                        <i data-lucide="moon" class="w-4 h-4 sm:w-5 sm:h-5 hidden dark:block"></i>
+                        <i data-lucide="sun" class="w-4 h-4 sm:w-5 sm:h-5 block dark:hidden"></i>
+                    </button>
+
+                    <!-- Wishlist -->
+                    <button id="wishlist-toggle-btn" class="hidden sm:flex relative p-2.5 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition" aria-label="المفضلة">
+                        <i data-lucide="heart" class="w-5 h-5"></i>
+                        <span id="wishlist-badge" class="absolute -top-1 -left-1 w-5 h-5 bg-rose-500 text-white text-[11px] font-bold rounded-full flex items-center justify-center shadow">0</span>
+                    </button>
+
+                    <!-- Cart Button with Counter -->
+                    <button id="cart-drawer-toggle" class="flex items-center gap-2 px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 active:scale-95 text-white font-medium shadow-md shadow-brand-500/20 transition">
+                        <div class="relative">
+                            <i data-lucide="shopping-bag" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                            <span id="cart-badge" class="absolute -top-2 -right-2 bg-amber-400 text-brand-950 text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                        </div>
+                        <span class="text-xs sm:text-sm font-bold font-mono" id="cart-header-total">0.00 ر.ع</span>
+                    </button>
+                </div>
             </div>
-            <div class="cart-btn" onclick="toggleCart()">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span class="cart-badge" id="cartCount">0</span>
+
+            <!-- Mobile Quick Search Input -->
+            <div class="lg:hidden pb-3 pt-1">
+                <div class="relative w-full">
+                    <input type="text" id="mobile-search-input" placeholder="ابحث في متجر غصن المتك..." 
+                        class="w-full bg-gray-100 dark:bg-gray-800/90 border border-transparent dark:border-gray-700/60 rounded-xl py-2 pr-9 pl-4 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 text-gray-800 dark:text-gray-200">
+                    <div class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                        <i data-lucide="search" class="w-3.5 h-3.5"></i>
+                    </div>
+                </div>
             </div>
-            <div class="menu-toggle" onclick="toggleMobileMenu()"
-                style="display: none; cursor: pointer; font-size: 1.5rem;">
-                <i class="fa-solid fa-bars"></i>
-            </div>
+
+            <!-- Comprehensive Category Horizontal Scroll Pills Bar -->
+            <nav class="flex items-center gap-2 pb-2.5 pt-1 overflow-x-auto no-scrollbar border-t border-gray-100 dark:border-gray-800/80 text-xs sm:text-sm">
+                <button class="cat-nav-btn active shrink-0 px-3.5 py-1.5 rounded-full bg-brand-500 text-white font-bold transition shadow-sm" data-category="all">
+                    🌿 كل الأقسام
+                </button>
+                <button class="cat-nav-btn shrink-0 px-3.5 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 transition" data-category="plants">
+                    🪴 النباتات والنوادر
+                </button>
+                <button class="cat-nav-btn shrink-0 px-3.5 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 transition" data-category="seeds">
+                    🌱 البذور والتقاوي
+                </button>
+                <button class="cat-nav-btn shrink-0 px-3.5 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 transition" data-category="pesticides">
+                    🛡️ المبيدات والوقاية
+                </button>
+                <button class="cat-nav-btn shrink-0 px-3.5 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 transition" data-category="irrigation">
+                    💧 أنظمة الري الحديث
+                </button>
+                <button class="cat-nav-btn shrink-0 px-3.5 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 transition" data-category="fertilizers">
+                    🧪 الأسمدة والمغذيات
+                </button>
+                <button class="cat-nav-btn shrink-0 px-3.5 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 transition" data-category="tools">
+                    ✂️ الأدوات والمعدات
+                </button>
+                <button class="cat-nav-btn shrink-0 px-3.5 py-1.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 transition" data-category="pots">
+                    🏺 المراكن والأحواض
+                </button>
+            </nav>
         </div>
     </header>
 
-    <main>
-        <!-- Stories Section -->
-        <section class="stories-section" id="storiesSection" style="display: none;" data-aos="fade-down">
-            <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 1rem; padding: 0 5px;">تابع جديدنا عبر قنواتنا</h3>
-            <div class="stories-container" id="storiesContainer">
-                <!-- Circular story badges will be injected here -->
-            </div>
-        </section>
-
-        <!-- Dynamic Hero Slider -->
-        <section class="hero-slider-container" id="home">
-            <div class="slider-wrapper" id="heroSliderWrapper">
-                <!-- Static Fallback Slide -->
-                <div class="slide active">
-                    <div class="hero">
-                        <div class="hero-content" data-aos="zoom-out" data-aos-duration="1200">
-                            <span style="color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 1rem;">سلطنة عمان - مسقط / صحار</span>
-                            <h1>مستقبلك الأخضر يبدأ بلمسة احترافية</h1>
-                            <p>نقدم أجود أنواع الأسمدة، البذور المهجنة، والمبيدات الآمنة لضمان إنتاجية استثنائية لمزرعتك.</p>
-                            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                                <a href="#products" class="btn-primary" data-i18n="browse_products">استعرض المنتجات</a>
-                                <a href="https://wa.me/96896017822" class="btn-primary" style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); box-shadow: none;" data-i18n="consult_engineer">استشارة المهندس</a>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-drawer-overlay" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-xs"></div>
+    <div id="mobile-drawer" class="fixed top-0 right-0 bottom-0 w-[82%] max-w-xs bg-white dark:bg-gray-900 z-50 translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+        <div class="p-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-brand-50/50 dark:bg-gray-800/50">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-brand-500 flex items-center justify-center text-white">
+                    <i data-lucide="leaf" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span class="font-black text-sm text-gray-900 dark:text-white">متجر غصن المتك</span>
+                    <span class="text-[10px] text-gray-400 block">نباتات • بذور • ري • مبيدات</span>
                 </div>
             </div>
-            <!-- Slider Controls -->
-            <button class="slider-nav prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-right"></i></button>
-            <button class="slider-nav next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-left"></i></button>
-            <div class="slider-dots" id="sliderDots"></div>
-        </section>
-
-        <!-- Flash Sale Banner (New Feature) -->
-        <section id="flashSaleBanner" class="flash-sale" style="background: linear-gradient(90deg, #ef4444, #fbbf24); color: var(--bg-dark); padding: 1rem; text-align: center; font-weight: 800; font-size: 1.1rem; position: relative; overflow: hidden;">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-                <span>🔥 عروض الصيف الكبرى! خصومات تصل إلى 50% على بذور الخريف</span>
-                <div id="countdown" style="background: rgba(0,0,0,0.1); padding: 5px 15px; border-radius: 50px;">ينتهي خلال: 12:45:00</div>
-            </div>
-        </section>
-
-        <!-- Trust Badges (New Feature) -->
-        <section style="padding: 2rem 5%; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--glass-border);">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; text-align: center;">
-                <div><i class="fa-solid fa-truck-fast" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 10px;"></i><p style="font-size: 0.8rem; font-weight: 700;">توصيل سريع لكافة الولايات</p></div>
-                <div><i class="fa-solid fa-shield-heart" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 10px;"></i><p style="font-size: 0.8rem; font-weight: 700;">جودة مضمونة 100%</p></div>
-                <div><i class="fa-solid fa-headset" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 10px;"></i><p style="font-size: 0.8rem; font-weight: 700;">دعم فني واستشارات</p></div>
-                <div><i class="fa-solid fa-lock" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 10px;"></i><p style="font-size: 0.8rem; font-weight: 700;">دفع آمن عند الاستلام</p></div>
-            </div>
-        </section>
-
-        <!-- New Products Slider (New Feature) -->
-        <section class="new-arrivals" data-aos="fade-up">
-            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; padding: 0 5%; margin-bottom: 2rem;">
-                <h2 style="font-size: 1.8rem; font-weight: 800; border-right: 4px solid var(--primary); padding-right: 15px;">وصل حديثاً ✨</h2>
-                <div class="slider-controls-mini">
-                    <button onclick="scrollNewProducts(-1)" class="mini-nav"><i class="fa-solid fa-chevron-right"></i></button>
-                    <button onclick="scrollNewProducts(1)" class="mini-nav"><i class="fa-solid fa-chevron-left"></i></button>
-                </div>
-            </div>
-            <div class="product-slider-container">
-                <div class="product-slider-track" id="newProductsTrack">
-                    <!-- Dynamic Product Cards Injected Here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Categories Filter -->
-        <section class="categories" data-aos="fade-up">
-            <div class="cat-item active" onclick="filterCategory('الكل', this)">الكل</div>
-            <div class="cat-item" onclick="filterCategory('أسمدة', this)"><i class="fa-solid fa-flask"></i> أسمدة</div>
-            <div class="cat-item" onclick="filterCategory('بذور', this)"><i class="fa-solid fa-leaf"></i> بذور</div>
-            <div class="cat-item" onclick="filterCategory('مبيدات', this)"><i class="fa-solid fa-shield-virus"></i>
-                مبيدات</div>
-            <div class="cat-item" onclick="filterCategory('أدوات', this)"><i class="fa-solid fa-screwdriver-wrench"></i>
-                أدوات</div>
-        </section>
-
-        <!-- Products Section -->
-        <section class="products-section" id="products">
-            <h2 class="grid-title" data-aos="fade-up">مجموعتنا المختارة</h2>
-            <div class="product-grid" id="productGrid">
-                <!-- Products will be injected by script.js -->
-            </div>
-        </section>
-
-        <!-- About / Features -->
-        <section id="about" style="padding: 6rem 5%; background: var(--bg-surface);">
-            <div
-                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; align-items: center;">
-                <div data-aos="fade-right">
-                    <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--primary);">لماذا تختار زهرة
-                        الارجوان؟</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 2rem;">نحن في زهرة الارجوان نسعى لتوفير أجود
-                        المستلزمات الزراعية التي تناسب بيئة سلطنة عمان، مع تقديم استشارات فنية متخصصة لضمان نجاح كل
-                        مشروع زراعي.</p>
-                    <ul style="list-style: none; display: grid; gap: 1rem;">
-                        <li><i class="fa-solid fa-circle-check" style="color: var(--secondary); margin-left: 10px;"></i>
-                            منتجات أصلية 100%</li>
-                        <li><i class="fa-solid fa-circle-check" style="color: var(--secondary); margin-left: 10px;"></i>
-                            استشارات من المهندس أبو حسن مباشرة</li>
-                        <li><i class="fa-solid fa-circle-check" style="color: var(--secondary); margin-left: 10px;"></i>
-                            توصيل سريع لمختلف ولايات السلطنة</li>
-                    </ul>
-                </div>
-                <div style="position: relative;" data-aos="fade-left">
-                    <img src="glassy_botanical_hero.png" alt="Zahrat Alarjwan"
-                        style="width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-premium);">
-                    <div
-                        style="position: absolute; bottom: -20px; right: -20px; background: var(--primary); padding: 2rem; border-radius: var(--radius-md); text-align: center;">
-                        <span style="font-size: 2.5rem; font-weight: 900; display: block;">10+</span>
-                        <span style="font-size: 0.9rem;">سنوات من الخبرة</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Mobile Bottom Navigation -->
-    <nav class="mobile-bottom-nav">
-        <a href="#home" class="nav-item active" onclick="document.querySelectorAll('.mobile-bottom-nav .nav-item').forEach(i=>i.classList.remove('active')); this.classList.add('active');">
-            <i class="fa-solid fa-house"></i>
-            <span data-i18n="home">الرئيسية</span>
-        </a>
-        <a href="#products" class="nav-item" onclick="document.querySelectorAll('.mobile-bottom-nav .nav-item').forEach(i=>i.classList.remove('active')); this.classList.add('active');">
-            <i class="fa-solid fa-store"></i>
-            <span data-i18n="store">المتجر</span>
-        </a>
-        <a href="#" class="nav-item" onclick="toggleCart(); return false;">
-            <div style="position: relative;">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span class="cart-badge-mobile" id="mobileCartCount">0</span>
-            </div>
-            <span data-i18n="cart">السلة</span>
-        </a>
-        <a href="https://wa.me/96896017822" class="nav-item" target="_blank">
-            <i class="fa-brands fa-whatsapp"></i>
-            <span data-i18n="contact_short">تواصل</span>
-        </a>
-    </nav>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col" data-aos="fade-up">
-                <a href="#" class="footer-logo">
-                    <img src="logo.jpeg" alt="Logo" class="logo-img" onerror="this.style.display='none'">
-                    <span>زهرة الارجوان</span>
-                </a>
-                <p style="color: var(--text-muted);">شريككم الموثوق في رحلة الإنتاج الزراعي. نوفر الحلول المبتكرة
-                    لمستقبل مستدام.</p>
-                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                    <a href="#" style="font-size: 1.5rem; color: var(--text-muted);"><i
-                            class="fa-brands fa-instagram"></i></a>
-                    <a href="#" style="font-size: 1.5rem; color: var(--text-muted);"><i
-                            class="fa-brands fa-twitter"></i></a>
-                    <a href="https://wa.me/96896017822" style="font-size: 1.5rem; color: var(--text-muted);"><i
-                            class="fa-brands fa-whatsapp"></i></a>
-                </div>
-            </div>
-            <div class="footer-col" data-aos="fade-up" data-aos-delay="100">
-                <h3>روابط سريعة</h3>
-                <ul class="footer-links">
-                    <li><a href="#home" data-i18n="home">الرئيسية</a></li>
-                    <li><a href="#products" data-i18n="store">المتجر</a></li>
-                    <li><a href="#about" data-i18n="about">عن المؤسسة</a></li>
-                    <li><a href="javascript:void(0)" onclick="document.getElementById('policiesModal').style.display='block'">السياسات والشروط</a></li>
-                    <li><a href="admin.html" style="color: var(--primary);"><i class="fa-solid fa-user-lock" style="margin-left: 5px;"></i> لوحة التحكم</a></li>
-                </ul>
-            </div>
-            <div class="footer-col" data-aos="fade-up" data-aos-delay="200" id="contact">
-                <h3>اتصل بنا</h3>
-                <ul class="footer-links">
-                    <li><i class="fa-solid fa-phone" style="color: var(--primary); margin-left: 10px;"></i> +968
-                        96017822</li>
-                    <li><i class="fa-solid fa-location-dot" style="color: var(--primary); margin-left: 10px;"></i>سلطنة
-                        عمان - منح / المعرى ر</li>
-                    <li><i class="fa-solid fa-envelope" style="color: var(--primary); margin-left: 10px;"></i>
-                        info@arjwan-om.com</li>
-                </ul>
-            </div>
+            <button id="close-mobile-drawer" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 dark:hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
         </div>
-        <div class="footer-bottom">
-            &copy; 2026 زهرة الارجوان. جميع الحقوق محفوظة. تصميم وتطوير أبو حسان.
-        </div>
-    </footer>
-
-    <!-- Cart Drawer -->
-    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
-    <div id="cartDrawer">
-        <div class="cart-header">
-            <h2 style="font-weight: 800;" id="cartDrawerTitle">سلة المشتريات</h2>
-            <i class="fa-solid fa-xmark" style="cursor: pointer; font-size: 1.5rem;" onclick="toggleCart()"></i>
-        </div>
-
-        <!-- Step 1: Cart Review -->
-        <div id="cartStep1" class="cart-step active">
-            <div id="cartItemsList">
-                <!-- Items injected by script.js -->
+        <div class="p-4 flex-1 overflow-y-auto space-y-2">
+            <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-2">أقسام متجر غصن المتك</p>
+            <div class="space-y-1 text-sm font-medium">
+                <button class="mobile-cat-btn w-full text-right px-3 py-2.5 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-900/30 flex items-center justify-between text-brand-600 dark:text-brand-400 font-bold" data-category="all">
+                    <span>🌿 كل الأقسام</span>
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button class="mobile-cat-btn w-full text-right px-3 py-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between text-gray-700 dark:text-gray-200" data-category="plants">
+                    <span>🪴 النباتات والنوادر</span>
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button class="mobile-cat-btn w-full text-right px-3 py-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between text-gray-700 dark:text-gray-200" data-category="seeds">
+                    <span>🌱 البذور والتقاوي</span>
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button class="mobile-cat-btn w-full text-right px-3 py-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between text-gray-700 dark:text-gray-200" data-category="pesticides">
+                    <span>🛡️ المبيدات والوقاية الزراعية</span>
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button class="mobile-cat-btn w-full text-right px-3 py-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between text-gray-700 dark:text-gray-200" data-category="irrigation">
+                    <span>💧 أنظمة الري الحديث والتقطير</span>
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button class="mobile-cat-btn w-full text-right px-3 py-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between text-gray-700 dark:text-gray-200" data-category="fertilizers">
+                    <span>🧪 الأسمدة والمغذيات</span>
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button class="mobile-cat-btn w-full text-right px-3 py-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between text-gray-700 dark:text-gray-200" data-category="tools">
+                    <span>✂️ الأدوات والمعدات</span>
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <button class="mobile-cat-btn w-full text-right px-3 py-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center justify-between text-gray-700 dark:text-gray-200" data-category="pots">
+                    <span>🏺 المراكن والأحواض</span>
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
             </div>
-
-            <div class="cart-footer">
-                <!-- Coupon Section -->
-                <div class="coupon-section">
-                    <input type="text" id="couponCode" placeholder="كود الخصم (مثلاً: WELCOME)">
-                    <button class="btn-coupon" onclick="applyCoupon()">تطبيق</button>
-                </div>
-
-                <div class="total-row" id="totalVolumeRow" style="display: none; font-size: 0.9rem; color: var(--text-muted); border-bottom: none; padding-bottom: 0;">
-                    <span>الحجم الإجمالي:</span>
-                    <span id="totalVolume">0</span>
-                </div>
-                <div class="total-row" id="discountRow" style="display: none; font-size: 0.95rem; color: var(--danger); border-bottom: none; padding-bottom: 0;">
-                    <span>الخصم:</span>
-                    <span id="discountAmount">0.000 ر.ع</span>
-                </div>
-                <div class="total-row">
-                    <span>الإجمالي:</span>
-                    <span id="totalAmount">0.000 ر.ع</span>
-                </div>
-
-                <button class="btn-primary btn-checkout-next" onclick="switchCartStep(2)" style="width: 100%; border: none;">
-                    الاستمرار لتعبئة البيانات <i class="fa-solid fa-arrow-left" style="margin-right: 8px; transform: scaleX(-1);"></i>
+            
+            <div class="pt-4 border-t border-gray-100 dark:border-gray-800 space-y-2">
+                <button id="mobile-admin-access-btn" class="w-full py-2.5 px-3 bg-gray-900 text-white dark:bg-emerald-950 dark:text-emerald-300 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+                    <i data-lucide="shield" class="w-4 h-4 text-emerald-400"></i> تسجيل دخول لوحة الإدارة
                 </button>
             </div>
         </div>
+    </div>
 
-        <!-- Step 2: Checkout Details -->
-        <div id="cartStep2" class="cart-step" style="display: none;">
-            <div class="checkout-back-link" onclick="switchCartStep(1)">
-                <i class="fa-solid fa-arrow-right" style="margin-left: 6px;"></i> العودة لتعديل السلة
+    <!-- Professional Ad Slider Showcase Section -->
+    <section class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 sm:pt-6">
+        <div class="relative overflow-hidden rounded-3xl shadow-xl border border-gray-200/80 dark:border-gray-800 group" id="hero-slider-showcase">
+            
+            <div id="slides-track" class="flex transition-transform duration-700 ease-out h-[360px] sm:h-[420px] lg:h-[460px]">
+                
+                <!-- SLIDE 1: Modern Irrigation & Agricultural Supplies -->
+                <div class="min-w-full h-full relative flex items-center bg-gradient-to-r from-blue-950 via-gray-950 to-brand-950 text-white overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?auto=format&fit=crop&w=1200&q=80" 
+                        alt="أنظمة الري الحديث غصن المتك" 
+                        class="absolute inset-0 w-full h-full object-cover opacity-35 transform scale-105 group-hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/90 via-black/60 to-transparent"></div>
+                    
+                    <div class="relative z-10 max-w-xl p-6 sm:p-12 text-right space-y-3 sm:space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-300 text-[11px] sm:text-xs font-black backdrop-blur-md">
+                            <span>💧 أنظمة الري الذكية في عُمان</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
+                            شبكات وأنظمة الري بالتنقيط الحديث والمؤقتات
+                        </h2>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-lg">
+                            وفّر 70% من استهلاك المياه مع مؤقتات الري الرقمية وموزعات التنقيط الأوتوماتيكية لحدائق المنازل والمزارع.
+                        </p>
+                        <div class="flex items-center gap-3 pt-2">
+                            <button class="slide-cta-btn px-5 sm:px-6 py-2.5 sm:py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-500/30 transition flex items-center gap-2" data-cat="irrigation">
+                                <span>تصفح أنظمة الري</span>
+                                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            </button>
+                            <span class="text-xs text-blue-300 font-mono font-bold bg-black/40 px-3 py-2 rounded-xl backdrop-blur">
+                                تبدأ من 6.50 ر.ع
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 2: Seeds & Organic Crop Protection -->
+                <div class="min-w-full h-full relative flex items-center bg-gradient-to-r from-emerald-950 via-gray-900 to-emerald-900 text-white overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1592417817098-8f3d6eb22509?auto=format&fit=crop&w=1200&q=80" 
+                        alt="بذور ومبيدات غصن المتك" 
+                        class="absolute inset-0 w-full h-full object-cover opacity-35 transform scale-105 group-hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/90 via-black/60 to-transparent"></div>
+
+                    <div class="relative z-10 max-w-xl p-6 sm:p-12 text-right space-y-3 sm:space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[11px] sm:text-xs font-black backdrop-blur-md">
+                            <span>🌱 بذور هجينة ومبيدات عضوية آمنة</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
+                            بذور خضار وزهور ممتازة وحماية وقائية متكاملة
+                        </h2>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-lg">
+                            نسبة إنبات تفوق 95% مع زيوت النيم ومبيدات الفطريات والحشرات العضوية الآمنة لبيئة المنازل والحدائق.
+                        </p>
+                        <div class="flex items-center gap-3 pt-2">
+                            <button class="slide-cta-btn px-5 sm:px-6 py-2.5 sm:py-3.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-500/30 transition flex items-center gap-2" data-cat="seeds">
+                                <span>تصفح البذور والمبيدات</span>
+                                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            </button>
+                            <span class="text-xs text-emerald-400 font-mono font-bold bg-black/40 px-3 py-2 rounded-xl backdrop-blur">
+                                تبدأ من 1.20 ر.ع
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 3: Rare Plants, Exotics & Decor -->
+                <div class="min-w-full h-full relative flex items-center bg-gradient-to-r from-gray-950 via-brand-950 to-gray-900 text-white overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1604762524889-3e2fccbc5604?auto=format&fit=crop&w=1200&q=80" 
+                        alt="نوادر النباتات ومراكن غصن المتك" 
+                        class="absolute inset-0 w-full h-full object-cover opacity-35 transform scale-105 group-hover:scale-110 transition-transform duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/90 via-black/60 to-transparent"></div>
+
+                    <div class="relative z-10 max-w-xl p-6 sm:p-12 text-right space-y-3 sm:space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-300 text-[11px] sm:text-xs font-black backdrop-blur-md">
+                            <span>✨ نوادر ومبرقشات استوائية فاخرة</span>
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight">
+                            مونستيرا، فيلوديندرون، ومراكن سيراميك اسكندنافية
+                        </h2>
+                        <p class="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-lg">
+                            نباتات منتقاة بعناية مع أسمدة NPK لتعزيز النمو ومقصات يابانية فائقة الحدة.
+                        </p>
+                        <div class="flex items-center gap-3 pt-2">
+                            <button class="slide-cta-btn px-5 sm:px-6 py-2.5 sm:py-3.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs sm:text-sm shadow-lg shadow-amber-500/30 transition flex items-center gap-2" data-cat="plants">
+                                <span>تصفح النباتات والنوادر</span>
+                                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="checkout-form-container">
-                <div class="order-form">
-                    <div class="form-group">
-                        <label for="custName"><i class="fa-solid fa-user"></i> الاسم بالكامل</label>
-                        <input type="text" id="custName" placeholder="أدخل اسمك الثلاثي">
-                    </div>
-                    <div class="form-group">
-                        <label for="custPhone"><i class="fa-solid fa-phone"></i> رقم الهاتف</label>
-                        <input type="tel" id="custPhone" placeholder="968XXXXXXXX">
-                    </div>
-                    <div class="form-group">
-                        <label for="custLoc"><i class="fa-solid fa-location-dot"></i> الولاية / العنوان</label>
-                        <input type="text" id="custLoc" placeholder="مثال: مسقط، السيب">
-                    </div>
+            <!-- Slider Prev/Next Navigation Arrows -->
+            <button id="slider-prev-btn" class="absolute top-1/2 -translate-y-1/2 right-3 sm:right-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all opacity-80 hover:opacity-100 z-20" aria-label="السابق">
+                <i data-lucide="chevron-right" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </button>
+            <button id="slider-next-btn" class="absolute top-1/2 -translate-y-1/2 left-3 sm:left-5 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 flex items-center justify-center transition-all opacity-80 hover:opacity-100 z-20" aria-label="التالي">
+                <i data-lucide="chevron-left" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </button>
 
-                    <!-- Shipping Destination -->
-                    <div class="form-group">
-                        <label for="shippingCountry"><i class="fa-solid fa-truck"></i> وجهة الشحن</label>
-                        <select id="shippingCountry" style="width:100%; padding:0.65rem 1rem; background:var(--bg); border:1.5px solid var(--border-dark); border-radius:var(--radius-md); color:var(--text); font-size:0.85rem; font-family:var(--font-ar);">
-                            <option value="OM">داخل عمان (محلي)</option>
-                            <option value="UAE">الإمارات (UAE)</option>
-                            <option value="KSA">السعودية (KSA)</option>
-                            <option value="KWI">الكويت (KWI)</option>
-                            <option value="BAH">البحرين (BAH)</option>
-                            <option value="QA">قطر (QA)</option>
-                        </select>
+            <!-- Slider Bottom Pagination Dots & Progress Indicator -->
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+                <button class="slider-dot active w-6 h-2 rounded-full bg-brand-400 transition-all" data-slide="0"></button>
+                <button class="slider-dot w-2 h-2 rounded-full bg-white/40 hover:bg-white/80 transition-all" data-slide="1"></button>
+                <button class="slider-dot w-2 h-2 rounded-full bg-white/40 hover:bg-white/80 transition-all" data-slide="2"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Products Catalog Section -->
+    <main id="catalog-section" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10">
+        
+        <div class="flex items-center justify-between gap-3 pb-4 sm:pb-6 border-b border-gray-200/80 dark:border-gray-800">
+            <div>
+                <div class="flex items-center gap-2">
+                    <h2 class="text-lg sm:text-2xl font-black text-gray-900 dark:text-white" id="current-category-title">
+                        كل الأقسام
+                    </h2>
+                    <span id="product-count-badge" class="px-2 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 font-bold text-[11px]">
+                        0 منتج
+                    </span>
+                </div>
+            </div>
+
+            <!-- Sort and Filter Buttons -->
+            <div class="flex items-center gap-2">
+                <button id="open-filter-modal-btn" class="lg:hidden flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-700 dark:text-brand-300 text-xs font-bold border border-brand-200 dark:border-brand-800">
+                    <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
+                    <span>تصفية</span>
+                </button>
+
+                <div class="flex items-center gap-1">
+                    <select id="sort-select" class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-2.5 py-1.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 text-gray-800 dark:text-gray-200 cursor-pointer">
+                        <option value="featured">✨ مقترحات غصن المتك</option>
+                        <option value="best-seller">🔥 الأكثر طلباً</option>
+                        <option value="price-low">📉 الأقل سعراً</option>
+                        <option value="price-high">📈 الأعلى سعراً</option>
+                        <option value="rating">⭐ الأعلى تقييماً</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Layout (Sidebar Filters + Products Grid) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 pt-6 items-start">
+            
+            <!-- Desktop Sidebar Filter -->
+            <aside class="hidden lg:block lg:col-span-3 space-y-5 sticky top-24 bg-white dark:bg-gray-900/70 p-5 rounded-3xl border border-gray-200/80 dark:border-gray-800 shadow-sm">
+                <div class="flex items-center justify-between pb-3 border-b border-gray-100 dark:border-gray-800">
+                    <div class="flex items-center gap-2 font-bold text-gray-900 dark:text-white text-sm">
+                        <i data-lucide="filter" class="w-4 h-4 text-brand-500"></i>
+                        <span>تصفية ذكية</span>
                     </div>
-                    <div id="shippingCostRow" style="display:none; padding:0.75rem 1rem; background:var(--primary-light); border-radius:var(--radius-md); margin-bottom:1rem; justify-content:space-between; align-items:center; font-weight:700; font-size:0.9rem;">
-                        <span><i class="fa-solid fa-truck-fast" style="color:var(--primary); margin-left:6px;"></i> رسوم الشحن الدولي:</span>
-                        <span id="shippingCostValue" style="color:var(--primary);">0.000 ر.ع</span>
+                    <button id="reset-filters-btn" class="text-xs text-brand-600 dark:text-brand-400 hover:underline font-bold">
+                        إعادة ضبط
+                    </button>
+                </div>
+
+                <!-- Category Quick Select -->
+                <div class="space-y-2">
+                    <label class="text-[11px] font-bold uppercase tracking-wider text-gray-400">القسم الرئيسي</label>
+                    <div class="space-y-1 text-xs">
+                        <button class="filter-cat-sidebar-btn w-full text-right p-1.5 rounded-lg hover:bg-brand-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium" data-category="all">
+                            🌿 كافة المنتجات
+                        </button>
+                        <button class="filter-cat-sidebar-btn w-full text-right p-1.5 rounded-lg hover:bg-brand-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium" data-category="plants">
+                            🪴 النباتات الطبيعية والنوادر
+                        </button>
+                        <button class="filter-cat-sidebar-btn w-full text-right p-1.5 rounded-lg hover:bg-brand-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium" data-category="seeds">
+                            🌱 البذور والتقاوي
+                        </button>
+                        <button class="filter-cat-sidebar-btn w-full text-right p-1.5 rounded-lg hover:bg-brand-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium" data-category="pesticides">
+                            🛡️ المبيدات والوقاية
+                        </button>
+                        <button class="filter-cat-sidebar-btn w-full text-right p-1.5 rounded-lg hover:bg-brand-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium" data-category="irrigation">
+                            💧 أنظمة الري الحديث
+                        </button>
+                        <button class="filter-cat-sidebar-btn w-full text-right p-1.5 rounded-lg hover:bg-brand-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium" data-category="fertilizers">
+                            🧪 الأسمدة والمغذيات
+                        </button>
+                        <button class="filter-cat-sidebar-btn w-full text-right p-1.5 rounded-lg hover:bg-brand-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium" data-category="tools">
+                            ✂️ الأدوات والمعدات
+                        </button>
+                        <button class="filter-cat-sidebar-btn w-full text-right p-1.5 rounded-lg hover:bg-brand-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium" data-category="pots">
+                            🏺 المراكن والأحواض
+                        </button>
                     </div>
-                    
-                    <!-- Gift Option -->
-                    <div style="margin-top: 15px; margin-bottom: 15px; padding: 0.5rem; border: 1px dashed var(--primary); border-radius: var(--radius-md); background: #fff;">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: bold; color: var(--primary); margin: 0; width: 100%;">
-                            <input type="checkbox" id="isGift" style="width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer;">
-                            إرسال الطلب كهدية 🎁 لمن تحب
+                </div>
+
+                <!-- Price Range Slider -->
+                <div class="space-y-3 pt-3 border-t border-gray-100 dark:border-gray-800">
+                    <div class="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-gray-400">
+                        <span>نطاق السعر</span>
+                        <span id="price-range-label" class="text-brand-600 dark:text-brand-400 font-bold font-mono">حتى 60.00 ر.ع</span>
+                    </div>
+                    <input type="range" id="price-slider" min="1" max="60" step="1" value="60" 
+                        class="w-full accent-brand-500 cursor-pointer h-1.5 bg-gray-200 dark:bg-gray-700 rounded-lg">
+                    <div class="flex justify-between text-[10px] text-gray-400 font-mono">
+                        <span>1.00 ر.ع</span>
+                        <span>60.00+ ر.ع</span>
+                    </div>
+                </div>
+
+                <!-- Special Tags -->
+                <div class="space-y-2 pt-3 border-t border-gray-100 dark:border-gray-800">
+                    <label class="text-[11px] font-bold uppercase tracking-wider text-gray-400">خيارات خاصة</label>
+                    <div class="space-y-1.5 text-xs">
+                        <label class="flex items-center gap-2 cursor-pointer p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                            <input type="checkbox" id="filter-pet-friendly" class="rounded text-brand-600 focus:ring-brand-500 w-4 h-4">
+                            <span class="text-gray-700 dark:text-gray-300">🐾 منتجات عضوية وآمنة</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer p-1.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                            <input type="checkbox" id="filter-on-sale" class="rounded text-brand-600 focus:ring-brand-500 w-4 h-4">
+                            <span class="text-gray-700 dark:text-gray-300">🔥 عروض وتخفيضات</span>
                         </label>
                     </div>
+                </div>
+            </aside>
 
-                    <!-- Gift Details Fields -->
-                    <div id="giftFields" style="display: none; background: var(--primary-light); padding: 1rem; border-radius: var(--radius-md); border: 1px solid rgba(109,40,217,0.1); margin-bottom: 1rem;">
-                        <h4 style="margin-bottom: 10px; color: var(--primary); font-size: 0.9rem; font-weight: 800;"><i class="fa-solid fa-gift"></i> بيانات المستلم (المهدى إليه)</h4>
-                        <div class="form-group" style="margin-bottom: 10px;">
-                            <input type="text" id="giftName" placeholder="الاسم بالكامل" style="padding: 0.6rem;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 10px;">
-                            <input type="tel" id="giftPhone" placeholder="رقم الهاتف للتواصل معه" style="padding: 0.6rem;">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <textarea id="giftMessage" placeholder="اكتب رسالة إهداء ترفق مع الطلب (اختياري)..." rows="2" style="padding: 0.6rem; width: 100%; border: 1.5px solid var(--border-dark); border-radius: var(--radius-md); font-family: var(--font-ar); resize: none; outline: none;"></textarea>
-                        </div>
+            <!-- Products Grid Container -->
+            <div class="lg:col-span-9">
+                <div id="products-grid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 transition-all">
+                    <!-- Products dynamically rendered -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden text-center py-16 px-4 space-y-4">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-brand-50 dark:bg-brand-900/30 text-brand-500 flex items-center justify-center">
+                        <i data-lucide="search-x" class="w-8 h-8"></i>
                     </div>
-                    
-                    <!-- Payment Method Selector -->
-                    <div class="payment-methods-selector" id="ompaySelectorContainer" style="display: none;">
-                        <label class="section-label">طريقة الدفع:</label>
-                        <div class="payment-options-grid">
-                            <div class="pay-method-option active" onclick="selectPaymentMethod('whatsapp')" id="methodWhatsApp">
-                                <i class="fa-brands fa-whatsapp"></i>
-                                <span>عبر الواتساب</span>
-                            </div>
-                            <div class="pay-method-option" onclick="selectPaymentMethod('ompay')" id="methodOmPay">
-                                <i class="fa-solid fa-credit-card"></i>
-                                <span>بطاقة بنكية (OmPay)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Checkout Summary -->
-                    <div class="checkout-summary-mini">
-                        <span>إجمالي الطلب:</span>
-                        <span id="checkoutTotalAmount" style="font-weight: 800; color: var(--secondary);">0.000 ر.ع</span>
-                    </div>
-
-                    <!-- WhatsApp Checkout Button -->
-                    <button class="btn-primary btn-checkout-submit" id="btnCheckoutWhatsApp" onclick="sendToWhatsApp()"
-                        style="width: 100%; background: #25d366; border: none; display: block;">
-                        <i class="fa-brands fa-whatsapp" style="margin-left: 8px;"></i> تأكيد وإرسال عبر واتساب
-                    </button>
-
-                    <!-- OmPay Checkout Button -->
-                    <button class="btn-primary btn-checkout-submit" id="btnCheckoutOmPay" onclick="payWithOmPay()"
-                        style="width: 100%; background: var(--primary); border: none; display: none;">
-                        <i class="fa-solid fa-shield-halved" style="margin-left: 8px;"></i> الدفع الآمن ببطاقتك
+                    <h3 class="text-base font-bold text-gray-800 dark:text-gray-200">لم نجد منتجات مطابقة لخياراتك!</h3>
+                    <p class="text-xs text-gray-500 max-w-xs mx-auto">
+                        جرب تخفيف الفلاتر أو تصفح كافة أقسام غصن المتك
+                    </p>
+                    <button id="empty-reset-btn" class="px-4 py-2 rounded-xl bg-brand-500 text-white font-bold text-xs shadow hover:bg-brand-600">
+                        عرض كل المنتجات
                     </button>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Floating WhatsApp -->
-    
-    <!-- Smart WhatsApp Widget -->
-    <div class="wa-widget-container" id="waWidgetContainer">
-        <div class="wa-widget-window" id="waWidgetWindow">
-            <div class="wa-header">
-                <div><i class="fa-brands fa-whatsapp"></i> <span data-i18n="wa_support">الدعم الفني المباشر</span></div>
-                <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleWaWidget()"></i>
-            </div>
-            <div class="wa-body">
-                <div class="wa-message">
-                    <span data-i18n="wa_welcome">مرحباً بك في زهرة الارجوان! كيف يمكننا مساعدتك اليوم؟ 🌿</span>
-                </div>
-            </div>
-            <div class="wa-footer">
-                <input type="text" id="waInput" placeholder="اكتب رسالتك هنا..." data-i18n-placeholder="wa_placeholder">
-                <button onclick="sendWaMessage()"><i class="fa-solid fa-paper-plane"></i></button>
-            </div>
         </div>
-        <button class="whatsapp-float" onclick="toggleWaWidget()">
-            <i class="fa-brands fa-whatsapp"></i>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <div class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#091a11]/95 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 px-4 py-2 lg:hidden flex items-center justify-around shadow-2xl">
+        <button class="mobile-nav-btn flex flex-col items-center gap-1 text-brand-600 dark:text-brand-400" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <i data-lucide="home" class="w-5 h-5"></i>
+            <span class="text-[10px] font-bold">الرئيسية</span>
+        </button>
+        <button class="mobile-nav-btn flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-brand-600" id="mobile-nav-cats">
+            <i data-lucide="grid" class="w-5 h-5"></i>
+            <span class="text-[10px] font-medium">الأقسام</span>
+        </button>
+        <button class="mobile-nav-btn flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-brand-600" id="mobile-nav-admin">
+            <i data-lucide="shield" class="w-5 h-5 text-emerald-500"></i>
+            <span class="text-[10px] font-medium">الإدارة</span>
+        </button>
+        <button class="mobile-nav-btn flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-brand-600 relative" id="mobile-nav-wishlist">
+            <i data-lucide="heart" class="w-5 h-5"></i>
+            <span id="mobile-wishlist-badge" class="absolute -top-1 right-2 w-4 h-4 bg-rose-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">0</span>
+            <span class="text-[10px] font-medium">المفضلة</span>
+        </button>
+        <button class="mobile-nav-btn flex flex-col items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-brand-600 relative" id="mobile-nav-cart">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span id="mobile-cart-badge" class="absolute -top-1 right-2 w-4 h-4 bg-brand-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">0</span>
+            <span class="text-[10px] font-medium">السلة</span>
         </button>
     </div>
-        
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast"></div>
-
-    <!-- FOMO Recent Sales Popup -->
-    <div class="fomo-popup" id="fomoPopup"></div>
-
-    <!-- Payment Success Modal -->
-    <div class="modal-overlay" id="paymentSuccessModal">
-        <div class="modal-card">
-            <div class="success-icon-wrapper" style="margin-bottom: 1.5rem; text-align: center;">
-                <i class="fa-solid fa-circle-check" style="font-size: 5rem; color: var(--primary); filter: drop-shadow(0 0 15px var(--primary-glow));"></i>
-            </div>
-            <h2 style="font-size: 2rem; font-weight: 800; color: white; margin-bottom: 1rem; text-align: center;">تم الدفع بنجاح!</h2>
-            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1rem; text-align: center;" id="successModalMessage">شكراً لك على ثقتك بزهرة الارجوان. تم استلام طلبك بنجاح وجاري تجهيزه.</p>
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 1.25rem; border-radius: 12px; margin-bottom: 2rem; text-align: right;">
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--secondary);">رقم الطلب (OmPay): <span id="successOrderId" style="font-family: monospace; color: white; font-weight: 700;">-</span></p>
-                <p style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted);">الاسم: <span id="successCustomerName" style="color: white; font-weight: 700;">-</span></p>
-                <p style="font-size: 0.9rem; margin-bottom: 0px; color: var(--text-muted);">المجموع: <span id="successOrderTotal" style="color: white; font-weight: 700;">-</span></p>
-            </div>
-            <button class="btn-primary" onclick="closeSuccessModal()" style="width: 100%;">العودة للمتجر</button>
-        </div>
-    </div>
-
-    <!-- Payment Failure Modal -->
-    <div class="modal-overlay" id="paymentFailureModal">
-        <div class="modal-card">
-            <div class="failure-icon-wrapper" style="margin-bottom: 1.5rem; text-align: center;">
-                <i class="fa-solid fa-circle-xmark" style="font-size: 5rem; color: #ef4444; filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.4));"></i>
-            </div>
-            <h2 style="font-size: 2rem; font-weight: 800; color: white; margin-bottom: 1rem; text-align: center;">فشلت عملية الدفع</h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1rem; text-align: center;" id="failureModalMessage">عذراً، لم نتمكن من إتمام عملية الدفع. يرجى التحقق من بيانات بطاقتك والمحاولة مجدداً.</p>
-            <button class="btn-primary" onclick="closeFailureModal()" style="width: 100%; background: #ef4444; box-shadow: 0 15px 30px rgba(239, 68, 68, 0.3);">إغلاق ومراجعة السلة</button>
-        </div>
-    </div>
-
-    
-    <!-- Product Details Modal -->
-    <div class="modal-overlay" id="productDetailModal">
-        <div class="modal-card" style="padding: 0; overflow: hidden; max-width: 500px;">
-            <div style="position: relative; height: 350px;">
-                <img id="detailImage" src="" style="width: 100%; height: 100%; object-fit: cover;">
-                <button onclick="closeProductModal()" style="position: absolute; top: 15px; right: 15px; width: 40px; height: 40px; border-radius: 50%; border: none; background: rgba(255,255,255,0.9); color: #ef4444; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div style="padding: 2rem; background: var(--bg-surface);">
-                <span id="detailCat" style="color: var(--primary); font-size: 0.85rem; font-weight: 700; text-transform: uppercase;"></span>
-                <h2 id="detailName" style="font-size: 1.5rem; font-weight: 800; color: var(--text-light); margin-bottom: 0.5rem;"></h2>
-                <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 1rem;">
-                    <span id="detailPrice" style="font-size: 1.5rem; font-weight: 900; color: var(--secondary);"></span>
-                    <del id="detailOldPrice" style="font-size: 1rem; color: var(--text-muted); display: none;"></del>
+    <!-- Slide-over Cart Drawer -->
+    <div id="cart-drawer-overlay" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-xs"></div>
+    <div id="cart-drawer" class="fixed top-0 left-0 bottom-0 w-full max-w-md bg-white dark:bg-gray-900 z-50 -translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+        <div class="p-4 sm:p-5 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 flex items-center justify-center">
+                    <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                 </div>
-                <p id="detailDesc" style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.6;"></p>
+                <div>
+                    <h3 class="font-bold text-sm sm:text-base text-gray-900 dark:text-white">سلة مشتريات غصن المتك</h3>
+                    <span id="cart-items-count-text" class="text-[11px] text-gray-400 font-mono">0 منتجات</span>
+                </div>
+            </div>
+            <button id="close-cart-drawer" class="p-2 rounded-xl text-gray-400 hover:text-gray-700 dark:hover:text-white">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div class="p-3.5 bg-brand-50/80 dark:bg-brand-950/50 border-b border-brand-100 dark:border-brand-900/30">
+            <div class="flex items-center justify-between text-xs font-semibold text-brand-900 dark:text-brand-200 mb-1.5">
+                <span id="free-shipping-message">أضف 25.00 ر.ع للحصول على شحن مجاني 🚀</span>
+                <span id="free-shipping-percent" class="font-bold text-brand-600 dark:text-brand-400 font-mono">0%</span>
+            </div>
+            <div class="w-full h-2 bg-brand-200/60 dark:bg-brand-900/60 rounded-full overflow-hidden">
+                <div id="free-shipping-progress" class="h-full bg-brand-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div id="cart-items-list" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+
+        <div id="cart-empty-view" class="hidden flex-1 flex flex-col items-center justify-center p-8 text-center space-y-3">
+            <div class="w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-400 flex items-center justify-center">
+                <i data-lucide="shopping-basket" class="w-8 h-8"></i>
+            </div>
+            <h4 class="font-bold text-sm text-gray-800 dark:text-gray-200">سلتك خالية حالياً</h4>
+            <p class="text-xs text-gray-400 max-w-xs">اختر ما يناسب حديقتك ومزرعتك من متجر غصن المتك!</p>
+            <button id="cart-explore-btn" class="px-5 py-2.5 rounded-xl bg-brand-500 text-white font-bold text-xs shadow hover:bg-brand-600 transition">
+                تصفح المنتجات
+            </button>
+        </div>
+
+        <div id="cart-footer" class="p-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/60 dark:bg-gray-900/90 space-y-3 text-xs">
+            <div class="flex gap-2">
+                <input type="text" id="coupon-input" placeholder="كود الخصم (جرب OMAN10)" class="flex-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-brand-500 uppercase font-mono">
+                <button id="apply-coupon-btn" class="px-3.5 py-2 bg-gray-800 dark:bg-gray-700 text-white rounded-xl font-bold hover:bg-black transition">
+                    تطبيق
+                </button>
+            </div>
+            <div id="coupon-feedback" class="text-[11px] font-bold hidden"></div>
+
+            <div class="space-y-1 text-gray-600 dark:text-gray-400">
+                <div class="flex justify-between">
+                    <span>المجموع الفرعي:</span>
+                    <span id="cart-subtotal" class="font-bold text-gray-900 dark:text-white font-mono">0.00 ر.ع</span>
+                </div>
+                <div id="discount-row" class="hidden flex justify-between text-emerald-600 dark:text-emerald-400 font-semibold">
+                    <span>الخصم المطبق:</span>
+                    <span id="cart-discount-amount" class="font-mono">-0.00 ر.ع</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>الشحن والتوصيل لكافة المحافظات:</span>
+                    <span id="cart-shipping-fee" class="font-medium text-gray-900 dark:text-white font-mono">2.50 ر.ع</span>
+                </div>
+                <div class="flex justify-between text-sm font-black text-gray-900 dark:text-white pt-2 border-t border-gray-200 dark:border-gray-700">
+                    <span>المجموع الإجمالي:</span>
+                    <span id="cart-grand-total" class="text-brand-600 dark:text-brand-400 text-base font-mono">0.00 ر.ع</span>
+                </div>
+            </div>
+
+            <button id="cart-checkout-btn" class="w-full py-3 rounded-2xl bg-brand-500 hover:bg-brand-600 active:scale-98 text-white font-bold text-xs sm:text-sm shadow-lg shadow-brand-500/25 transition flex items-center justify-center gap-2">
+                <i data-lucide="message-circle" class="w-4 h-4"></i>
+                <span>إتمام الطلب وإرسال الفاتورة عبر واتساب</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- WHATSAPP ORDER / CHECKOUT MODAL              -->
+    <!-- ============================================ -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4">
+        <div id="checkout-modal-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-md"></div>
+        <div class="relative bg-white dark:bg-gray-900 rounded-3xl max-w-lg w-full max-h-[95vh] overflow-y-auto shadow-2xl z-10 border border-gray-100 dark:border-gray-800 flex flex-col text-right">
+
+            <!-- Modal Header -->
+            <div class="p-5 bg-gradient-to-r from-[#128c7e] to-[#25d366] text-white rounded-t-3xl flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center">
+                        <i data-lucide="message-circle" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-base">إتمام الطلب عبر واتساب</h3>
+                        <p class="text-[11px] text-white/80">سيتم إرسال فاتورتك تلقائياً إلى فريق غصن المتك</p>
+                    </div>
+                </div>
+                <button id="close-checkout-modal" class="p-2 rounded-xl bg-white/20 hover:bg-white/30 transition">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Order Summary Preview -->
+            <div class="p-4 bg-gray-50 dark:bg-gray-800/60 border-b border-gray-100 dark:border-gray-700">
+                <div class="flex items-center gap-2 mb-2.5">
+                    <i data-lucide="shopping-bag" class="w-4 h-4 text-brand-500"></i>
+                    <span class="text-xs font-bold text-gray-700 dark:text-gray-200">ملخص الطلب</span>
+                </div>
+                <div id="checkout-order-summary" class="space-y-1 text-xs text-gray-600 dark:text-gray-300"></div>
+                <div class="pt-2 mt-2 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between text-xs font-black text-gray-900 dark:text-white">
+                    <span>الإجمالي الكلي:</span>
+                    <span id="checkout-grand-total" class="text-brand-600 dark:text-brand-400 font-mono text-sm">0.00 ر.ع</span>
+                </div>
+            </div>
+
+            <!-- Customer Info Form -->
+            <form id="checkout-customer-form" class="p-5 space-y-4 text-right flex-1">
+                <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">بيانات المشتري للتوصيل</p>
+
+                <!-- Full Name -->
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="user" class="w-3.5 h-3.5 text-brand-500"></i>
+                        الاسم الكامل *
+                    </label>
+                    <input type="text" id="customer-name" required placeholder="مثال: محمد بن عبدالله الهاشمي"
+                        class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
+                </div>
+
+                <!-- Phone Number -->
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="phone" class="w-3.5 h-3.5 text-brand-500"></i>
+                        رقم الهاتف (واتساب) *
+                    </label>
+                    <div class="flex gap-2">
+                        <span class="flex items-center px-3 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-xs font-bold text-gray-600 dark:text-gray-300">🇴🇲 +968</span>
+                        <input type="tel" id="customer-phone" required placeholder="مثال: 91234567" pattern="[0-9]{8}"
+                            class="flex-1 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono transition">
+                    </div>
+                </div>
+
+                <!-- Delivery Governorate -->
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-500"></i>
+                        محافظة / ولاية التوصيل *
+                    </label>
+                    <select id="customer-governorate" required
+                        class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 transition">
+                        <option value="" disabled selected>-- اختر المحافظة --</option>
+                        <option>محافظة مسقط</option>
+                        <option>محافظة الباطنة الشمالية</option>
+                        <option>محافظة الباطنة الجنوبية</option>
+                        <option>محافظة الداخلية</option>
+                        <option>محافظة الشرقية الشمالية</option>
+                        <option>محافظة الشرقية الجنوبية</option>
+                        <option>محافظة الظاهرة</option>
+                        <option>محافظة البريمي</option>
+                        <option>محافظة الوسطى</option>
+                        <option>محافظة ظفار</option>
+                        <option>محافظة مسندم</option>
+                    </select>
+                </div>
+
+                <!-- Detailed Address -->
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="navigation" class="w-3.5 h-3.5 text-brand-500"></i>
+                        العنوان التفصيلي *
+                    </label>
+                    <textarea id="customer-address" required rows="2" placeholder="مثال: مسقط، بوشر، الخوير، بالقرب من مجمع الخوير..."
+                        class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none transition"></textarea>
+                </div>
+
+                <!-- Delivery Type -->
+                <div class="space-y-2">
+                    <label class="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="truck" class="w-3.5 h-3.5 text-brand-500"></i>
+                        طريقة الاستلام *
+                    </label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="delivery-type-option cursor-pointer">
+                            <input type="radio" name="delivery-type" value="توصيل للبيت 🏠" class="hidden delivery-radio" checked>
+                            <div class="delivery-card flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-brand-500 bg-brand-50/50 dark:bg-brand-950/30 text-center transition">
+                                <span class="text-xl">🏠</span>
+                                <span class="text-[11px] font-bold text-brand-700 dark:text-brand-300">توصيل للبيت</span>
+                                <span class="text-[10px] text-gray-500">2-3 أيام عمل</span>
+                            </div>
+                        </label>
+                        <label class="delivery-type-option cursor-pointer">
+                            <input type="radio" name="delivery-type" value="استلام من المكتب 🏢" class="hidden delivery-radio">
+                            <div class="delivery-card flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 border-gray-200 dark:border-gray-700 text-center transition hover:border-brand-400">
+                                <span class="text-xl">🏢</span>
+                                <span class="text-[11px] font-bold text-gray-700 dark:text-gray-200">استلام من المكتب</span>
+                                <span class="text-[10px] text-gray-500">1-2 أيام عمل</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Optional Note -->
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-700 dark:text-gray-300 flex items-center gap-1.5">
+                        <i data-lucide="message-square" class="w-3.5 h-3.5 text-gray-400"></i>
+                        ملاحظات إضافية (اختياري)
+                    </label>
+                    <input type="text" id="customer-notes" placeholder="أي تعليمات خاصة بالطلب أو التوصيل..."
+                        class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-3 text-xs focus:outline-none focus:ring-1 focus:ring-brand-500 transition">
+                </div>
+
+                <!-- Submit: Send via WhatsApp -->
+                <button type="submit" class="w-full py-4 rounded-2xl bg-[#25d366] hover:bg-[#1db954] active:scale-95 text-white font-black text-sm shadow-xl shadow-green-500/30 transition flex items-center justify-center gap-2.5">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                    </svg>
+                    <span>إرسال الفاتورة عبر واتساب الآن</span>
+                </button>
+
+                <p class="text-[10px] text-center text-gray-400">
+                    سيتم فتح واتساب تلقائياً مع فاتورة طلبك الكاملة لإرسالها لفريق غصن المتك
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Plant Diagnostic Wizard Modal -->
+    <div id="care-wizard-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4">
+        <div id="care-wizard-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-xs"></div>
+        <div class="relative bg-white dark:bg-gray-900 rounded-3xl max-w-md w-full shadow-2xl z-10 border border-gray-100 dark:border-gray-800 p-5 sm:p-7 text-right">
+            <button id="close-care-wizard" class="absolute top-3 left-3 p-2 rounded-full text-gray-400 hover:text-gray-700 dark:hover:text-white bg-gray-100 dark:bg-gray-800">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+            <div class="text-center space-y-1.5 mb-5">
+                <div class="w-10 h-10 rounded-2xl bg-brand-100 dark:bg-brand-900/60 text-brand-600 dark:text-brand-400 flex items-center justify-center mx-auto">
+                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                </div>
+                <h3 class="text-base font-bold text-gray-900 dark:text-white">مساعد اختيار المنتجات الزراعية</h3>
+                <p class="text-xs text-gray-500">اختر ما تبحث عنه لنرشح لك الأفضل من غصن المتك</p>
+            </div>
+            <div id="wizard-steps-container" class="space-y-4">
+                <div class="wizard-step space-y-2.5" data-step="1">
+                    <label class="block text-xs font-bold text-gray-800 dark:text-gray-200">ما هو غرضك الزراعي الأساسي؟</label>
+                    <div class="grid grid-cols-1 gap-2 text-xs">
+                        <button type="button" class="wizard-opt-btn p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-brand-500 text-right flex items-center justify-between" data-cat="plants">
+                            <span>🪴 نباتات داخلية وديكور منزلي</span>
+                            <i data-lucide="chevron-left" class="w-4 h-4 text-gray-400"></i>
+                        </button>
+                        <button type="button" class="wizard-opt-btn p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-brand-500 text-right flex items-center justify-between" data-cat="seeds">
+                            <span>🌱 زراعة بذور خضار وزهور وحدائق</span>
+                            <i data-lucide="chevron-left" class="w-4 h-4 text-gray-400"></i>
+                        </button>
+                        <button type="button" class="wizard-opt-btn p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-brand-500 text-right flex items-center justify-between" data-cat="irrigation">
+                            <span>💧 تركيب شبكة ري بالتنقيط وتوفير المياه</span>
+                            <i data-lucide="chevron-left" class="w-4 h-4 text-gray-400"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="wizard-result-container" class="hidden text-center space-y-3 pt-1">
+                <h4 class="text-sm font-bold text-gray-900 dark:text-white" id="wizard-result-title">الترشيحات المقترحة لك:</h4>
+                <div id="wizard-recommended-cards" class="grid grid-cols-2 gap-2 text-right"></div>
+                <button id="wizard-apply-filter-btn" class="w-full py-2.5 rounded-xl bg-brand-500 text-white font-bold text-xs shadow hover:bg-brand-600">
+                    عرض المنتجات المطابقة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick View Product Modal -->
+    <div id="quick-view-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4">
+        <div id="quick-view-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"></div>
+        <div class="relative bg-white dark:bg-gray-900 rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl z-10 border border-gray-100 dark:border-gray-800 p-5 sm:p-7">
+            <button id="close-quick-view" class="absolute top-3 left-3 p-2 rounded-full text-gray-400 hover:text-gray-700 dark:hover:text-white bg-gray-100 dark:bg-gray-800">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+            <div id="quick-view-content" class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 items-start"></div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- SECURE ADMIN LOGIN MODAL                   -->
+    <!-- ========================================== -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div id="admin-login-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+        <div class="relative bg-white dark:bg-gray-900 rounded-3xl max-w-sm w-full p-6 sm:p-7 shadow-2xl z-10 border border-gray-200 dark:border-gray-800 text-center space-y-5">
+            <button id="close-admin-login" class="absolute top-4 left-4 p-2 rounded-full text-gray-400 hover:text-gray-700 dark:hover:text-white bg-gray-100 dark:bg-gray-800">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-700 to-brand-500 text-white flex items-center justify-center mx-auto shadow-lg shadow-brand-500/25">
+                <i data-lucide="lock" class="w-7 h-7"></i>
+            </div>
+
+            <div class="space-y-1">
+                <h3 class="text-lg font-black text-gray-900 dark:text-white">إدارة متجر غصن المتك</h3>
+                <p class="text-xs text-gray-500">أدخل كلمة المرور لمتابعة التحكم بمنتجات المتجر</p>
+            </div>
+
+            <form id="admin-login-form" class="space-y-3 text-right">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-gray-700 dark:text-gray-300">الرقم السري (Password)</label>
+                    <div class="relative">
+                        <input type="password" id="admin-password-input" required placeholder="أدخل كلمة المرور..." 
+                            class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl py-3 pr-10 pl-10 text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none font-mono">
+                        <div class="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400">
+                            <i data-lucide="key-round" class="w-4 h-4"></i>
+                        </div>
+                        <button type="button" id="toggle-password-visibility" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="admin-login-error" class="hidden text-xs font-bold text-rose-500 text-center py-1">
+                    ❌ كلمة المرور غير صحيحة! يرجى المحاولة مجدداً.
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-bold text-xs sm:text-sm shadow-md shadow-brand-500/25 transition active:scale-95 flex items-center justify-center gap-2">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>دخول لوحة التحكم</span>
+                </button>
+            </form>
+
+            <div class="pt-2 border-t border-gray-100 dark:border-gray-800 text-[11px] text-gray-400">
+                <span>🔐 منطقة محمية لإدارة غصن المتك</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- FULL ADMIN DASHBOARD MODAL & CONTROL SUITE -->
+    <!-- ========================================== -->
+    <div id="admin-panel-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-2 sm:p-4">
+        <div id="admin-panel-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+        <div class="relative bg-white dark:bg-gray-900 rounded-3xl max-w-5xl w-full max-h-[95vh] overflow-hidden shadow-2xl z-10 border border-gray-200 dark:border-gray-800 flex flex-col text-right">
+            
+            <!-- Admin Top Bar -->
+            <div class="p-4 sm:p-5 bg-gradient-to-r from-gray-900 via-brand-900 to-gray-900 text-white flex items-center justify-between border-b border-gray-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-brand-500 text-white flex items-center justify-center shadow-md">
+                        <i data-lucide="leaf" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-black text-base sm:text-lg">لوحة تحكم متجر غصن المتك</h3>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold">OMAN v2.5</span>
+                        </div>
+                        <p class="text-[11px] text-brand-200">إدارة المنتجات (نباتات، بذور، مبيدات، شبكات ري، أسمدة، أدوات)، الإعلانات، والكوبونات</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="admin-logout-btn" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-rose-600 text-white text-xs font-bold transition flex items-center gap-1">
+                        <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                        <span class="hidden sm:inline">تسجيل خروج</span>
+                    </button>
+                    <button id="close-admin-panel" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Nav Tabs -->
+            <div class="flex items-center gap-2 p-2.5 bg-gray-50 dark:bg-gray-800/80 border-b border-gray-200 dark:border-gray-700/60 overflow-x-auto no-scrollbar text-xs font-bold">
+                <button class="admin-tab-btn active px-4 py-2 rounded-xl bg-brand-500 text-white shadow-sm flex items-center gap-1.5 shrink-0" data-tab="products">
+                    <i data-lucide="package" class="w-4 h-4"></i>
+                    <span>إدارة المنتجات (<span id="admin-prod-count">0</span>)</span>
+                </button>
+                <button id="admin-product-tab-btn" class="admin-tab-btn px-4 py-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-1.5 shrink-0" data-tab="add-product">
+                    <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-500" id="admin-product-tab-icon"></i>
+                    <span id="admin-product-tab-title">+ إضافة أو تعديل منتج</span>
+                </button>
+                <button class="admin-tab-btn px-4 py-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-1.5 shrink-0" data-tab="announcements">
+                    <i data-lucide="megaphone" class="w-4 h-4 text-amber-500"></i>
+                    <span>الإعلانات والشريط العلوي</span>
+                </button>
+                <button class="admin-tab-btn px-4 py-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-1.5 shrink-0" data-tab="coupons">
+                    <i data-lucide="tag" class="w-4 h-4 text-blue-500"></i>
+                    <span>كوبونات الخصم</span>
+                </button>
+                <button class="admin-tab-btn px-4 py-2 rounded-xl text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center gap-1.5 shrink-0" data-tab="orders">
+                    <i data-lucide="clipboard-list" class="w-4 h-4 text-purple-500"></i>
+                    <span>الطلبات الواردة</span>
+                </button>
+            </div>
+
+            <!-- Admin Tab Contents Container -->
+            <div class="p-4 sm:p-6 flex-1 overflow-y-auto space-y-6">
                 
-                <!-- Reviews Section -->
-                <div style="margin-bottom: 1.5rem; background: rgba(0,0,0,0.02); padding: 10px; border-radius: 12px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
-                        <span style="font-weight:700; color:var(--text-light);" data-i18n="customer_reviews">تقييمات العملاء</span>
-                        <div id="detailStars" style="color:var(--secondary); font-size:0.9rem;"></div>
+                <!-- TAB 1: Products List Management -->
+                <div id="tab-content-products" class="admin-tab-panel space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">قائمة المنتجات الحالية في غصن المتك</h4>
+                        <button id="admin-quick-add-btn" class="px-3.5 py-1.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i> + إضافة منتج جديد
+                        </button>
                     </div>
-                    <div id="detailReviews" style="max-height: 100px; overflow-y:auto; font-size:0.85rem; color:var(--text-muted); margin-bottom: 10px;"></div>
+
+                    <div class="overflow-x-auto rounded-2xl border border-gray-200 dark:border-gray-700">
+                        <table class="w-full text-right text-xs">
+                            <thead class="bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 font-bold border-b border-gray-200 dark:border-gray-700">
+                                <tr>
+                                    <th class="p-3">الصورة</th>
+                                    <th class="p-3">اسم المنتج</th>
+                                    <th class="p-3">القسم</th>
+                                    <th class="p-3">السعر (ر.ع)</th>
+                                    <th class="p-3">الحالة</th>
+                                    <th class="p-3 text-center">الإجراءات (تعديل / حذف)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-products-table-body" class="divide-y divide-gray-100 dark:divide-gray-800"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 2: Add or Edit Product Form -->
+                <div id="tab-content-add-product" class="admin-tab-panel hidden space-y-4">
+                    <div class="flex items-center justify-between bg-brand-50/50 dark:bg-gray-800/40 p-3 rounded-2xl border border-brand-100 dark:border-gray-700">
+                        <div>
+                            <h4 class="font-bold text-sm text-gray-900 dark:text-white" id="product-form-heading">
+                                إضافة منتج جديد إلى غصن المتك
+                            </h4>
+                            <p class="text-[11px] text-gray-500" id="product-form-subheading">
+                                أضف أو عدل منتجات النباتات، البذور، المبيدات، أنظمة الري، الأسمدة أو الأدوات
+                            </p>
+                        </div>
+                        <button type="button" id="cancel-edit-btn" class="hidden px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-xl text-xs font-bold hover:bg-gray-300 transition">
+                            إلغاء التعديل
+                        </button>
+                    </div>
                     
-                    <div style="display:flex; gap:5px; align-items:center;">
-                        <input type="text" id="reviewInput" placeholder="أضف تقييمك..." style="flex:1; padding:8px; border:1px solid var(--glass-border); border-radius:8px; background:var(--bg-surface); color:var(--text-light); font-family:var(--font-cairo); font-size:0.85rem;">
-                        <button onclick="addReview()" style="padding:8px 12px; background:var(--primary); color:#fff; border:none; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-paper-plane"></i></button>
+                    <form id="add-product-form" class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                        <input type="hidden" id="edit-prod-id" value="">
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">اسم المنتج بالعربي *</label>
+                            <input type="text" id="new-prod-name" required placeholder="مثال: شبكة ري بالتنقيط 50 متر أو بذور طماطم هجينة" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5 focus:ring-1 focus:ring-brand-500">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">النوع / الموديل / الاسم العلمي</label>
+                            <input type="text" id="new-prod-botanical" placeholder="مثال: Drip Irrigation Kit 50M / F1 Hybrid" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5 focus:ring-1 focus:ring-brand-500 font-mono">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">القسم الرئيسي في المتجر *</label>
+                            <select id="new-prod-category" class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5 focus:ring-1 focus:ring-brand-500">
+                                <option value="plants">🪴 النباتات والنوادر</option>
+                                <option value="seeds">🌱 البذور والتقاوي</option>
+                                <option value="pesticides">🛡️ المبيدات والوقاية الزراعية</option>
+                                <option value="irrigation">💧 أنظمة الري الحديث والتقطير</option>
+                                <option value="fertilizers">🧪 الأسمدة والمغذيات والتربة</option>
+                                <option value="tools">✂️ الأدوات والمعدات الزراعية</option>
+                                <option value="pots">🏺 المراكن والأحواض والديكور</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">السعر بالريال العُماني (ر.ع) *</label>
+                            <input type="number" step="0.10" id="new-prod-price" required placeholder="مثال: 9.50" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5 focus:ring-1 focus:ring-brand-500 font-mono">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">السعر قبل الخصم (اختياري)</label>
+                            <input type="number" step="0.10" id="new-prod-orig-price" placeholder="مثال: 14.00" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5 focus:ring-1 focus:ring-brand-500 font-mono">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">رابط صورة المنتج (URL) *</label>
+                            <input type="url" id="new-prod-image" required placeholder="https://images.unsplash.com/..." 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5 focus:ring-1 focus:ring-brand-500 font-mono">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">شارة مميزة (Badge)</label>
+                            <input type="text" id="new-prod-badge" placeholder="مثال: أصلي 100% 🌟 أو الأكثر مبيعاً 🔥" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5 focus:ring-1 focus:ring-brand-500">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">طريقة الاستخدام / الجدولة</label>
+                            <input type="text" id="new-prod-water" placeholder="مثال: ري أوتوماتيكي / خلط 2 مل لكل لتر ماء" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">المواصفات / الحجم / المقاس</label>
+                            <input type="text" id="new-prod-size" placeholder="مثال: لفة 50 متر / عبوة 1 لتر / عبوة 500 بذرة" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">حالة التوفر والأمان</label>
+                            <div class="pt-2 flex items-center gap-4">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="new-prod-pet" class="rounded text-brand-600 w-4 h-4">
+                                    <span>🐾 آمن / عضوي</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="checkbox" id="new-prod-stock" checked class="rounded text-brand-600 w-4 h-4">
+                                    <span>متوفر بالمخزون</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-2 space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">وصف المنتج ومميزاته</label>
+                            <textarea id="new-prod-desc" rows="3" placeholder="اكتب وصفاً شاملاً للمنتج ومواصفاته الفنية..." 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5"></textarea>
+                        </div>
+
+                        <div class="sm:col-span-2 pt-2 flex gap-3">
+                            <button type="submit" id="submit-product-btn" class="flex-1 py-3 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-bold shadow-md text-xs sm:text-sm flex items-center justify-center gap-2">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                                <span id="submit-product-text">حفظ ونشر المنتج في غصن المتك فوراً 🚀</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- TAB 3: Announcements & Hero Management -->
+                <div id="tab-content-announcements" class="admin-tab-panel hidden space-y-5">
+                    <h4 class="font-bold text-sm text-gray-900 dark:text-white">تعديل الإعلانات ونصوص الواجهة الرئيسية</h4>
+
+                    <form id="announcement-form" class="space-y-4 text-xs">
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">نص الشريط الإعلاني العلوي</label>
+                            <input type="text" id="edit-announcement-input" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">شارة الإعلان في واجهة البانر</label>
+                            <input type="text" id="edit-hero-badge-input" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">العنوان الترويجي الرئيسي (Hero Title)</label>
+                            <input type="text" id="edit-hero-title-input" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">الوصف الترويجي (Hero Description)</label>
+                            <textarea id="edit-hero-desc-input" rows="2" 
+                                class="w-full bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-2.5"></textarea>
+                        </div>
+
+                        <button type="submit" class="py-2.5 px-6 bg-brand-500 hover:bg-brand-600 text-white rounded-xl font-bold text-xs">
+                            تحديث الإعلانات فورياً
+                        </button>
+                    </form>
+                </div>
+
+                <!-- TAB 4: Coupons Management -->
+                <div id="tab-content-coupons" class="admin-tab-panel hidden space-y-5">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">إدارة كوبونات وقسائم الخصم</h4>
+                    </div>
+
+                    <form id="add-coupon-form" class="bg-gray-50 dark:bg-gray-800/60 p-4 rounded-2xl border border-gray-200 dark:border-gray-700 grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs items-end">
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">رمز الكوبون (الكود) *</label>
+                            <input type="text" id="new-coupon-code" required placeholder="مثال: GHOSN15" 
+                                class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-2 font-mono uppercase">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">نسبة الخصم (%) *</label>
+                            <input type="number" id="new-coupon-discount" required placeholder="مثال: 15" min="1" max="100" 
+                                class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-2 font-mono">
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="font-bold text-gray-700 dark:text-gray-300">الوصف</label>
+                            <input type="text" id="new-coupon-desc" placeholder="مثال: خصم خاص على أنظمة الري والبذور" 
+                                class="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-2">
+                        </div>
+
+                        <button type="submit" class="py-2 px-4 bg-brand-500 text-white rounded-xl font-bold h-9">
+                            + إضافة الكوبون
+                        </button>
+                    </form>
+
+                    <div class="overflow-x-auto rounded-2xl border border-gray-200 dark:border-gray-700">
+                        <table class="w-full text-right text-xs">
+                            <thead class="bg-gray-50 dark:bg-gray-800 text-gray-500 font-bold">
+                                <tr>
+                                    <th class="p-3">كود الخصم</th>
+                                    <th class="p-3">نسبة الخصم</th>
+                                    <th class="p-3">الوصف</th>
+                                    <th class="p-3 text-center">إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-coupons-table-body" class="divide-y divide-gray-100 dark:divide-gray-800"></tbody>
+                        </table>
                     </div>
                 </div>
-        
-                <div style="display: flex; gap: 10px;">
-                    <button id="detailAddBtn" class="btn-primary" style="flex: 1; padding: 1rem; color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px;"></button>
-                    <button id="detailShareBtn" class="btn-primary" style="background: #25d366; box-shadow: none; padding: 1rem 1.5rem; color: #fff;"><i class="fa-brands fa-whatsapp"></i></button>
+
+                <!-- TAB 5: Incoming Orders -->
+                <div id="tab-content-orders" class="admin-tab-panel hidden space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-sm text-gray-900 dark:text-white">سجل الطلبات الواردة في سلطنة عُمان</h4>
+                        <span class="text-xs text-gray-400 font-mono" id="admin-orders-count">0 طلبات</span>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-2xl border border-gray-200 dark:border-gray-700">
+                        <table class="w-full text-right text-xs">
+                            <thead class="bg-gray-50 dark:bg-gray-800 text-gray-500 font-bold">
+                                <tr>
+                                    <th class="p-3">رقم الطلب</th>
+                                    <th class="p-3">التاريخ</th>
+                                    <th class="p-3">المنتجات</th>
+                                    <th class="p-3">الإجمالي (ر.ع)</th>
+                                    <th class="p-3">الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-orders-table-body" class="divide-y divide-gray-100 dark:divide-gray-800"></tbody>
+                        </table>
+                    </div>
                 </div>
+
+            </div>
+
+            <!-- Admin Footer -->
+            <div class="p-4 bg-gray-50 dark:bg-gray-800/60 border-t border-gray-200 dark:border-gray-700 text-xs flex items-center justify-between text-gray-500">
+                <span>يتم حفظ جميع التعديلات تلقائياً في المتصفح.</span>
+                <button id="admin-close-bottom-btn" class="px-4 py-2 bg-gray-800 dark:bg-gray-700 text-white rounded-xl font-bold hover:bg-black">
+                    إغلاق والعودة للمتجر
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Story Viewer Modal -->
-    <div class="story-modal" id="storyViewerModal">
-        <div class="story-modal-overlay" onclick="closeStoryViewer()"></div>
-        <div class="story-viewer-card">
-            <!-- Progress Bars -->
-            <div class="story-progress-container" id="storyProgressContainer"></div>
-            
-            <!-- Story Header -->
-            <div class="story-viewer-header">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <span class="story-viewer-title" id="storyViewerTitle">اسم القصة</span>
-                </div>
-                <i class="fa-solid fa-xmark story-viewer-close" onclick="closeStoryViewer()"></i>
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Order Simulation Success Modal -->
+    <div id="order-success-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/70 backdrop-blur-md"></div>
+        <div class="relative bg-white dark:bg-gray-900 rounded-3xl max-w-sm w-full shadow-2xl z-10 border border-gray-100 dark:border-gray-800 p-6 text-center space-y-4">
+            <div class="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto animate-bounce">
+                <i data-lucide="check-circle" class="w-8 h-8"></i>
             </div>
-            
-            <!-- Story Content -->
-            <div class="story-viewer-content" id="storyViewerContent">
-                <!-- 9:16 Image will be dynamically injected here -->
+            <div class="space-y-1">
+                <h3 class="text-xl font-black text-gray-900 dark:text-white">تم تأكيد طلبك في غصن المتك! 🇴🇲🌱</h3>
+                <p class="text-xs text-gray-600 dark:text-gray-300">
+                    رقم الطلب: <strong class="font-mono text-brand-600 dark:text-brand-400" id="order-number">#GM-8942</strong>
+                </p>
             </div>
-            
-            <!-- Story Navigation Taps -->
-            <div class="story-tap-zone left" onclick="prevStory()"></div>
-            <div class="story-tap-zone right" onclick="nextStory()"></div>
-            
-            <!-- Story Action Button -->
-            <div class="story-viewer-footer" id="storyViewerFooter" style="display: none;">
-                <a href="#" class="btn-primary" id="storyActionBtn" style="width: 100%; text-align: center;">تسوق الآن</a>
+            <div class="bg-gray-50 dark:bg-gray-800/60 p-3 rounded-2xl text-[11px] text-gray-500 dark:text-gray-400 text-right space-y-1">
+                <p>• سيتم تجهيز الشحنة والتوصيل لكافة ولايات السلطنة فوراً.</p>
+                <p>• ستصلك رسالة الواتساب مع بوليصة الشحن ورابط التتبع.</p>
             </div>
+            <button id="close-success-modal-btn" class="w-full py-3 bg-brand-500 text-white rounded-xl font-bold text-xs shadow hover:bg-brand-600 transition">
+                متابعة التسوق
+            </button>
         </div>
     </div>
 
-    <!-- Policies Modal -->
-    <div id="policiesModal" style="display:none; position:fixed; inset:0; z-index:9000; background:rgba(28,25,23,0.7); backdrop-filter:blur(6px); overflow-y:auto;">
-        <div style="max-width:700px; margin:60px auto; background:var(--surface); border-radius:var(--radius-lg); padding:2rem; position:relative; border:1px solid var(--border); box-shadow:var(--shadow-xl);">
-            <button onclick="document.getElementById('policiesModal').style.display='none'" style="position:absolute; top:1rem; left:1rem; background:var(--bg); border:none; width:36px; height:36px; border-radius:50%; font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
-            <h1 style="text-align:center; font-size:1.6rem; font-weight:900; color:var(--primary); margin-bottom:2rem;">السياسات والشروط</h1>
-            
-            <h2 style="color:var(--primary); font-weight:800; border-bottom:2px solid var(--border); padding-bottom:.5rem; margin-bottom:1rem;">1. شروط الاستخدام</h2>
-            <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:.8rem;">مرحباً بك في متجر زهرة الارجوان. باستخدامك لهذا المتجر، فإنك توافق على الالتزام بشروط الاستخدام التالية.</p>
-            <ul style="color:var(--text-secondary); line-height:1.8; padding-right:1.5rem; margin-bottom:1.5rem;">
-                <li>جميع محتويات صفحات هذا المتجر هي لمعلوماتك العامة فقط وتخضع للتغيير دون إشعار.</li>
-                <li>يتحمل المستخدم المسؤولية الكاملة عن استخدام أي معلومات أو مواد من هذا المتجر.</li>
-                <li>يُحظر الاستخدام غير المصرح به لهذا المتجر.</li>
-            </ul>
-
-            <h2 style="color:var(--primary); font-weight:800; border-bottom:2px solid var(--border); padding-bottom:.5rem; margin-bottom:1rem;">2. سياسة الخصوصية</h2>
-            <ul style="color:var(--text-secondary); line-height:1.8; padding-right:1.5rem; margin-bottom:1.5rem;">
-                <li><strong>جمع البيانات:</strong> نقوم بجمع المعلومات الأساسية اللازمة لمعالجة الطلبات كالاسم، رقم الهاتف، والعنوان.</li>
-                <li><strong>استخدام البيانات:</strong> تُستخدم بياناتك فقط لتوصيل الطلبات والتواصل بخصوص طلبك.</li>
-                <li><strong>حماية البيانات:</strong> لا نشارك بياناتك مع أي طرف ثالث لأغراض تسويقية.</li>
-            </ul>
-
-            <h2 style="color:var(--primary); font-weight:800; border-bottom:2px solid var(--border); padding-bottom:.5rem; margin-bottom:1rem;">3. سياسة الشحن والتوصيل</h2>
-            <ul style="color:var(--text-secondary); line-height:1.8; padding-right:1.5rem; margin-bottom:1.5rem;">
-                <li>نوفر خدمة التوصيل لمختلف ولايات سلطنة عمان.</li>
-                <li>تختلف رسوم الشحن باختلاف الولاية وحجم الشحنة، ويتم توضيحها قبل تأكيد الطلب.</li>
-                <li>مدة التوصيل تتراوح بين يوم إلى ثلاثة أيام عمل.</li>
-            </ul>
-
-            <h2 style="color:var(--primary); font-weight:800; border-bottom:2px solid var(--border); padding-bottom:.5rem; margin-bottom:1rem;">4. الاسترجاع والاستبدال</h2>
-            <ul style="color:var(--text-secondary); line-height:1.8; padding-right:1.5rem; margin-bottom:1.5rem;">
-                <li>يمكن استبدال المنتج التالف خلال 3 أيام من تاريخ الاستلام بحالته الأصلية.</li>
-                <li>لا يمكن استرجاع البذور والأسمدة والمبيدات المفتوحة لأسباب تتعلق بسلامة المحاصيل.</li>
-                <li>يجب التواصل معنا مباشرة عبر الواتساب للإبلاغ عن أي ضرر.</li>
-            </ul>
-
-            <div style="text-align:center; margin-top:2rem;">
-                <button onclick="document.getElementById('policiesModal').style.display='none'" style="background:var(--primary); color:#fff; border:none; padding:.8rem 2rem; border-radius:var(--radius-md); font-weight:800; font-size:1rem; cursor:pointer;">إغلاق</button>
-            </div>
-        </div>
-    </div>
-
-
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
-    <script src="script.js?v=5" defer></script>
+    <!-- Application Script -->
+    <script src="app.js"></script>
 </body>
-
 </html>
