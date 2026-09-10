@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://arjwan-om.com/sitemap.xml
+# Disallow admin-only UI is client-side; keep crawlable public pages
+Sitemap: https://zahratalarjwan.github.io/agristore/sitemap.xml
