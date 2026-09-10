@@ -1,21 +1,30 @@
 {
-  "name": "زهرة الأرجوان - المتجر الزراعي",
-  "short_name": "زهرة الأرجوان",
-  "description": "متجر زراعي عربي لعرض المنتجات والطلبات والمقالات الزراعية.",
+  "name": "غصن المتك - المتجر الزراعي",
+  "short_name": "غصن المتك",
+  "description": "متجر غصن المتك للنباتات والبذور والمبيدات والأسمدة وأنظمة الري في سلطنة عُمان.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "dir": "rtl",
-  "lang": "ar",
-  "background_color": "#ffffff",
-  "theme_color": "#5b16f0",
-  "categories": ["shopping", "business", "productivity"],
+  "lang": "ar-OM",
+  "background_color": "#f8faf8",
+  "theme_color": "#15803d",
+  "categories": [
+    "shopping",
+    "business"
+  ],
   "icons": [
     {
-      "src": "icons/zahrat-alarjwan-logo.jpg",
-      "sizes": "512x512",
+      "src": "logo.jpeg",
+      "sizes": "192x192",
       "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "app_icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
