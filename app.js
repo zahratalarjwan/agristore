@@ -5221,10 +5221,41 @@ document.addEventListener('DOMContentLoaded', () => {
     initCareWizard();
     initMobileBottomNav();
     initAdminPanel();
+    applySeoUrlParams();
     renderProducts();
     updateCartUI();
     updateWishlistBadge();
 });
+
+// Deep links for SEO: ?category=plants|seeds|... and ?q=search
+function applySeoUrlParams() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const cat = (params.get('category') || '').trim();
+        const q = (params.get('q') || '').trim();
+        const allowed = ['all','plants','seeds','pesticides','irrigation','fertilizers','tools','pots'];
+        if (cat && allowed.includes(cat)) {
+            const btn = document.querySelector(`.cat-nav-btn[data-category="${cat}"]`)
+                || document.querySelector(`.mobile-cat-btn[data-category="${cat}"]`)
+                || document.querySelector(`.filter-cat-sidebar-btn[data-category="${cat}"]`);
+            if (btn) btn.click();
+            else state.category = cat;
+        }
+        if (q) {
+            const desktop = document.getElementById('desktop-search-input');
+            const mobile = document.getElementById('mobile-search-input');
+            if (desktop) desktop.value = q;
+            if (mobile) mobile.value = q;
+            state.searchQuery = q.trim().toLowerCase();
+        }
+        if (window.location.hash === '#products') {
+            const el = document.getElementById('products') || document.getElementById('current-category-title');
+            if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 200);
+        }
+    } catch (e) {
+        console.warn('applySeoUrlParams', e);
+    }
+}
 
 function initLucideIcons() {
     if (window.lucide) {
